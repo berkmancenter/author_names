@@ -21,4 +21,6 @@ class User < ActiveRecord::Base
     (1..size).collect{|a| chars[rand(chars.size)] }.join
   end
   
+  
+  
 end
