@@ -3,6 +3,7 @@ class Publisher < ActiveRecord::Base
   
   has_many :users
   has_many :questionnaires
+  has_many :authors
   
   def all_staff
     User.find(:all, :conditions => {:staff => true, :publisher_id => self.id})
