@@ -1,0 +1,29 @@
+<h1>Publishers</h1>
+
+<div>
+  	<table id="publishers-table" class="table table-condensed tablesorter">
+	<thead>
+	  <tr>
+		<th>Name</th>
+		<th>Actions</th>
+	  </tr>
+	</thead> 
+	<tbody>
+	    <% @publishers.each do |publisher| %>
+	    	<tr>
+	  	  <td><%= publisher.name %></td>
+		  <td>
+	      <% if current_user.try(:superadmin?) %>
+	   		<%= link_to('Edit', edit_publisher_path(publisher), :class => "action-edit") %> | <%= link_to('Delete', publisher_path(publisher), :confirm => "Are you sure?", :method => :delete) %>
+	  	  <% end %>
+		  </td>
+	    </tr>
+	    <% end %>
+	</tbody>	
+	</table>
+  
+  <% if current_user.try(:superadmin?) %>
+    <%= link_to("Add New Publisher", new_publisher_path ) %>
+  <% end %>
+</div>
+<%= will_paginate @publishers %>

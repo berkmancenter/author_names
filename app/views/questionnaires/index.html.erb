@@ -1,0 +1,29 @@
+<h1>Questionnaires</h1>
+
+<div>
+  	<table id="questionnaires-table" class="table table-condensed tablesorter">
+	<thead>
+	  <tr>
+		<th>Name</th>
+		<th>Actions</th>
+	  </tr>
+	</thead> 
+	<tbody>
+	    <% @questionnaires.each do |questionnaire| %>
+	    	<tr>
+	  	  <td><%= Questionnaire.name %></td>
+		  <td>
+	      <% if current_user.try(:admin?) %>
+	   		<%= link_to('Edit', edit_questionnaire_path(questionnaire), :class => "action-edit") %> | <%= link_to('Delete', questionnaire_path(questionnaire), :confirm => "Are you sure?", :method => :delete) %>
+	  	  <% end %>
+		  </td>
+	    </tr>
+	    <% end %>
+	</tbody>	
+	</table>
+  
+  <% if current_user.try(:superadmin?) %>
+    <%= link_to("Add New Questionnaire", new_questionnaire_path ) %>
+  <% end %>
+</div>
+<%= will_paginate @questionnaires %>
