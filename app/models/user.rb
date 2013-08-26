@@ -45,15 +45,15 @@ class User < ActiveRecord::Base
   end  
   
   def is_lib_staff?
-    self.try(:staff?) && current_user.is_librarian?
+    self.try(:staff?) && self.is_librarian?
   end 
   
   def is_pub_admin?
-    self.try(:admin?) && current_user.is_publisher?
+    self.try(:admin?) && self.is_publisher?
   end 
   
   def is_pub_staff?
-    self.try(:staff?) && current_user.is_publisher?
+    self.try(:staff?) && self.is_publisher?
   end 
   
 end

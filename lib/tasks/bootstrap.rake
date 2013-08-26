@@ -19,6 +19,7 @@ namespace :crt do
       user = User.new(:email => 'libadmin@example.com', :first_name => 'Library', :last_name => 'Admin')
       user.password = "12345678"
     end
+    user.library = Library.first
     user.admin = true
     user.save
     puts "Lib Admin email is: #{user.email}"
@@ -29,7 +30,8 @@ namespace :crt do
       user = User.new(:email => 'libstaff@example.com', :first_name => 'Library', :last_name => 'Staff')
       user.password = "12345678"
     end
-    user.admin = true
+    user.library = Library.first
+    user.staff = true
     user.save
     puts "Lib Staff email is: #{user.email}"
     puts "Lib Staff password is: #{user.password}"
@@ -39,6 +41,7 @@ namespace :crt do
       user = User.new(:email => 'pubadmin@example.com', :first_name => 'Publisher', :last_name => 'Admin')
       user.password = "12345678"
     end
+    user.publisher = Publisher.first
     user.admin = true
     user.save
     puts "Pub Admin email is: #{user.email}"
@@ -49,7 +52,8 @@ namespace :crt do
       user = User.new(:email => 'pubstaff@example.com', :first_name => 'Publisher', :last_name => 'Staff')
       user.password = "12345678"
     end
-    user.admin = true
+    user.publisher = Publisher.first
+    user.staff = true
     user.save
     puts "Pub Staff email is: #{user.email}"
     puts "Pub Staff password is: #{user.password}"

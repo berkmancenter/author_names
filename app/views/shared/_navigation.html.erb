@@ -10,32 +10,32 @@
 	  <li><%= link_to "Edit Account", edit_user_registration_path %></li>
 	  <li><%= link_to "Sign Out", destroy_user_session_path, :method => :delete %></li>
 	<% elsif current_user.is_lib_staff? %>
-	  <li><%= link_to "View New Author Data", root_path %></li>
-	  <li><%= link_to "View Past Author Data", root_path %></li>
+	  <li><%= link_to "New Author Data", root_path %></li>
+	  <li><%= link_to "Past Author Data", root_path %></li>
 	  <li><%= link_to "Export Data", root_path %></li>
 	  <li><%= link_to "Edit Account", edit_user_registration_path %></li>
 	  <li><%= link_to "Sign Out", destroy_user_session_path, :method => :delete %></li>
 	<% elsif current_user.is_lib_admin? %>  
-  	  <li><%= link_to "View New Author Data", root_path %></li>
-  	  <li><%= link_to "View Past Author Data", root_path %></li>
+  	  <li><%= link_to "New Author Data", root_path %></li>
+  	  <li><%= link_to "Past Author Data", root_path %></li>
   	  <li><%= link_to "Export Data", root_path %></li>
 	  <li><%= link_to "Manage Staff", users_path %></li>
 	  <li><%= link_to "Edit Account", edit_user_registration_path %></li>
 	  <li><%= link_to "Sign Out", destroy_user_session_path, :method => :delete %></li>
     <% elsif current_user.is_pub_staff? %>
 	  <li><%= link_to "Send Questionnaire", root_path %></li>
-      <li><%= link_to "View New Author Data", root_path %></li>
-      <li><%= link_to "View Past Author Data", root_path %></li>
+      <li><%= link_to "New Author Data", root_path %></li>
+      <li><%= link_to "Past Author Data", root_path %></li>
       <li><%= link_to "Export Data", root_path %></li>
       <li><%= link_to "Edit Account", edit_user_registration_path %></li>
       <li><%= link_to "Sign Out", destroy_user_session_path, :method => :delete %></li>  
   	<% elsif current_user.is_pub_admin? %>  
 	  <li><%= link_to "Send Questionnaire", root_path %></li>
-      <li><%= link_to "View New Author Data", root_path %></li>
-      <li><%= link_to "View Past Author Data", root_path %></li>
+      <li><%= link_to "New Author Data", root_path %></li>
+      <li><%= link_to "Past Author Data", root_path %></li>
       <li><%= link_to "Export Data", root_path %></li>
   	  <li><%= link_to "Manage Staff", users_path %></li>
-	  <li><%= link_to "Manage Questionnaires", root_path %></li>
+	  <li><%= link_to "Manage Questionnaires", questionnaires_path %></li>
   	  <li><%= link_to "Edit Account", edit_user_registration_path %></li>
   	  <li><%= link_to "Sign Out", destroy_user_session_path, :method => :delete %></li>  
 	<% end %>
