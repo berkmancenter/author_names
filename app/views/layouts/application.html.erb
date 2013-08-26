@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Author Names</title>
+  <%= stylesheet_link_tag    'application', :media => "all" %>
+  <%= javascript_include_tag 'application' %>
+  <%= csrf_meta_tags %>
+  <%= yield :header_tags -%>
+</head>
+<body <%= yield :body %>>
+  <div id="wrap">
+	<header class="navbar navbar-fixed-top">
+	  <nav class="navbar-inner">
+	    <div class="container">
+	      <%= render :partial => 'shared/navigation' %>
+	    </div>
+	  </nav>
+	</header>
+	
+	<div id="main" role="main">
+	  <div class="container">
+	    <div class="content">
+	      <div class="row">
+	        <div class="span12">
+	          <%= render :partial => 'shared/messages' %>
+	          <%= yield %>
+	        </div>
+	      </div>
+	    </div>
+	  </div> <!--! end of .container -->
+	</div> <!--! end of #main -->
+	<div id="push"></div>
+  </div> <!--! end of #wrap -->	
+  <div id="footer">
+    <div class="container">
+      <%= render :partial => 'shared/footer' %>
+    </div>
+  </div>	
+</body>
+</html>

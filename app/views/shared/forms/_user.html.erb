@@ -1,0 +1,19 @@
+<%= semantic_form_for(@user) do |f| %>
+  <%= f.inputs do %>
+	<% if current_user.try(:superadmin?) %>
+	  <%= f.input :first_name, :input_html => { :size => 30 } %>
+	  <%= f.input :last_name, :input_html => { :size => 30 } %>
+	  <%= f.input :email, :input_html => { :size => 30 } %>
+	<% end %>
+	<%= f.input :library, :as => :radio, :label => "Library: " %>
+	<%= f.input :publisher, :as => :radio, :label => "Publisher: " %>
+	<% if @user != current_user || @user.superadmin? %>
+	  <span id='admin_box'>
+		  <%= f.input :admin, :label => "Is Admin? " %> 
+		  <%= f.input :staff, :label => "Is Staff? " %>
+		  <%= f.input :superadmin, :label => "Is Superadmin? " %>
+	  </span>
+	<% end %>
+  <% end %>
+  <%= f.actions %>
+<% end %>
