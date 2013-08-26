@@ -36,6 +36,9 @@ GEM
     carrierwave (0.8.0)
       activemodel (>= 3.2.0)
       activesupport (>= 3.2.0)
+    ckeditor (4.0.4)
+      mime-types
+      orm_adapter
     coffee-rails (3.2.2)
       coffee-script (>= 2.2.0)
       railties (~> 3.2.0)
@@ -43,6 +46,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.6.2)
+    country_select (1.2.0)
     devise (2.2.1)
       bcrypt-ruby (~> 3.0)
       orm_adapter (~> 0.1)
@@ -63,6 +67,9 @@ GEM
       thor (>= 0.14, < 2.0)
     jquery-tablesorter (1.4.1)
       railties (~> 3.1)
+    jquery-ui-rails (4.0.3)
+      jquery-rails
+      railties (>= 3.1.0)
     json (1.8.0)
     libv8 (3.3.10.4)
     mail (2.4.4)
@@ -130,12 +137,15 @@ PLATFORMS
 DEPENDENCIES
   bootstrap-sass
   carrierwave
+  ckeditor
   coffee-rails (~> 3.2.1)
+  country_select
   devise
   formtastic
   formtastic-bootstrap
   jquery-rails
   jquery-tablesorter
+  jquery-ui-rails
   pg
   rails (= 3.2.11)
   sass-rails (~> 3.2.3)

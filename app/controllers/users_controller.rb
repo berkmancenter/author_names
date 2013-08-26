@@ -1,8 +1,12 @@
 class UsersController < ApplicationController
-  before_filter :authenticate_superadmin!, :except => [:edit, :update]
+  before_filter :authenticate_superadmin_or_admin!, :except => [:edit, :update]
   
   def index
-    @users = User.order('email').paginate(:page => params[:page], :per_page => 50)
+    if current_user.superadmin?
+      @users = User.order('email').paginate(:page => params[:page], :per_page => 50)
+    elsif current_user.is_lib_admin?
+      @users = current_user.library.users.order('email').paginate(:page => params[:page], :per_page => 50)  
+    end
   end
   
   def new

@@ -22,6 +22,38 @@ class User < ActiveRecord::Base
     (1..size).collect{|a| chars[rand(chars.size)] }.join
   end
   
+  def is_librarian?
+    if !self.library.nil?
+      return true
+    end  
+  end  
   
+  def is_publisher?
+    if !self.publisher.nil?
+      return true
+    end  
+  end
+  
+  def is_author?
+    if self.library.nil? && self.publisher.nil?
+      return true
+    end  
+  end
+  
+  def is_lib_admin?
+    self.try(:admin?) && self.is_librarian?
+  end  
+  
+  def is_lib_staff?
+    self.try(:staff?) && current_user.is_librarian?
+  end 
+  
+  def is_pub_admin?
+    self.try(:admin?) && current_user.is_publisher?
+  end 
+  
+  def is_pub_staff?
+    self.try(:staff?) && current_user.is_publisher?
+  end 
   
 end

@@ -23,7 +23,7 @@
 		  <td><%= user.staff ? "Yes" : "No" %></td>
 		  <td><%= user.superadmin ? "Yes" : "No" %></td> 
 		  <td><%= link_to('Edit', edit_user_path(user), :class => "action-edit") %>
-	      <% if current_user.try(:admin?) %>
+	      <% if (current_user.try(:admin?) || current_user.try(:superadmin?)) && user != current_user %>
 	   		 | <%= link_to('Delete', user_path(user), :confirm => "Are you sure?", :method => :delete) %>
 	  	  <% end %>
 		  </td>
