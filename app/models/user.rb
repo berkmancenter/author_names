@@ -39,7 +39,7 @@ class User < ActiveRecord::Base
   end
   
   def is_author?
-    if self.library.nil? && self.publisher.nil?
+    if (self.library.nil? && self.publisher.nil?) && !self.superadmin
       return true
     end  
   end
