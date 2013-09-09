@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :admin, :staff, :first_name, :last_name, :publisher_id, :library_id
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :admin, :staff, :first_name, :last_name, :publisher_id, :library_id, :username
   # attr_accessible :title, :body
   
   belongs_to :publisher
@@ -14,7 +14,11 @@ class User < ActiveRecord::Base
   belongs_to :author
   
   def to_s
-    self.email
+    self.full_name
+  end
+  
+  def full_name
+    return "#{self.first_name} #{self.last_name}"
   end
   
   def self.random_password(size = 11)
