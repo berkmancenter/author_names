@@ -22,7 +22,7 @@
 		  <td><%= form_item.required %></td>
 		  <td>
 	      <% if current_user.try(:superadmin?) %>
-	   		<%= link_to('Edit', edit_form_item_path(form_item), :class => "action-edit") %> | <%= link_to('Delete', form_item_path(form_item), :confirm => "Are you sure?", :method => :delete) %> | <%= link_to('View Field', view_field_path(form_item), :class => "action-edit") %>
+	   		<%= link_to('Edit', edit_form_item_path(form_item), :class => "action-edit") %> | <%= link_to('Delete', form_item_path(form_item), :confirm => "Are you sure?", :method => :delete) %> | <%= link_to('View Field', view_field_form_item_path(form_item), :class => "action-edit") %>
 	  	  <% end %>
 		  </td>
 	    </tr>
