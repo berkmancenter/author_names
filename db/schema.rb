@@ -11,7 +11,23 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130624194300) do
+ActiveRecord::Schema.define(:version => 20130909132522) do
+
+  create_table "authors", :force => true do |t|
+    t.string   "first_name",                  :null => false
+    t.string   "last_name",                   :null => false
+    t.string   "phone",                       :null => false
+    t.string   "email",                       :null => false
+    t.string   "address_1",    :limit => 150, :null => false
+    t.string   "address_2",    :limit => 150
+    t.string   "city",         :limit => 100, :null => false
+    t.string   "state",        :limit => 100, :null => false
+    t.string   "postal_code",  :limit => 30,  :null => false
+    t.string   "country",      :limit => 2,   :null => false
+    t.integer  "publisher_id"
+    t.datetime "created_at",                  :null => false
+    t.datetime "updated_at",                  :null => false
+  end
 
   create_table "form_items", :force => true do |t|
     t.string   "field_name",                       :null => false
@@ -104,6 +120,7 @@ ActiveRecord::Schema.define(:version => 20130624194300) do
     t.string   "last_name"
     t.datetime "created_at",                                :null => false
     t.datetime "updated_at",                                :null => false
+    t.string   "username",               :default => "",    :null => false
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

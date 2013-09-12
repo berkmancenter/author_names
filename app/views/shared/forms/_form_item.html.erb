@@ -1,0 +1,10 @@
+<%= semantic_form_for(@form_item) do |f| %>
+  <%= f.inputs do %>
+    <%= f.input :field_name, :label => 'Field Name' %>
+	<%= f.input :display_text, :label => 'Display Text' %>
+	<%= f.input :field_type, :as => :radio, :collection => FormItem::FIELD_TYPES, :label => 'Field Type' %>
+	<%= f.input :field_options, :label => 'Field Options' %>
+	<%= f.input :required, :label => 'Required Field?' %>
+  <% end %>
+  <%= f.actions %>
+<% end %>

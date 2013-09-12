@@ -8,8 +8,11 @@ AuthorNames::Application.routes.draw do
   resources :questionnaires
 
 
-  resources :form_items
-
+  resources :form_items do
+    member do
+      get 'view_field'
+    end
+  end  
 
   resources :libraries
 
