@@ -1,4 +1,10 @@
 <%= semantic_form_for(@questionnaire) do |f| %>
-  <%= f.inputs%>
+  <%= f.inputs do %>
+    <%= f.input :name, :label => 'Name' %>
+	<%= f.input :description, :label => 'Description' %>
+	<%= f.input :version, :label => 'Version' %>
+	<%= f.input :publisher, :label => 'Publisher' %>
+	<%= f.input :form_items, :as => :check_boxes, :label => 'Form Items' %>
+  <% end %>
   <%= f.actions %>
 <% end %>

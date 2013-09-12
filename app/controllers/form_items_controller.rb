@@ -48,4 +48,8 @@ class FormItemsController < ApplicationController
       format.json { head :no_content }
     end
   end 
+  
+  def view_field
+    @form_item = FormItem.find(params[:id])
+  end  
 end
