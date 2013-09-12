@@ -9,7 +9,7 @@ namespace :authornames do
     end
     user.superadmin = true
     user.save
-    puts "Super Admin email is: #{user.username}"
+    puts "Super Admin username is: #{user.username}"
     puts "Super Admin password is: #{user.password}"
   end
   
@@ -17,12 +17,12 @@ namespace :authornames do
   task :default_libadmin => :environment do
     if %w[development dev local].include?(Rails.env)
       user = User.new(:username => 'libadmin', :email => 'libadmin@example.com', :first_name => 'Library', :last_name => 'Admin')
-      user.password = "12345678"
+      user.password = '12345678'
     end
     user.library = Library.first
     user.admin = true
     user.save
-    puts "Lib Admin email is: #{user.username}"
+    puts "Lib Admin username is: #{user.username}"
     puts "Lib Admin password is: #{user.password}"
   end
   task :default_libstaff => :environment do
@@ -33,7 +33,7 @@ namespace :authornames do
     user.library = Library.first
     user.staff = true
     user.save
-    puts "Lib Staff email is: #{user.username}"
+    puts "Lib Staff username is: #{user.username}"
     puts "Lib Staff password is: #{user.password}"
   end
   task :default_pubadmin => :environment do
@@ -44,7 +44,7 @@ namespace :authornames do
     user.publisher = Publisher.first
     user.admin = true
     user.save
-    puts "Pub Admin email is: #{user.username}"
+    puts "Pub Admin username is: #{user.username}"
     puts "Pub Admin password is: #{user.password}"
   end
   task :default_pubstaff => :environment do
@@ -55,7 +55,7 @@ namespace :authornames do
     user.publisher = Publisher.first
     user.staff = true
     user.save
-    puts "Pub Staff email is: #{user.username}"
+    puts "Pub Staff username is: #{user.username}"
     puts "Pub Staff password is: #{user.password}"
   end
   task :default_author => :environment do
@@ -64,7 +64,7 @@ namespace :authornames do
       user.password = "12345678"
     end
     user.save
-    puts "Author email is: #{user.username}"
+    puts "Author username is: #{user.username}"
     puts "Author password is: #{user.password}"
   end
   
