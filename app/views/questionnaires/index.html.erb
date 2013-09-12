@@ -22,7 +22,7 @@
 	</tbody>	
 	</table>
   
-  <% if current_user.try(:superadmin?) %>
+  <% if current_user.try(:admin?) %>
     <%= link_to("Add New Questionnaire", new_questionnaire_path ) %>
   <% end %>
 </div>
