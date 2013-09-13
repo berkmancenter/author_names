@@ -14,7 +14,7 @@
 	  	  <td><%= Questionnaire.name %></td>
 		  <td>
 	      <% if current_user.try(:admin?) %>
-	   		<%= link_to('Edit', edit_questionnaire_path(questionnaire), :class => "action-edit") %> | <%= link_to('Delete', questionnaire_path(questionnaire), :confirm => "Are you sure?", :method => :delete) %>
+	   		<%= link_to('Edit', edit_questionnaire_path(questionnaire), :class => "action-edit") %> | <%= link_to('Delete', questionnaire_path(questionnaire), :confirm => "Are you sure?", :method => :delete) %> | <%= link_to('View', questionnaire_path(questionnaire), :class => "action-edit") %>
 	  	  <% end %>
 		  </td>
 	    </tr>
