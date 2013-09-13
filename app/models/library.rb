@@ -3,6 +3,8 @@ class Library < ActiveRecord::Base
   
   has_many :users
   
+  validates_presence_of :name, :contact_name, :phone, :email
+  
   def all_staff
     User.find(:all, :conditions => {:admin => true, :library_id => self.id})
   end

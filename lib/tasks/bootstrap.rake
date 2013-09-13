@@ -13,6 +13,24 @@ namespace :authornames do
     puts "Super Admin password is: #{user.password}"
   end
   
+  desc "Add the default libraries"
+  task :default_libraries => :environment do
+    ['Widener', 'Houghton', 'Fine Arts'].each do |library|
+      library = Library.new(:name => library, :contact_name => "Default Contact", :phone => "XXX-XXX-XXXX", :email => "contact@example.com", :address_1 => "1 Smart Lane", :city => "Boston", :state => "MA", :postal_code => "02111", :country => "US")
+      library.save
+    end
+    puts "Libraries Added!"
+  end
+  
+  desc "Add the default publishers"
+  task :default_publishers => :environment do
+    ['Tupelo', 'Harvard', 'MIT'].each do |publisher|
+      publisher = Publisher.new(:name => publisher, :contact_name => "Default Contact", :phone => "XXX-XXX-XXXX", :email => "contact@example.com", :address_1 => "1 Smart Lane", :city => "Boston", :state => "MA", :postal_code => "02111", :country => "US")
+      publisher.save
+    end
+    puts "Publishers Added!"
+  end
+  
   desc "Add the test accounts"
   task :default_libadmin => :environment do
     if %w[development dev local].include?(Rails.env)
@@ -66,24 +84,6 @@ namespace :authornames do
     user.save
     puts "Author username is: #{user.username}"
     puts "Author password is: #{user.password}"
-  end
-  
-  desc "Add the default libraries"
-  task :default_libraries => :environment do
-    ['Widener', 'Houghton', 'Fine Arts'].each do |library|
-      library = Library.new(:name => library, :contact_name => "Default Contact", :phone => "XXX-XXX-XXXX", :email => "contact@example.com", :address_1 => "1 Smart Lane", :city => "Boston", :state => "MA", :postal_code => "02111", :country => "US")
-      library.save
-    end
-    puts "Libraries Added!"
-  end
-  
-  desc "Add the default publishers"
-  task :default_publishers => :environment do
-    ['Tupelo', 'Harvard', 'MIT'].each do |publisher|
-      publisher = Publisher.new(:name => publisher, :contact_name => "Default Contact", :phone => "XXX-XXX-XXXX", :email => "contact@example.com", :address_1 => "1 Smart Lane", :city => "Boston", :state => "MA", :postal_code => "02111", :country => "US")
-      publisher.save
-    end
-    puts "Publishers Added!"
   end
   
   desc "run all tasks in bootstrap"

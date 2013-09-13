@@ -12,7 +12,6 @@ class CreateFormItems < ActiveRecord::Migration
     create_table(:form_items_questionnaires, :id => false) do|t|
       t.references :form_item
       t.references :questionnaire
-      t.timestamps
     end
     
     [:field_name, :display_text, :field_type, :field_options].each do|col|
