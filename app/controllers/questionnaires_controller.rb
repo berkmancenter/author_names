@@ -4,6 +4,15 @@ class QuestionnairesController < ApplicationController
     @questionnaires = Questionnaire.paginate(:page => params[:page], :per_page => 10)
   end
   
+  def show
+    @questionnaire = Questionnaire.find(params[:id])
+    #@response = Response.new
+    p "in show"
+    if !params[:gather_response].nil?
+      redirect_to gather_response_questionnaires_url, :answers => params[:gather_response]
+    end  
+  end
+  
   def new
     @questionnaire = Questionnaire.new
   end
@@ -13,7 +22,9 @@ class QuestionnairesController < ApplicationController
   end
   
   def create
+    params[:questionnaire][:publisher] = Publisher.find_by_name(params[:questionnaire][:publisher])
     @questionnaire = Questionnaire.new(params[:questionnaire])
+    
     respond_to do |format|
       if @questionnaire.save
         format.html { redirect_to questionnaires_url, notice: 'Questionnaire was successfully created.' }
@@ -47,5 +58,11 @@ class QuestionnairesController < ApplicationController
       format.html { redirect_to questionnaires_url }
       format.json { head :no_content }
     end
+  end  
+  
+  def gather_response
+    p "in gather response"
+    p params[:gather_response]
+    redirect_to questionnaires_url, notice: 'Response was successfully recorded.'
   end  
 end

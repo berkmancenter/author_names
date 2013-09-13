@@ -5,6 +5,12 @@ class Publisher < ActiveRecord::Base
   has_many :questionnaires
   has_many :authors
   
+  validates_presence_of :name, :contact_name, :phone, :email
+  
+  def to_s
+    self.name
+  end
+  
   def all_staff
     User.find(:all, :conditions => {:staff => true, :publisher_id => self.id})
   end

@@ -5,7 +5,11 @@ AuthorNames::Application.routes.draw do
   resources :responses
 
 
-  resources :questionnaires
+  resources :questionnaires do
+    collection do
+      get 'gather_response'
+    end
+  end  
 
 
   resources :form_items do
