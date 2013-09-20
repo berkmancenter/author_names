@@ -9,11 +9,15 @@
 	<br />
 	
 	<%= semantic_form_for :gather_response, :html => { :method => :get } do |f| %>
-	  <% @questionnaire.form_items.each do |item| %>
-	    <%= f.inputs do %>
+	  <%= f.inputs do %>
+	    <% @questionnaire.form_items.each do |item| %>
 	      <%= f.input item.field_name, :as => item.formtastic_field_map, :label => "#{item.display_text}" %>
 	    <% end %>
+		<%= f.input :questionnaire_id, :as => :hidden, :value => @questionnaire.id %>
 	  <% end %>
-	  <%= f.actions %>
+  	  <%= f.actions do %>
+  	    <%= f.action :submit, :as => :button, :label => 'Submit Response ' %>
+  	  <% end %>
+	  
 	<% end %>
 </div>	

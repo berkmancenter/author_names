@@ -1,2 +1,6 @@
-<%= @form_item.form_tag_field_map %>
+<%= semantic_form_for :test, :html => { :method => :get } do |f| %>
+  <%= f.inputs do %>
+    <%= f.input @form_item.field_name, :as => @form_item.formtastic_field_map, :label => "#{@form_item.display_text}" %>
+  <% end %>
+<% end %>
 

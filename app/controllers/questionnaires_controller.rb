@@ -6,10 +6,8 @@ class QuestionnairesController < ApplicationController
   
   def show
     @questionnaire = Questionnaire.find(params[:id])
-    #@response = Response.new
-    p "in show"
     if !params[:gather_response].nil?
-      redirect_to gather_response_questionnaires_url, :answers => params[:gather_response]
+      redirect_to gather_response_questionnaires_url(:responses => params[:gather_response])
     end  
   end
   
@@ -62,7 +60,8 @@ class QuestionnairesController < ApplicationController
   
   def gather_response
     p "in gather response"
-    p params[:gather_response]
+    p params[:responses]
+    response = Response.new()
     redirect_to questionnaires_url, notice: 'Response was successfully recorded.'
   end  
 end

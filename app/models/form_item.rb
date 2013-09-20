@@ -26,23 +26,5 @@ class FormItem < ActiveRecord::Base
     elsif self.field_type == "Textarea"
       as_param = "text"
     end            
-  end
-  
-  def form_tag_field_map
-    as_param = ""
-    
-    if self.field_type == "Checkbox"
-      as_param = "check_box_tag"  
-    elsif self.field_type == "Dropdown"
-      as_param = "select_tag"
-    elsif self.field_type == "File"
-      as_param = "file_field_tag"
-    elsif self.field_type == "Radio"
-      as_param = "radio_button_tag"
-    elsif self.field_type == "String"
-      as_param = "text_field_tag"
-    elsif self.field_type == "Textarea"
-      as_param = "text_area_tag"
-    end            
-  end  
+  end 
 end

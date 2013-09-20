@@ -45,10 +45,8 @@ ActiveRecord::Schema.define(:version => 20130909132522) do
   add_index "form_items", ["field_type"], :name => "index_form_items_on_field_type"
 
   create_table "form_items_questionnaires", :id => false, :force => true do |t|
-    t.integer  "form_item_id"
-    t.integer  "questionnaire_id"
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
+    t.integer "form_item_id"
+    t.integer "questionnaire_id"
   end
 
   create_table "libraries", :force => true do |t|
@@ -95,7 +93,10 @@ ActiveRecord::Schema.define(:version => 20130909132522) do
   end
 
   create_table "responses", :force => true do |t|
-    t.integer  "questionnaire_id"
+    t.integer  "questionnaire_id", :null => false
+    t.integer  "user_id",          :null => false
+    t.integer  "form_item_id",     :null => false
+    t.text     "response"
     t.datetime "created_at",       :null => false
     t.datetime "updated_at",       :null => false
   end
