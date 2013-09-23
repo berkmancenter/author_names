@@ -4,7 +4,7 @@ class CreateResponses < ActiveRecord::Migration
       t.references :questionnaire, :null => false
       t.references :user, :null => false
       t.references :form_item, :null => false
-      t.text :response
+      t.text :response_text
       t.timestamps
     end
   end

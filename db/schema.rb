@@ -96,7 +96,7 @@ ActiveRecord::Schema.define(:version => 20130909132522) do
     t.integer  "questionnaire_id", :null => false
     t.integer  "user_id",          :null => false
     t.integer  "form_item_id",     :null => false
-    t.text     "response"
+    t.text     "response_text"
     t.datetime "created_at",       :null => false
     t.datetime "updated_at",       :null => false
   end
