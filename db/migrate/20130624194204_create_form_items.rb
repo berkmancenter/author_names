@@ -12,6 +12,7 @@ class CreateFormItems < ActiveRecord::Migration
     create_table(:form_items_questionnaires, :id => false) do|t|
       t.references :form_item
       t.references :questionnaire
+      #t.integer :form_item_position, :null => false
     end
     
     [:field_name, :display_text, :field_type, :field_options].each do|col|

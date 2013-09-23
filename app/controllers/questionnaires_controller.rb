@@ -35,6 +35,7 @@ class QuestionnairesController < ApplicationController
   end
   
   def update
+    params[:questionnaire][:publisher] = Publisher.find_by_name(params[:questionnaire][:publisher])
     @questionnaire = Questionnaire.find(params[:id])
 
     respond_to do |format|
