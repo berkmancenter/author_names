@@ -1,7 +1,12 @@
 class ResponsesController < ApplicationController
   
   def index
-    @responses = Response.paginate(:page => params[:page], :per_page => 10)
+    if current_user.try(:superadmin?)
+      @questionnaires = Questionnaire.all
+      
+    elsif current_user.is_pub_admin? || current_user.is_pub_staff?
+      
+    end 
   end
   
   def show

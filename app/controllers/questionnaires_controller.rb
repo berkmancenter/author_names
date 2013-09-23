@@ -1,7 +1,11 @@
 class QuestionnairesController < ApplicationController
   
   def index
-    @questionnaires = Questionnaire.paginate(:page => params[:page], :per_page => 10)
+    if current_user.try(:superadmin?)
+      @questionnaires = Questionnaire.all
+    elsif current_user.is_pub_admin? || current_user.is_pub_staff?
+      @questionnaires = Questionnaire.all(:conditions => {:publisher_id => current_user.publisher.id})
+    end    
   end
   
   def show

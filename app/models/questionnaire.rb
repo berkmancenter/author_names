@@ -5,4 +5,8 @@ class Questionnaire < ActiveRecord::Base
   belongs_to :publisher
   
   validates_presence_of :name, :publisher
+  
+  def assemble_author_data
+    questions = self.form_items
+  end 
 end
