@@ -1,15 +1,19 @@
 class QuestionnairesController < ApplicationController
   
   def index
-    @questionnaires = Questionnaire.paginate(:page => params[:page], :per_page => 10)
+    if current_user.try(:superadmin?)
+      @questionnaires = Questionnaire.all
+    elsif current_user.is_pub_admin? || current_user.is_pub_staff?
+      @questionnaires = Questionnaire.all(:conditions => {:publisher_id => current_user.publisher.id})
+    elsif current_user.is_author?
+      redirect_to('/') and return
+    end    
   end
   
   def show
     @questionnaire = Questionnaire.find(params[:id])
-    #@response = Response.new
-    p "in show"
     if !params[:gather_response].nil?
-      redirect_to gather_response_questionnaires_url, :answers => params[:gather_response]
+      redirect_to gather_response_questionnaires_url(:answers => params[:gather_response])
     end  
   end
   
@@ -37,6 +41,7 @@ class QuestionnairesController < ApplicationController
   end
   
   def update
+    params[:questionnaire][:publisher] = Publisher.find_by_name(params[:questionnaire][:publisher])
     @questionnaire = Questionnaire.find(params[:id])
 
     respond_to do |format|
@@ -61,8 +66,10 @@ class QuestionnairesController < ApplicationController
   end  
   
   def gather_response
-    p "in gather response"
-    p params[:gather_response]
+    params[:answers].each_value do |value|
+      response = Response.create(value)
+    end  
+    
     redirect_to questionnaires_url, notice: 'Response was successfully recorded.'
   end  
 end

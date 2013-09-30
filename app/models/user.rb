@@ -12,6 +12,7 @@ class User < ActiveRecord::Base
   belongs_to :publisher
   belongs_to :library
   belongs_to :author
+  has_many :responses
   
   def to_s
     self.full_name
