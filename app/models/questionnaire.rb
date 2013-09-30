@@ -3,6 +3,7 @@ class Questionnaire < ActiveRecord::Base
   
   has_and_belongs_to_many :form_items, :order => "id DESC"
   belongs_to :publisher
+  has_many :responses
   
   validates_presence_of :name, :publisher
   
