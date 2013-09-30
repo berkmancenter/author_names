@@ -1,20 +1,20 @@
-<h3>Viewing: <%= @questionnaire.name %></h3>
+<h3>Viewing: <%= @response.name %></h3>
 
 <div>
-	<strong>Description:</strong> <%= @questionnaire.description %><br />
-	<strong>Version:</strong> <%= @questionnaire.version %><br />
-	<strong>Publisher:</strong> <%= @questionnaire.publisher %><br />
+	<strong>Description:</strong> <%= @response.description %><br />
+	<strong>Version:</strong> <%= @response.version %><br />
+	<strong>Publisher:</strong> <%= @response.publisher %><br />
 	<br />
 	<strong>Form Items:</strong><br />
 	<br />
 	
 	<%= semantic_form_for :gather_response, :html => { :method => :get } do |f| %>
 	  <%= f.inputs do %>
-	    <% @questionnaire.form_items.each do |item| %>
+	    <% @response.form_items.each do |item| %>
 		  <%= f.semantic_fields_for "#{item.field_name}", :html => { :method => :get } do |fi| %>
 			<%= fi.input :response_text, :as => item.formtastic_field_map, :label => "#{item.display_text}" %>
 			<%= fi.input :form_item_id, :as => :hidden, :value => item.id %>
-			<%= fi.input :questionnaire_id, :as => :hidden, :value => @questionnaire.id %>
+			<%= fi.input :questionnaire_id, :as => :hidden, :value => @response.id %>
 			<%= fi.input :user_id, :as => :hidden, :value => current_user.id %>
 		  <% end %>	
 	    <% end %>

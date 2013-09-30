@@ -87,7 +87,7 @@ namespace :authornames do
   end
   
   desc "run all tasks in bootstrap"
-  task :run_all => [:default_superadmin, :default_libadmin, :default_libstaff, :default_pubadmin, :default_pubstaff, :default_libraries, :default_publishers] do
-    puts "Created Admin account, Repos, Locations and Rooms!"
+  task :run_all => [:default_superadmin, :default_libadmin, :default_libstaff, :default_pubadmin, :default_pubstaff, :default_libraries, :default_publishers, :default_author] do
+    puts "Created user accounts, Libraries, Publishers!"
   end
 end    
