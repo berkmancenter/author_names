@@ -9,7 +9,11 @@ class FormItemsController < ApplicationController
   end
   
   def new
-    @form_item = FormItem.new
+    unless params[:clone].nil?
+      @form_item = FormItem.find(params[:clone]).dup
+    else  
+      @form_item = FormItem.new
+    end  
   end
   
   def edit
