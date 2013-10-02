@@ -1,7 +1,8 @@
 class FormItemsController < ApplicationController
   
   def index
-    @form_items = FormItem.paginate(:page => params[:page], :per_page => 10)
+    @form_items = FormItem.find(:all, :conditions => {:publisher_id => nil})
+    #@form_items = FormItem.paginate(:page => params[:page], :per_page => 10)
     if current_user.is_pub_admin?
       @your_form_items = FormItem.find(:all, :conditions => {:publisher_id => current_user.publisher.id})
     end  

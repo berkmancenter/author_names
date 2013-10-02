@@ -4,6 +4,8 @@ class FormItem < ActiveRecord::Base
   has_and_belongs_to_many :questionnaires
   belongs_to :publisher
   
+  validates_uniqueness_of :field_name
+  
   FIELD_TYPES = ['Checkbox', 'Dropdown', 'File', 'Radio', 'String', 'Textarea', 'Date', 'Label' ]
   FIELD_OPTIONS = ['']
   

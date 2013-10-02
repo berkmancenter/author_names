@@ -1,5 +1,6 @@
 <h1>Form Items</h1>
 
+<% unless @form_items.nil? %>
 <div>
 	<h3>Global</h3>
   	<table id="form_items-table" class="table table-condensed tablesorter">
@@ -37,7 +38,7 @@
     <%= link_to("Add New Form Item", new_form_item_path ) %>
   <% end %>
 </div>
-<%= will_paginate @form_items %>
+<% end %>
 
 <% unless @your_form_items.nil? %>
 <div>
