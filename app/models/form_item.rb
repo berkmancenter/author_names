@@ -1,5 +1,5 @@
 class FormItem < ActiveRecord::Base
-  attr_accessible :field_name, :display_text, :field_type, :field_options, :required
+  attr_accessible :field_name, :display_text, :field_type, :field_options, :required, :publisher
   
   has_and_belongs_to_many :questionnaires
   belongs_to :publisher

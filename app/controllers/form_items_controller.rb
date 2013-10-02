@@ -2,6 +2,9 @@ class FormItemsController < ApplicationController
   
   def index
     @form_items = FormItem.paginate(:page => params[:page], :per_page => 10)
+    if current_user.is_pub_admin?
+      @your_form_items = FormItem.find(:all, :conditions => {:publisher_id => current_user.publisher.id})
+    end  
   end
   
   def new
@@ -13,6 +16,9 @@ class FormItemsController < ApplicationController
   end
   
   def create
+    unless params[:form_item][:publisher].nil?
+      params[:form_item][:publisher] = Publisher.find(params[:form_item][:publisher])
+    end  
     @form_item = FormItem.new(params[:form_item])
     respond_to do |format|
       if @form_item.save
