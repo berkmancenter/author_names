@@ -1,6 +1,8 @@
 <h1>Form Items</h1>
 
+<% unless @form_items.nil? %>
 <div>
+	<h3>Global</h3>
   	<table id="form_items-table" class="table table-condensed tablesorter">
 	<thead>
 	  <tr>
@@ -36,4 +38,40 @@
     <%= link_to("Add New Form Item", new_form_item_path ) %>
   <% end %>
 </div>
-<%= will_paginate @form_items %>
+<% end %>
+
+<% unless @your_form_items.nil? %>
+<div>
+	<h3>Ours</h3>
+  	<table id="form_items-table" class="table table-condensed tablesorter">
+	<thead>
+	  <tr>
+		<th>Field Name</th>
+		<th>Display Text</th>
+		<th>Field Type</th>
+		<th>Field Options</th>
+		<th>Required?</th>
+		<th>Actions</th>
+	  </tr>
+	</thead> 
+	<tbody>
+	    <% @your_form_items.each do |form_item| %>
+	    	<tr>
+	  	  <td><%= form_item.field_name %></td>
+		  <td><%= form_item.display_text %></td>
+		  <td><%= form_item.field_type %></td>
+		  <td><%= form_item.field_options %></td>
+		  <td><%= form_item.required %></td>
+		  <td>
+	   		<%= link_to('Edit', edit_form_item_path(form_item), :class => "action-edit") %> | <%= link_to('Delete', form_item_path(form_item), :confirm => "Are you sure?", :method => :delete) %> | <%= link_to('View Field', view_field_form_item_path(form_item), :class => "action-edit") %>
+		  </td>
+	    </tr>
+	    <% end %>
+	</tbody>	
+	</table>
+  
+  <% if current_user.is_pub_admin? %>
+    <%= link_to("Add New Form Item", new_form_item_path ) %>
+  <% end %>
+</div>
+<% end %>
