@@ -1,9 +1,12 @@
 class FormItem < ActiveRecord::Base
-  attr_accessible :field_name, :display_text, :field_type, :field_options, :required
+  attr_accessible :field_name, :display_text, :field_type, :field_options, :required, :publisher
   
   has_and_belongs_to_many :questionnaires
+  belongs_to :publisher
   
-  FIELD_TYPES = ['Checkbox', 'Dropdown', 'File', 'Radio', 'String', 'Textarea' ]
+  validates_uniqueness_of :field_name
+  
+  FIELD_TYPES = ['Checkbox', 'Dropdown', 'File', 'Radio', 'String', 'Textarea', 'Date', 'Label' ]
   FIELD_OPTIONS = ['']
   
   def to_s
@@ -25,6 +28,8 @@ class FormItem < ActiveRecord::Base
       as_param = "string"
     elsif self.field_type == "Textarea"
       as_param = "text"
+    elsif self.field_type == "Date"
+      as_param = "date_select"  
     end            
   end 
 end

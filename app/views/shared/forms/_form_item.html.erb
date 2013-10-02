@@ -5,6 +5,9 @@
 	<%= f.input :field_type, :as => :radio, :collection => FormItem::FIELD_TYPES, :label => 'Field Type' %>
 	<%= f.input :field_options, :label => 'Field Options' %>
 	<%= f.input :required, :label => 'Required Field?' %>
+	<% if current_user.is_pub_admin? %>
+	  <%= f.input :publisher, :as => :hidden, :input_html => { :value => current_user.publisher.id } %>
+	<% end %>  
   <% end %>
   <%= f.actions %>
 <% end %>

@@ -4,6 +4,7 @@ class Publisher < ActiveRecord::Base
   has_many :users
   has_many :questionnaires
   has_many :authors
+  has_many :form_items
   
   validates_presence_of :name, :contact_name, :phone, :email
   
