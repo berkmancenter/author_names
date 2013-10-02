@@ -1,6 +1,11 @@
-<%= semantic_form_for :test, :html => { :method => :get } do |f| %>
-  <%= f.inputs do %>
-    <%= f.input @form_item.field_name, :as => @form_item.formtastic_field_map, :label => "#{@form_item.display_text}", :collection => @form_item.field_options.nil? ? '' : @form_item.field_options.split(',') %>
+<% if @form_item.field_type == "Label" %>
+  <%= raw @form_item.display_text %><br />
+<% else %>
+
+  <%= semantic_form_for :test, :html => { :method => :get } do |f| %>
+    <%= f.inputs do %>
+      <%= f.input @form_item.field_name, :as => @form_item.formtastic_field_map, :label => "#{@form_item.display_text}", :collection => @form_item.field_options.nil? ? '' : @form_item.field_options.split(',') %>
+    <% end %>
   <% end %>
-<% end %>
+<% end %>  
 
