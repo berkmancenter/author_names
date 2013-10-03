@@ -1,0 +1,31 @@
+<h1>Author Profiles</h1>
+<% unless @authors.nil? %>
+<div>
+  	<table id="users-table" class="table table-condensed tablesorter">
+	<thead>
+	  <tr>
+		<th>First Name</th>
+		<th>Last Name</th>
+		<th>Email</th>
+		<th>Actions</th>
+	  </tr>
+	</thead> 
+	<tbody>
+	    <% @authors.each do |author| %>	
+	    <tr>
+		  <td><%= author.user.first_name %></td>
+		  <td><%= author.user.last_name %></td>
+	  	  <td><%= author.user.email %></td>
+		  <td><%= link_to('Edit', edit_author_path(author), :class => "action-edit") %>
+	      <% if (current_user.try(:admin?) || current_user.try(:superadmin?)) && author.user != current_user %>
+	   		 | <%= link_to('Delete', author_path(author), :confirm => "Are you sure?", :method => :delete) %>
+	  	  <% end %>
+		  </td>
+	    </tr>
+	    <% end %>
+	</tbody>	
+	</table>
+</div>
+<% else %>
+None yet!
+<% end %>
