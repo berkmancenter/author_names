@@ -88,4 +88,9 @@ class UsersController < ApplicationController
       end
     end
   end
+  
+  def authors
+    @authors = current_user.my_authors
+    #@users = User.order('email').paginate(:page => params[:page], :per_page => 50)
+  end
 end

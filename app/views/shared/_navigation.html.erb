@@ -3,19 +3,23 @@
 	<li><%= link_to "Home", root_path %></li>
 	<% if current_user.nil? %>
 	  <li><%= link_to "Sign In/Sign Up", new_user_session_path %></li>
+	
 	<% elsif current_user.try(:superadmin?) %>
 	  <li><%= link_to "Libraries", libraries_path %></li>
 	  <li><%= link_to "Publishers", publishers_path %></li>
+	  <li><%= link_to "Authors", authors_path %></li>
 	  <li><%= link_to "View Form Items", form_items_path %></li>
 	  <li><%= link_to "Users", users_path %></li>
 	  <li><%= link_to "Edit Account", edit_user_registration_path %></li>
 	  <li><%= link_to "Sign Out", destroy_user_session_path, :method => :delete %></li>
+	
 	<% elsif current_user.is_lib_staff? %>
 	  <li><%= link_to "New Author Data", root_path %></li>
 	  <li><%= link_to "Past Author Data", root_path %></li>
 	  <li><%= link_to "Export Data", root_path %></li>
 	  <li><%= link_to "Edit Account", edit_user_registration_path %></li>
 	  <li><%= link_to "Sign Out", destroy_user_session_path, :method => :delete %></li>
+	
 	<% elsif current_user.is_lib_admin? %>  
   	  <li><%= link_to "New Author Data", root_path %></li>
   	  <li><%= link_to "Past Author Data", root_path %></li>
@@ -23,7 +27,8 @@
 	  <li><%= link_to "Manage Staff", users_path %></li>
 	  <li><%= link_to "Edit Account", edit_user_registration_path %></li>
 	  <li><%= link_to "Sign Out", destroy_user_session_path, :method => :delete %></li>
-    <% elsif current_user.is_pub_staff? %>
+    
+	<% elsif current_user.is_pub_staff? %>
 	  <li class="dropdown"><a id="drop1" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">Manage Questionnaires<b class="caret"></b></a>
 		<ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
 	  	  <li><%= link_to "Send Questionnaire", root_path %></li>
@@ -35,28 +40,32 @@
 	      <li><%= link_to "New Author Data", responses_path %></li>
 	      <li><%= link_to "Past Author Data", responses_path %></li>
 	      <li><%= link_to "Export Data", root_path %></li>
+		  <li><%= link_to "View Authors", authors_users_path %></li>
 	    </ul>	
 	  </li>
       <li><%= link_to "Edit Account", edit_user_registration_path %></li>
       <li><%= link_to "Sign Out", destroy_user_session_path, :method => :delete %></li>  
-  	<% elsif current_user.is_pub_admin? %>  
-  <li class="dropdown"><a id="drop1" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">Manage Questionnaires<b class="caret"></b></a>
-	<ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
-	  <li><%= link_to "View Questionnaires", questionnaires_path %></li>
-  	  <li><%= link_to "Send Questionnaire", root_path %></li>
-      <li><%= link_to "View Form Items", form_items_path %></li>
-    </ul>	
-  </li>
+  	
+	<% elsif current_user.is_pub_admin? %>  
+      <li class="dropdown"><a id="drop1" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">Manage Questionnaires<b class="caret"></b></a>
+	    <ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
+	      <li><%= link_to "View Questionnaires", questionnaires_path %></li>
+  	      <li><%= link_to "Send Questionnaire", root_path %></li>
+      	  <li><%= link_to "View Form Items", form_items_path %></li>
+        </ul>	
+  	  </li>
   	  <li class="dropdown"><a id="drop1" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">Manage Author Data <b class="caret"></b></a>
   		<ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
 	        <li><%= link_to "New Author Data", responses_path %></li>
 	        <li><%= link_to "Past Author Data", responses_path %></li>
 			<li><%= link_to "Export Data", root_path %></li>
+			<li><%= link_to "View Authors", authors_users_path %></li>
   	    </ul>	
   	  </li>
   	  <li><%= link_to "Manage Staff", users_path %></li>
   	  <li><%= link_to "Edit Account", edit_user_registration_path %></li>
   	  <li><%= link_to "Sign Out", destroy_user_session_path, :method => :delete %></li>  
+	
 	<% else %>  
 	  <li><%= link_to "Sign Out", destroy_user_session_path, :method => :delete %></li>
 	<% end %>

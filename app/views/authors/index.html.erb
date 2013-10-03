@@ -1,0 +1,31 @@
+<h1>Author Profiles</h1>
+
+<div>
+  	<table id="authors-table" class="table table-condensed tablesorter">
+	<thead>
+	  <tr>
+		<th>Name</th>
+		<th>Publisher</th>
+		<th>Actions</th>
+	  </tr>
+	</thead> 
+	<tbody>
+	    <% @authors.each do |author| %>
+	    	<tr>
+	  	  <td><%= author.user.full_name %></td>
+		  <td><%= author.publisher.name %></td>
+		  <td>
+	      <% if current_user.try(:superadmin?) %>
+	   		<%= link_to('Edit', edit_author_path(author), :class => "action-edit") %> | <%= link_to('Delete', author_path(author), :confirm => "Are you sure?", :method => :delete) %>
+	  	  <% end %>
+		  </td>
+	    </tr>
+	    <% end %>
+	</tbody>	
+	</table>
+  
+  <% if current_user.try(:superadmin?) %>
+    <%= link_to("Add New Author Profile", new_author_path ) %>
+  <% end %>
+</div>
+<%= will_paginate @authors %>

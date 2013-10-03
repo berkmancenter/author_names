@@ -1,5 +1,5 @@
 <% unless current_user.nil? %>
-  <h2>Hello, <%= current_user.email %>!</h2>
+  <h2>Hello, <%= current_user.email %> at <%= current_user.affiliation %>!</h2>
   <% if current_user.is_author? %>
     <h3>Questionnaires</h3>
     <table id="questionnaires-table" class="table table-condensed tablesorter">
