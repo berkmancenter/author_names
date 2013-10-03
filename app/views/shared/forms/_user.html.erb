@@ -6,13 +6,15 @@
 	  <%= f.input :username, :input_html => { :size => 30 } %>
 	  <%= f.input :email, :input_html => { :size => 30 } %>
 	<% end %>
-	<%= f.input :library, :as => :radio, :label => "Library: " %>
-	<%= f.input :publisher, :as => :radio, :label => "Publisher: " %>
+	<%= f.input :library, :as => :radio, :label => "Assign Library: " %>
+	<%= f.input :publisher, :as => :radio, :label => "Assign Publisher: " %>
+	<br />
 	<% if @user != current_user || @user.superadmin? %>
 	  <span id='admin_box'>
-		  <%= f.input :admin, :label => "Is Admin? " %> 
-		  <%= f.input :staff, :label => "Is Staff? " %>
-		  <%= f.input :superadmin, :label => "Is Superadmin? " %>
+		  Internal User Type:<br />
+		  <%= f.input :superadmin, :label => " Is Superadmin? " %>
+		  <%= f.input :admin, :label => " Is Admin? " %> 
+		  <%= f.input :staff, :label => " Is Staff? " %>
 	  </span>
 	<% end %>
   <% end %>

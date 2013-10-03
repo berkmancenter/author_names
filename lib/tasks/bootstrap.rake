@@ -81,6 +81,7 @@ namespace :authornames do
       user = User.new(:username => 'author', :email => 'author@example.com', :first_name => 'Author', :last_name => 'User')
       user.password = "12345678"
     end
+    user.staff = true
     user.save
     puts "Author username is: #{user.username}"
     puts "Author password is: #{user.password}"

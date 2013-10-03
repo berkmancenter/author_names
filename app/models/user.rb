@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
   
   belongs_to :publisher
   belongs_to :library
-  belongs_to :author
+  has_many :authors
   has_many :responses
   
   def to_s
@@ -40,7 +40,7 @@ class User < ActiveRecord::Base
   end
   
   def is_author?
-    if (self.library.nil? && self.publisher.nil?) && !self.superadmin
+    if !self.authors.empty?
       return true
     end  
   end
@@ -60,5 +60,23 @@ class User < ActiveRecord::Base
   def is_pub_staff?
     self.try(:staff?) && self.is_publisher?
   end 
+  
+  def my_authors
+    authors = Array.new
+    if self.superadmin
+      authors << Author.all
+    elsif self.is_pub_admin? || self.is_pub_staff?
+      Author.all.collect{|author| author.publisher == self.publisher ? authors << author : ''} 
+    end
+    return authors
+  end
+  
+  def affiliation
+    authors = Array.new
+    if self.is_pub_admin? || self.is_pub_staff?
+      User.all.collect{|user| user.is_author? && user.publisher == self.publisher ? authors << user : ''}
+    end
+    return authors
+  end
   
 end
