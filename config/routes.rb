@@ -8,6 +8,7 @@ AuthorNames::Application.routes.draw do
   resources :questionnaires do
     collection do
       get 'gather_response'
+      get 'send_questionnaire'
     end
   end  
 
@@ -29,6 +30,12 @@ AuthorNames::Application.routes.draw do
   resources :users do
     collection do
       get 'authors'
+    end
+  end
+  
+  resources :welcome do
+    collection do
+      get 'author_home'
     end
   end
 
