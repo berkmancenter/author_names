@@ -9,6 +9,7 @@ AuthorNames::Application.routes.draw do
     collection do
       get 'gather_response'
       get 'send_questionnaire'
+      get 'choose_authors'
     end
   end  
 

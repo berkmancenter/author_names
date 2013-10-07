@@ -73,20 +73,24 @@ class QuestionnairesController < ApplicationController
     redirect_to questionnaires_url, notice: 'Response was successfully recorded.'
   end  
   
+  def choose_authors
+    @questionnaire = Questionnaire.find(params[:questionnaire_id].to_i)
+    @authors = @questionnaire.publisher.authors
+  end
+  
   def send_questionnaire
     @questionnaire = Questionnaire.find(params[:questionnaire_id].to_i)
     @publisher = @questionnaire.publisher
-    @authors = @publisher.authors
+    @authors = params[:emails]
     
-    # respond_to do |format|
-#       unless params[:emails].nil?
-#         format.html { redirect_to questionnaires_url, notice: 'Questionnaire was successfully sent.' }
-#         format.json { head :no_content }
-#       else
-#         format.html { redirect_to send_questionnaire_questionnaires_path(:questionnaire_id => @questionnaire), notice: 'Please select authors.' }
-#         format.json { head :no_content }
-#       end
-#     end
-    
+    respond_to do |format|
+      unless params[:emails].nil?
+        format.html { redirect_to questionnaires_url, notice: 'Questionnaire was successfully sent.' }
+        format.json { head :no_content }
+      else
+        format.html { redirect_to choose_authors_questionnaires_path(:questionnaire_id => @questionnaire), notice: 'Please select authors.' }
+        format.json { head :no_content }
+      end
+    end
   end
 end
