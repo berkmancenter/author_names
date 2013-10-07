@@ -1,24 +1,5 @@
 <% unless current_user.nil? %>
-  <h2>Hello, <%= current_user.email %> at <%= current_user.affiliation %>!</h2>
-  <% if current_user.is_author? %>
-    <h3>Questionnaires</h3>
-    <table id="questionnaires-table" class="table table-condensed tablesorter">
-  	  <thead>
-  	  <tr>
-  		<th>Name</th>
-  		<th>Actions</th>
-  	  </tr>
-  	  </thead> 
-  	  <tbody>
-  	    <% @questionnaires.each do |questionnaire| %>
-  	    	<tr>
-  	  	  <td><%= questionnaire.name %></td>
-  		  <td><%= link_to('View', questionnaire_path(questionnaire), :class => "action-edit") %></td>
-  	    </tr>
-  	    <% end %>
-  	  </tbody>	
-  	</table>
-  <% end %>
+  <h2>Hello, <%= current_user.email %>!</h2>
 <% else %>
   <h2>Welcome!</h2>
 <% end %>    

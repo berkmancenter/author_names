@@ -72,11 +72,7 @@ class User < ActiveRecord::Base
   end
   
   def affiliation
-    authors = Array.new
-    if self.is_pub_admin? || self.is_pub_staff?
-      User.all.collect{|user| user.is_author? && user.publisher == self.publisher ? authors << user : ''}
-    end
-    return authors
+    # spit out all publishers, libraries and/or author profiles associated with self.
   end
   
 end
