@@ -1,4 +1,5 @@
 class QuestionnairesController < ApplicationController
+  before_filter :authenticate_user!
   
   def index
     if current_user.try(:superadmin?)
@@ -80,11 +81,20 @@ class QuestionnairesController < ApplicationController
   
   def send_questionnaire
     @questionnaire = Questionnaire.find(params[:questionnaire_id].to_i)
-    @publisher = @questionnaire.publisher
-    @authors = params[:emails]
+    @authors = Array.new
+    unless params[:emails].nil?
+      @authors = params[:emails]
+    end  
+    unless params[:more_emails].blank?
+      @authors << params[:more_emails].split(",")
+      @authors.flatten!
+    end  
+    p "authors"
+    p @authors
     
     respond_to do |format|
-      unless params[:emails].nil?
+      unless params[:emails].nil? && params[:more_emails].blank?
+        @questionnaire.send_questionnaire_email(@authors)
         format.html { redirect_to questionnaires_url, notice: 'Questionnaire was successfully sent.' }
         format.json { head :no_content }
       else

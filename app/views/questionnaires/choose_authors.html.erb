@@ -8,6 +8,9 @@
     <%= check_box_tag("emails[]", author.user.email, false, :class => 'check') %> <%= author.user.email %><br />
   <% end %>
   <br />
+  Additional Emails (comma separated):<br />
+  <%= text_area_tag 'more_emails', nil, :size => "50x10" %>
+  <br />
   <%= submit_tag "Send" %>
 </p>
 <% end %>
