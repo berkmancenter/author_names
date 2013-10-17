@@ -23,7 +23,7 @@ class ResponsesController < ApplicationController
   
   def show
     @response = Response.find(params[:id])
-    if !params[:gather_response].nil?
+    unless params[:gather_response].nil?
       redirect_to gather_response_questionnaires_url(:responses => params[:gather_response])
     end  
   end

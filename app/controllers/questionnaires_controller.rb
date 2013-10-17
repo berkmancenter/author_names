@@ -13,7 +13,19 @@ class QuestionnairesController < ApplicationController
   
   def show
     @questionnaire = Questionnaire.find(params[:id])
-    if !params[:gather_response].nil?
+    
+    profile = Author.first(:conditions => {:email => current_user.email, :publisher_id => @questionnaire.publisher.id, :user_id => nil})
+    p "profile"
+    p profile
+    p current_user.email
+    p @questionnaire.publisher.id
+    
+    unless profile.nil?
+      profile.user_id = current_user.id
+      profile.save
+    end 
+    
+    unless params[:gather_response].nil?
       redirect_to gather_response_questionnaires_url(:answers => params[:gather_response])
     end  
   end
@@ -88,9 +100,7 @@ class QuestionnairesController < ApplicationController
     unless params[:more_emails].blank?
       @authors << params[:more_emails].split(",")
       @authors.flatten!
-    end  
-    p "authors"
-    p @authors
+    end 
     
     respond_to do |format|
       unless params[:emails].nil? && params[:more_emails].blank?
