@@ -6,7 +6,11 @@ AuthorNames::Application.routes.draw do
   end  
 
 
-  resources :responses
+  resources :responses do
+    collection do
+      get 'author_response'
+    end
+  end  
 
 
   resources :questionnaires do

@@ -1,10 +1,7 @@
 class ResponsesController < ApplicationController
   
   def index
-    if current_user.try(:superadmin?)
-      @questionnaires = Questionnaire.all
-      
-    elsif current_user.is_pub_admin? || current_user.is_pub_staff?
+    if current_user.is_pub_admin? || current_user.is_pub_staff?
       @questionnaires = Questionnaire.all(:conditions => {:publisher_id => current_user.publisher.id})
       @response_hash = Hash.new
       @questionnaires.each do |q|
@@ -16,7 +13,7 @@ class ResponsesController < ApplicationController
           @response_hash[q][r.user_id]<< r
         end   
       end
-      p "responses"
+      p "response hash"
       p @response_hash  
     end 
   end
@@ -73,5 +70,15 @@ class ResponsesController < ApplicationController
       format.html { redirect_to questionnaires_url }
       format.json { head :no_content }
     end
+  end  
+  
+  def author_response
+    @questionnaire = Questionnaire.find(params[:questionnaire].to_i)
+    @user = User.find(params[:user].to_i)
+    if current_user.is_pub_admin? || current_user.is_pub_staff?
+      @responses = Response.all(:conditions => {:questionnaire_id => @questionnaire.id, :user_id => @user.id})
+      p "responses"
+      p @responses  
+    end 
   end  
 end
