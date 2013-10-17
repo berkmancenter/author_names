@@ -74,7 +74,7 @@ class AuthorsController < ApplicationController
     end
     
     respond_to do |format|
-      format.html { redirect_to authors_path, notice: 'Done.' }
+      format.html { redirect_to authors_path, notice: 'Author profile stubs created.' }
       format.json { head :no_content }
     end
   end  

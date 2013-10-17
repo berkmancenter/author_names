@@ -15,10 +15,6 @@ class QuestionnairesController < ApplicationController
     @questionnaire = Questionnaire.find(params[:id])
     
     profile = Author.first(:conditions => {:email => current_user.email, :publisher_id => @questionnaire.publisher.id, :user_id => nil})
-    p "profile"
-    p profile
-    p current_user.email
-    p @questionnaire.publisher.id
     
     unless profile.nil?
       profile.user_id = current_user.id
