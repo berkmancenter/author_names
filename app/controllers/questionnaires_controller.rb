@@ -36,6 +36,8 @@ class QuestionnairesController < ApplicationController
   
   def create
     params[:questionnaire][:publisher] = Publisher.find_by_name(params[:questionnaire][:publisher])
+    params[:questionnaire][:form_item_ids] << FormItem.all(:conditions => {:required => true}).collect{|fi| fi.id}
+    params[:questionnaire][:form_item_ids].flatten!
     @questionnaire = Questionnaire.new(params[:questionnaire])
     
     respond_to do |format|
