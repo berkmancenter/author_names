@@ -1,0 +1,10 @@
+<h1><%= @user.full_name %>'s Responses</h1>
+
+<% @responses.each do |response| %>
+  <%= raw response.form_item.display_text %>: <%= response.response_text %> 
+
+  <% if current_user.is_pub_admin? %>
+	<%= link_to('Edit', edit_response_path(response), :class => "action-edit") %> | <%= link_to('Delete', response_path(response), :confirm => "Are you sure you want to delete this response? This action cannot be undone.", :method => :delete) %>
+  <% end %>
+  <br />
+<% end %>

@@ -18,9 +18,13 @@
 			  <%= fi.input :response_text, :as => item.formtastic_field_map, :label => "#{item.display_text}", :collection => item.field_options.nil? ? '' : item.field_options.split(',') %>
 			  <%= fi.input :form_item_id, :as => :hidden, :value => item.id %>
 			  <%= fi.input :questionnaire_id, :as => :hidden, :value => @questionnaire.id %>
-			  <%= fi.input :user_id, :as => :hidden, :value => current_user.id %>
+	  	      <% if current_user.try(:admin?) %>
+	  	        <%= fi.input :user_id, :as => :select, :collection => current_user.my_authors %>
+	  	      <% else %>
+			    <%= fi.input :user_id, :as => :hidden, :value => current_user.id %>
+			  <% end %>
 			<% end %>  
-		  <% end %>	
+		  <% end %>
 	    <% end %>
 	  <% end %>
   	  <%= f.actions do %>

@@ -18,7 +18,7 @@
 	    <% @form_items.each do |form_item| %>
 	    	<tr>
 	  	  <td><%= form_item.field_name %></td>
-		  <td><%= form_item.display_text %></td>
+		  <td><%= raw form_item.display_text %></td>
 		  <td><%= form_item.field_type %></td>
 		  <td><%= form_item.field_options %></td>
 		  <td><%= form_item.required %></td>
@@ -58,7 +58,7 @@
 	    <% @your_form_items.each do |form_item| %>
 	    	<tr>
 	  	  <td><%= form_item.field_name %></td>
-		  <td><%= form_item.display_text %></td>
+		  <td><%= raw form_item.display_text %></td>
 		  <td><%= form_item.field_type %></td>
 		  <td><%= form_item.field_options %></td>
 		  <td><%= form_item.required %></td>

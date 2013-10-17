@@ -1,15 +1,14 @@
 <%= semantic_form_for(@questionnaire) do |f| %>
   <%= f.inputs do %>
     <%= f.input :name, :label => 'Name' %>
-	<%= f.input :description, :label => 'Description' %>
+	<%= f.input :description, :label => 'Description', :size => "50x10" %>
 	<%= f.input :version, :label => 'Version' %>
 	<% unless current_user.try(:superadmin?) %>
 	  <%= f.input :publisher, :label => 'Publisher', :as => :string, :input_html => { :value => current_user.publisher, :readonly => true } %>
 	<% else %>  
 	  <%= f.input :publisher, :label => 'Publisher' %>
 	<% end %>  
-	<%= f.input :form_items, :as => :check_boxes, :label => 'Form Items' %>
-	
+	<%= f.input :form_items, :as => :check_boxes, :collection => FormItem.all(:conditions => {:required => false}), :label => 'Form Items' %>
   <% end %>
   <%= f.actions %>
 <% end %>
