@@ -1,8 +1,16 @@
 AuthorNames::Application.routes.draw do
-  resources :authors
+  resources :authors do
+    collection do
+      get 'bulk_authors'
+    end
+  end  
 
 
-  resources :responses
+  resources :responses do
+    collection do
+      get 'author_response'
+    end
+  end  
 
 
   resources :questionnaires do

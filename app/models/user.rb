@@ -75,4 +75,7 @@ class User < ActiveRecord::Base
     # spit out all publishers, libraries and/or author profiles associated with self.
   end
   
+  def find_profile(publisher)
+    Author.first(:conditions => {:user_id => self.id, :publisher_id => publisher})
+  end  
 end
