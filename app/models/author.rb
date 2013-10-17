@@ -1,5 +1,5 @@
 class Author < ActiveRecord::Base
-  attr_accessible :publisher_id, :user_id, :phone, :address_1, :address_2, :city, :state, :postal_code, :country, :email
+  attr_accessible :publisher_id, :user_id, :phone, :address_1, :address_2, :city, :state, :postal_code, :country, :email, :first_name, :last_name
   
   belongs_to :publisher
   belongs_to :user
