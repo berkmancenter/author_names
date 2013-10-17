@@ -2,6 +2,9 @@ class CreateAuthors < ActiveRecord::Migration
   def change
     create_table :authors do |t|
       t.string :phone, :null => false
+      t.string :email, :null => false
+      t.string :first_name, :null => false
+      t.string :last_name, :null => false
       t.string :address_1, :limit => 150, :null => false
       t.string :address_2, :limit => 150
       t.string :city, :limit => 100, :null => false

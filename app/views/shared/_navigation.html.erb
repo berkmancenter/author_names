@@ -31,7 +31,7 @@
 	<% elsif current_user.is_pub_staff? %>
 	  <li class="dropdown"><a id="drop1" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">Manage Questionnaires<b class="caret"></b></a>
 		<ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
-	  	  <li><%= link_to "Send Questionnaire", root_path %></li>
+	  	  <li><%= link_to "View Questionnaires", questionnaires_path %></li>
 	      <li><%= link_to "View Form Items", form_items_path %></li>
 	    </ul>	
 	  </li>
@@ -40,7 +40,7 @@
 	      <li><%= link_to "New Author Data", responses_path %></li>
 	      <li><%= link_to "Past Author Data", responses_path %></li>
 	      <li><%= link_to "Export Data", root_path %></li>
-		  <li><%= link_to "View Authors", authors_users_path %></li>
+		  <li><%= link_to "View Authors", authors_path %></li>
 	    </ul>	
 	  </li>
       <li><%= link_to "Edit Account", edit_user_registration_path %></li>
@@ -50,7 +50,6 @@
       <li class="dropdown"><a id="drop1" href="#" role="button" class="dropdown-toggle" data-toggle="dropdown">Manage Questionnaires<b class="caret"></b></a>
 	    <ul class="dropdown-menu" role="menu" aria-labelledby="drop1">
 	      <li><%= link_to "View Questionnaires", questionnaires_path %></li>
-  	      <li><%= link_to "Send Questionnaire", root_path %></li>
       	  <li><%= link_to "View Form Items", form_items_path %></li>
         </ul>	
   	  </li>
@@ -59,7 +58,7 @@
 	        <li><%= link_to "New Author Data", responses_path %></li>
 	        <li><%= link_to "Past Author Data", responses_path %></li>
 			<li><%= link_to "Export Data", root_path %></li>
-			<li><%= link_to "View Authors", authors_users_path %></li>
+			<li><%= link_to "View Authors", authors_path %></li>
   	    </ul>	
   	  </li>
   	  <li><%= link_to "Manage Staff", users_path %></li>
@@ -67,6 +66,8 @@
   	  <li><%= link_to "Sign Out", destroy_user_session_path, :method => :delete %></li>  
 	
 	<% else %>  
+	  <li><%= link_to "Edit Profile", edit_author_path(current_user.find_profile(3)) %></li>
+	  <li><%= link_to "Edit Account", edit_user_registration_path %></li>
 	  <li><%= link_to "Sign Out", destroy_user_session_path, :method => :delete %></li>
 	<% end %>
 </ul>

@@ -1,4 +1,5 @@
 class QuestionnairesController < ApplicationController
+  before_filter :authenticate_user!
   
   def index
     if current_user.try(:superadmin?)
@@ -12,7 +13,15 @@ class QuestionnairesController < ApplicationController
   
   def show
     @questionnaire = Questionnaire.find(params[:id])
-    if !params[:gather_response].nil?
+    
+    profile = Author.first(:conditions => {:email => current_user.email, :publisher_id => @questionnaire.publisher.id, :user_id => nil})
+    
+    unless profile.nil?
+      profile.user_id = current_user.id
+      profile.save
+    end 
+    
+    unless params[:gather_response].nil?
       redirect_to gather_response_questionnaires_url(:answers => params[:gather_response])
     end  
   end
@@ -80,11 +89,18 @@ class QuestionnairesController < ApplicationController
   
   def send_questionnaire
     @questionnaire = Questionnaire.find(params[:questionnaire_id].to_i)
-    @publisher = @questionnaire.publisher
-    @authors = params[:emails]
+    @authors = Array.new
+    unless params[:emails].nil?
+      @authors = params[:emails]
+    end  
+    unless params[:more_emails].blank?
+      @authors << params[:more_emails].split(",")
+      @authors.flatten!
+    end 
     
     respond_to do |format|
-      unless params[:emails].nil?
+      unless params[:emails].nil? && params[:more_emails].blank?
+        @questionnaire.send_questionnaire_email(@authors)
         format.html { redirect_to questionnaires_url, notice: 'Questionnaire was successfully sent.' }
         format.json { head :no_content }
       else

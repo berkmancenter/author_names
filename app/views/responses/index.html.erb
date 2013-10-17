@@ -3,30 +3,22 @@
 <div>
   <% @response_hash.each_key do |questionnaire| %>
 	<h2><%= questionnaire.name %></h2>
+	<strong>Description:</strong> <%= questionnaire.description %><br />
+	<strong>Version:</strong> <%= questionnaire.version %><br />
+	<strong>Publisher:</strong> <%= questionnaire.publisher %><br />
+	<br />
 	  <% @response_hash[questionnaire].each_key do |user| %>
-	  	<h3><%= User.find(user).username %></h3>
-		<table id="responses-table" class="table table-condensed tablesorter">
-		<thead>
-		  <tr>
-			<th>Form Item</th>
-			<th>Response</th>
-			<th>Actions</th>
-		  </tr>
-		</thead> 
-		<tbody>
+	  	<h3><%= link_to User.find(user).full_name, author_response_responses_path(:questionnaire => questionnaire, :user => user) %></h3>
+		<!--
 		<% @response_hash[questionnaire][user].each do |response| %>
-		<tr>
-		  <td><%= response.form_item.display_text %></td>
-		  <td><%= response.response_text %></td>
-		  <td>
+		  <%= response.form_item.display_text %>: <%= response.response_text %> 
+		
 	      <% if current_user.try(:superadmin?) || current_user.is_pub_admin? %>
 	   		<%= link_to('Edit', edit_response_path(response), :class => "action-edit") %> | <%= link_to('Delete', response_path(response), :confirm => "Are you sure you want to delete this response? This action cannot be undone.", :method => :delete) %>
 	  	  <% end %>
-		  </td>
-	    </tr>
+		  <br />
 		<% end %>
-	  </tbody>	
-	  </table>
+		-->	
 	  <% end %>
   <% end %>
   <% if current_user.try(:superadmin?) || current_user.is_pub_admin? %>
