@@ -96,7 +96,22 @@ class QuestionnairesController < ApplicationController
       @authors = params[:emails]
     end  
     unless params[:more_emails].blank?
-      @authors << params[:more_emails].split(",")
+      emails = Array.new
+      emails << params[:more_emails].split(",").each{|e| e.strip!}
+      emails.flatten!
+      emails.each do |email|
+        author = Author.new(:email => email, :publisher_id => params[:publisher_id])
+        author.first_name = ""
+        author.last_name = ""
+        author.phone = ""
+        author.address_1 = ""
+        author.city = ""
+        author.state = ""
+        author.postal_code = ""
+        author.country = ""
+        author.save
+      end
+      @authors << emails
       @authors.flatten!
     end 
     
@@ -110,5 +125,6 @@ class QuestionnairesController < ApplicationController
         format.json { head :no_content }
       end
     end
+    
   end
 end
