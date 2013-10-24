@@ -6,7 +6,7 @@
 	<%= f.input :field_options, :label => 'Field Options' %>
 	<%= f.input :required, :label => 'Required Field?' %>
 	<% if current_user.is_pub_admin? %>
-	  <%= f.input :publisher, :as => :hidden, :input_html => { :value => current_user.publisher.id } %>
+	  <%= f.input :publisher, :as => :hidden, :input_html => { :value => @form_item.publisher.nil? ? current_user.publisher.id : @form_item.publisher.id } %>
 	<% end %>  
   <% end %>
   <%= f.actions %>

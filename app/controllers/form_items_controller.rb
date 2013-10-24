@@ -18,6 +18,12 @@ class FormItemsController < ApplicationController
   
   def edit
     @form_item = FormItem.find(params[:id])
+    @questionnaire_ids = Array.new
+    FormItemsQuestionnaires.all(:conditions => {:form_item_id => @form_item.id}).collect{|fiq| @questionnaire_ids << fiq.questionnaire_id}
+    unless @questionnaire_ids.nil?
+      @questionnaires = Questionnaire.find(@questionnaire_ids)
+      flash[:notice] = "Note that #{@questionnaires.length} questionnaires are using this form item."
+    end
   end
   
   def create
@@ -38,7 +44,9 @@ class FormItemsController < ApplicationController
   
   def update
     @form_item = FormItem.find(params[:id])
-
+    unless params[:form_item][:publisher].nil?
+      params[:form_item][:publisher] = Publisher.find(params[:form_item][:publisher])
+    end 
     respond_to do |format|
       if @form_item.update_attributes(params[:form_item])
         format.html { redirect_to form_items_url, notice: 'FormItem was successfully updated.' }
