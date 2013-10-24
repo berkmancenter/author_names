@@ -19,6 +19,8 @@ class QuestionnairesController < ApplicationController
     unless profile.nil?
       profile.user_id = current_user.id
       profile.save
+      current_user.publisher_id = @questionnaire.publisher.id
+      current_user.save
     end 
     
     unless params[:gather_response].nil?
@@ -36,6 +38,8 @@ class QuestionnairesController < ApplicationController
   
   def create
     params[:questionnaire][:publisher] = Publisher.find_by_name(params[:questionnaire][:publisher])
+    params[:questionnaire][:form_item_ids] << FormItem.all(:conditions => {:required => true}).collect{|fi| fi.id}
+    params[:questionnaire][:form_item_ids].flatten!
     @questionnaire = Questionnaire.new(params[:questionnaire])
     
     respond_to do |format|
@@ -79,7 +83,7 @@ class QuestionnairesController < ApplicationController
       response = Response.create(value)
     end  
     
-    redirect_to questionnaires_url, notice: 'Response was successfully recorded.'
+    redirect_to root_url, notice: 'Response was successfully recorded.'
   end  
   
   def choose_authors
@@ -94,7 +98,22 @@ class QuestionnairesController < ApplicationController
       @authors = params[:emails]
     end  
     unless params[:more_emails].blank?
-      @authors << params[:more_emails].split(",")
+      emails = Array.new
+      emails << params[:more_emails].split(",").each{|e| e.strip!}
+      emails.flatten!
+      emails.each do |email|
+        author = Author.new(:email => email, :publisher_id => params[:publisher_id])
+        author.first_name = ""
+        author.last_name = ""
+        author.phone = ""
+        author.address_1 = ""
+        author.city = ""
+        author.state = ""
+        author.postal_code = ""
+        author.country = ""
+        author.save
+      end
+      @authors << emails
       @authors.flatten!
     end 
     
@@ -108,5 +127,6 @@ class QuestionnairesController < ApplicationController
         format.json { head :no_content }
       end
     end
+    
   end
 end

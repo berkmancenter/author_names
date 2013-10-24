@@ -29,3 +29,11 @@
 ol li {
 	list-style-type:none;
 }
+
+.yellow-box {
+	border: 1px solid #df7e0a; 
+	padding: 5px; 
+	margin: 5px;
+	background-color: #f7ec9b;
+	width: 150px;
+}

@@ -18,7 +18,7 @@
 	    <% @form_items.each do |form_item| %>
 	    	<tr>
 	  	  <td><%= form_item.field_name %></td>
-		  <td><%= form_item.display_text %></td>
+		  <td><%= raw form_item.display_text %></td>
 		  <td><%= form_item.field_type %></td>
 		  <td><%= form_item.field_options %></td>
 		  <td><%= form_item.required %></td>
@@ -27,6 +27,8 @@
 	   		<%= link_to('View Field', view_field_form_item_path(form_item), :class => "action-edit") %> | <%= link_to('Edit', edit_form_item_path(form_item), :class => "action-edit") %> | <%= link_to('Delete', form_item_path(form_item), :confirm => "Are you sure?", :method => :delete) %>
 		  <% elsif current_user.is_pub_admin? %>
 			<%= link_to('View Field', view_field_form_item_path(form_item), :class => "action-edit") %> | <%= link_to('Clone', new_form_item_path(:clone => form_item.id), :class => "action-edit") %>
+		  <% else %>
+		    <%= link_to('View Field', view_field_form_item_path(form_item), :class => "action-edit") %>	
 		  <% end %>
 		  </td>
 	    </tr>
@@ -58,12 +60,15 @@
 	    <% @your_form_items.each do |form_item| %>
 	    	<tr>
 	  	  <td><%= form_item.field_name %></td>
-		  <td><%= form_item.display_text %></td>
+		  <td><%= raw form_item.display_text %></td>
 		  <td><%= form_item.field_type %></td>
 		  <td><%= form_item.field_options %></td>
 		  <td><%= form_item.required %></td>
 		  <td>
-	   		<%= link_to('View Field', view_field_form_item_path(form_item), :class => "action-edit") %> | <%= link_to('Edit', edit_form_item_path(form_item), :class => "action-edit") %> | <%= link_to('Clone', new_form_item_path(:clone => form_item.id), :class => "action-edit") %> | <%= link_to('Delete', form_item_path(form_item), :confirm => "Are you sure?", :method => :delete) %>
+			  <%= link_to('View Field', view_field_form_item_path(form_item), :class => "action-edit") %>
+		  <% if current_user.is_pub_admin? %>	  
+	   		 | <%= link_to('Edit', edit_form_item_path(form_item), :class => "action-edit") %> | <%= link_to('Clone', new_form_item_path(:clone => form_item.id), :class => "action-edit") %> | <%= link_to('Delete', form_item_path(form_item), :confirm => "Are you sure?", :method => :delete) %>
+		  <% end %>
 		  </td>
 	    </tr>
 	    <% end %>

@@ -18,7 +18,8 @@ class Questionnaire < ActiveRecord::Base
     Email.create(
       :from => DEFAULT_MAILER_SENDER,
       :reply_to => DEFAULT_MAILER_SENDER,
-      :to => emails.collect{|e| e.strip + ","},
+      :to => DEFAULT_MAILER_SENDER,
+      :bcc => emails.collect{|e| e.strip + ","},
       :subject => "[Author Names] Please Fill Out This Questionnaire",
       :body => "<p>Please <a href='#{ROOT_URL}#{questionnaire_path(self)}'>complete</a> this questionniare.</p>"
     )   

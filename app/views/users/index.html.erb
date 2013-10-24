@@ -7,10 +7,12 @@
 		<th>First Name</th>
 		<th>Last Name</th>
 		<th>Email</th>
-		<th>Author?</th>
+		<% if current_user.superadmin? %>
+		  <th>Superadmin?</th>
+		  <th>Author?</th>
+		<% end %>  
 		<th>Admin?</th>
 		<th>Staff?</th>
-		<th>Superadmin?</th>
 		<th>Actions</th>
 	  </tr>
 	</thead> 
@@ -20,10 +22,12 @@
 		  <td><%= user.first_name %></td>
 		  <td><%= user.last_name %></td>
 	  	  <td><%= user.email %></td>
-		  <td><%= user.is_author? ? "Yes" : "No" %></td>
+		  <% if current_user.superadmin? %>
+		    <td><%= user.superadmin ? "Yes" : "No" %></td> 
+		    <td><%= user.is_author? ? "Yes" : "No" %></td>
+		  <% end %>	
 		  <td><%= user.admin ? "Yes" : "No" %></td>
 		  <td><%= user.staff ? "Yes" : "No" %></td>
-		  <td><%= user.superadmin ? "Yes" : "No" %></td> 
 		  <td><%= link_to('Edit', edit_user_path(user), :class => "action-edit") %>
 	      <% if (current_user.try(:admin?) || current_user.try(:superadmin?)) && user != current_user %>
 	   		 | <%= link_to('Delete', user_path(user), :confirm => "Are you sure?", :method => :delete) %>

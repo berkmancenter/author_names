@@ -1,5 +1,11 @@
 <% unless current_user.nil? %>
-  <h2>Hello, <%= current_user.email %>!</h2>
+  <h3>Hello, <%= current_user.email %>!</h3>
+  
+  <% if current_user.is_author? %>
+    <% if @author_profile.first_name == "" || @author_profile.last_name == "" || @author_profile.phone == "" %>
+      <p>You have not yet completed your author profile, please do so <%= link_to "here", edit_author_path(current_user.find_profile(current_user.publisher.id)) %>.</p>
+	  <% end %>
+  <% end %>	  
 <% else %>
-  <h2>Welcome!</h2>
+  <h3>Welcome!</h3>
 <% end %>    

@@ -5,7 +5,6 @@ class AuthorsController < ApplicationController
     elsif current_user.is_pub_admin? || current_user.is_pub_staff?
       @authors = Author.all(:conditions => {:publisher_id => current_user.publisher.id}) 
     end 
-    
   end
   
   def new

@@ -66,7 +66,8 @@ class User < ActiveRecord::Base
     if self.superadmin
       authors << Author.all
     elsif self.is_pub_admin? || self.is_pub_staff?
-      Author.all.collect{|author| author.publisher == self.publisher ? authors << author : ''} 
+      #Author.all.collect{|author| author.publisher == self.publisher ? authors << author : ''} 
+      authors = Author.all(:conditions => {:publisher_id => self.publisher.id})
     end
     return authors
   end
