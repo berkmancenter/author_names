@@ -67,7 +67,14 @@
 		  <td>
 			  <%= link_to('View Field', view_field_form_item_path(form_item), :class => "action-edit") %>
 		  <% if current_user.is_pub_admin? %>	  
-	   		 | <%= link_to('Edit', edit_form_item_path(form_item), :class => "action-edit") %> | <%= link_to('Clone', new_form_item_path(:clone => form_item.id), :class => "action-edit") %> | <%= link_to('Delete', form_item_path(form_item), :confirm => "Are you sure?", :method => :delete) %>
+	      <% 
+		    @questionnaire_ids = Array.new
+	        FormItemsQuestionnaires.all(:conditions => {:form_item_id => form_item.id}).collect{|fiq| @questionnaire_ids << fiq.questionnaire_id}
+	        unless @questionnaire_ids.nil?
+	          @questionnaires = Questionnaire.find(@questionnaire_ids)
+	        end
+		  %>
+	   		 | <%= link_to('Edit', edit_form_item_path(form_item), :class => "action-edit") %> | <%= link_to('Clone', new_form_item_path(:clone => form_item.id), :class => "action-edit") %> | <%= link_to('Delete', form_item_path(form_item), :confirm => "Note that #{@questionnaires.length} questionnaires are using this form item. Are you sure you want to delete it everywhere?", :method => :delete) %>
 		  <% end %>
 		  </td>
 	    </tr>
