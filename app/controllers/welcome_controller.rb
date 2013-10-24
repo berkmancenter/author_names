@@ -1,6 +1,9 @@
 class WelcomeController < ApplicationController
   
-  def index   
+  def index
+    if current_user && current_user.is_author?
+      @author_profile = current_user.authors.where(:publisher_id => current_user.publisher_id).first
+    end 
   end
   
   def author_home

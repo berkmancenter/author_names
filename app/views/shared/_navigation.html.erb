@@ -66,7 +66,7 @@
   	  <li><%= link_to "Sign Out", destroy_user_session_path, :method => :delete %></li>  
 	
 	<% else %>  
-	  <li><%= link_to "Edit Profile", edit_author_path(current_user.find_profile(3)) %></li>
+	  <li><%= link_to "Edit Profile", edit_author_path(current_user.find_profile(current_user.publisher.id)) %></li>
 	  <li><%= link_to "Edit Account", edit_user_registration_path %></li>
 	  <li><%= link_to "Sign Out", destroy_user_session_path, :method => :delete %></li>
 	<% end %>

@@ -19,6 +19,8 @@ class QuestionnairesController < ApplicationController
     unless profile.nil?
       profile.user_id = current_user.id
       profile.save
+      current_user.publisher_id = @questionnaire.publisher.id
+      current_user.save
     end 
     
     unless params[:gather_response].nil?
@@ -81,7 +83,7 @@ class QuestionnairesController < ApplicationController
       response = Response.create(value)
     end  
     
-    redirect_to questionnaires_url, notice: 'Response was successfully recorded.'
+    redirect_to root_url, notice: 'Response was successfully recorded.'
   end  
   
   def choose_authors

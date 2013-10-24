@@ -15,8 +15,9 @@
 	  	  <td><%= questionnaire.name %></td>
 		  <td>
 	      <% if current_user.try(:superadmin?) || current_user.is_pub_admin? %>
-	   		<%= link_to('Edit', edit_questionnaire_path(questionnaire), :class => "action-edit") %> | <%= link_to('Delete', questionnaire_path(questionnaire), :confirm => "Are you sure you want to delete this questionnaire? This action cannot be undone.", :method => :delete) %> | <%= link_to('View', questionnaire_path(questionnaire), :class => "action-edit") %>
+	   		<%= link_to('Edit', edit_questionnaire_path(questionnaire), :class => "action-edit") %> | <%= link_to('Delete', questionnaire_path(questionnaire), :confirm => "Are you sure you want to delete this questionnaire? This action cannot be undone.", :method => :delete) %> | 
 	  	  <% end %>
+		    <%= link_to('View', questionnaire_path(questionnaire), :class => "action-edit") %>
 		  </td>
 		  <td><%= link_to('Send Via Email', choose_authors_questionnaires_path(:questionnaire_id => questionnaire), :class => "action-edit") %></td>
 	    </tr>
