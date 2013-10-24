@@ -37,3 +37,12 @@ ol li {
 	background-color: #f7ec9b;
 	width: 150px;
 }
+
+form.formtastic fieldset > ol > li p.inline-errors {
+  color: #b94a48;	
+  padding: 5px;
+  background-color: pink;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+  display: table;
+}
+
