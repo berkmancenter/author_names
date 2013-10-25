@@ -1,12 +1,12 @@
 class Publisher < ActiveRecord::Base
-  attr_accessible :name, :contact_name, :phone, :email, :address_1, :city, :state, :postal_code, :country, :website
+  attr_accessible :name, :contact_name, :phone, :email, :address_1, :address_2, :city, :state, :postal_code, :country, :website
   
   has_many :users
   has_many :questionnaires
   has_many :authors
   has_many :form_items
   
-  validates_presence_of :name, :contact_name, :phone, :email
+  validates_presence_of :name, :contact_name, :phone, :email, :address_1, :city, :state, :postal_code, :country
   
   def to_s
     self.name
