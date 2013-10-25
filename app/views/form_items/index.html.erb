@@ -37,7 +37,8 @@
 	</table>
   
   <% if current_user.try(:superadmin?) %>
-    <%= link_to("Add New Form Item", new_form_item_path ) %>
+    <%= link_to("Add New Form Item", new_form_item_path ) %> <br />
+	<%= link_to("Batch Upload", batch_upload_form_items_path ) %>
   <% end %>
 </div>
 <% end %>
