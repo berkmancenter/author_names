@@ -9,6 +9,7 @@ AuthorNames::Application.routes.draw do
   resources :responses do
     collection do
       get 'author_response'
+      get 'export'
     end
   end  
 

@@ -6,6 +6,7 @@
 	  <tr>
 		<th>Name</th>
 		<th>Actions</th>
+		<th>Submit for Author</th>
 		<th>Send</th>
 	  </tr>
 	</thead> 
@@ -18,6 +19,12 @@
 	   		<%= link_to('Edit', edit_questionnaire_path(questionnaire), :class => "action-edit") %> | <%= link_to('Delete', questionnaire_path(questionnaire), :confirm => "Are you sure you want to delete this questionnaire? This action cannot be undone.", :method => :delete) %> | 
 	  	  <% end %>
 		    <%= link_to('View', questionnaire_path(questionnaire), :class => "action-edit") %>
+		  </td>
+		  <td>
+			  <%= form_tag questionnaire_path(questionnaire), :method => :get do %>
+			    <%= select_tag :author_id, options_from_collection_for_select(current_user.my_authors, "id", "email") %>
+			    <%= submit_tag "Go" %>
+			  <% end %>
 		  </td>
 		  <td><%= link_to('Send Via Email', choose_authors_questionnaires_path(:questionnaire_id => questionnaire), :class => "action-edit") %></td>
 	    </tr>

@@ -46,3 +46,15 @@ form.formtastic fieldset > ol > li p.inline-errors {
   display: table;
 }
 
+#welcome-left {
+	float: left;
+	width: 45%;
+}
+
+#welcome-right {
+	float: right;
+	width: 45%;
+	
+}
+
+
