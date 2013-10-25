@@ -16,9 +16,9 @@ class Questionnaire < ActiveRecord::Base
   def send_questionnaire_email(emails)
     # send to selected authors with link to questionnaire
     Email.create(
-      :from => DEFAULT_MAILER_SENDER,
-      :reply_to => DEFAULT_MAILER_SENDER,
-      :to => DEFAULT_MAILER_SENDER,
+      :from => self.publisher.email,
+      :reply_to => self.publisher.email,
+      :to => self.publisher.email,
       :bcc => emails.collect{|e| e.strip + ","},
       :subject => "[Author Names] Please Fill Out This Questionnaire",
       :body => "<p>Please <a href='#{ROOT_URL}#{questionnaire_path(self)}'>complete</a> this questionniare.</p>"
