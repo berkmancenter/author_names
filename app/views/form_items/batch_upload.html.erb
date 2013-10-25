@@ -1,0 +1,34 @@
+<div class="asset_upload">
+  <h2>Batch Upload</h2>	
+
+    <h3>Import form items via CSV</h3>
+
+    <p>
+      Use the form below to import form items via a CSV (comma separated value) file.
+    </p>
+    <p>
+      These are the fields to be populated:
+	  <ul>
+		<li>Field Name (no spaces or special characters)</li>
+		<li>Display Text</li>
+		<li>Field Type (options are: Checkbox, Dropdown, File, Radio, String, Textarea, Date, Label)</li>
+		<li>Field Options</li>
+		<li>Required</li>
+	  </ul>
+    </p>
+
+  <p>
+    <b><i>Format example:</i></b><br />
+
+    <code>
+      book_title,Title of Your Book,String,,true<br />
+      book_description,Description of the Book,Textarea,,false<br />
+	  book_category,Category of the Book,Radio,Fiction,Non-Fiction,false<br />
+    </code>
+
+</p>
+  <%= form_tag import_form_items_path, :multipart => true do -%>
+    <%= file_field 'upload', 'datafile' %></p>
+	<%= submit_tag "Upload", :disable_with => 'Uploading...' %>
+  <% end -%>
+</div>	

@@ -1,3 +1,4 @@
+require 'csv'
 class FormItemsController < ApplicationController
   
   def index
@@ -74,4 +75,24 @@ class FormItemsController < ApplicationController
   def view_field
     @form_item = FormItem.find(params[:id])
   end  
+  
+  def import
+    @file = params[:upload][:datafile] unless params[:upload].blank?
+    CSV.parse(@file.read).each do |cell|
+        
+        asset={}
+        
+        asset[:field_name] = cell[0]
+        asset[:display_text] = cell[1]
+        asset[:field_type] = cell[2]
+        asset[:field_options] = cell[3]
+        asset[:required] = cell[4]
+        
+        @form_item = FormItem.new
+ 
+        @form_item.attributes = asset
+        @form_item.save
+    end
+    redirect_to form_items_path
+  end 
 end

@@ -28,6 +28,10 @@ AuthorNames::Application.routes.draw do
     member do
       get 'view_field'
     end
+    collection do
+      get 'batch_upload'
+      post 'import'
+    end
   end  
 
   resources :libraries
