@@ -21,7 +21,12 @@ class FormItemsController < ApplicationController
     FormItemsQuestionnaires.all(:conditions => {:form_item_id => @form_item.id}).collect{|fiq| @questionnaire_ids << fiq.questionnaire_id}
     unless @questionnaire_ids.nil?
       @questionnaires = Questionnaire.find(@questionnaire_ids)
-      flash[:notice] = "Note that #{@questionnaires.length} questionnaires are using this form item."
+      @q_links = ""
+      @questionnaires.each do |q|
+        @q_links = @q_links + "<a href='#{ROOT_URL}#{questionnaire_path(q)}'>#{q.name}</a><br />"
+      end  
+      flash[:notice] = "<p>Note that #{@questionnaires.length} questionnaires are using this form item.</p>
+                        <p>#{@q_links}</p>"
     end
   end
   

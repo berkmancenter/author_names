@@ -91,4 +91,25 @@ namespace :authornames do
   task :run_all => [:default_superadmin, :default_libadmin, :default_libstaff, :default_pubadmin, :default_pubstaff, :default_libraries, :default_publishers, :default_author] do
     puts "Created user accounts, Libraries, Publishers!"
   end
+  
+  namespace :cron_task do
+    desc "Send emails that are queued up"
+    task :send_queued_emails => :environment do
+      emails = Email.to_send
+      emails.each do |email|
+        begin
+          Notification.send_queued(email).deliver
+          email.message_sent = true
+          email.date_sent = Time.now
+          email.save
+        rescue Exception => e
+          #FAIL!
+          email.error_message = e.inspect[0..4999]
+          email.to_send = false
+          email.save
+        end
+      end  
+      puts "Successfully sent queued emails!" 
+    end
+  end
 end    

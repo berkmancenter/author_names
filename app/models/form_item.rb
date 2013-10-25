@@ -4,7 +4,9 @@ class FormItem < ActiveRecord::Base
   has_and_belongs_to_many :questionnaires
   belongs_to :publisher
   
+  validates_presence_of :field_name, :field_type
   validates_uniqueness_of :field_name
+  validates_format_of :field_name, :with => /^\S+\w{2,32}\S{1,}/, :message => "cannot contain spaces or special characters"
   
   FIELD_TYPES = ['Checkbox', 'Dropdown', 'File', 'Radio', 'String', 'Textarea', 'Date', 'Label' ]
   FIELD_OPTIONS = ['']
