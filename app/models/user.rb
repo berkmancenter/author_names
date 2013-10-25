@@ -77,6 +77,7 @@ class User < ActiveRecord::Base
   end
   
   def find_profile(publisher)
+    p "in here"
     Author.first(:conditions => {:user_id => self.id, :publisher_id => publisher})
   end  
 end

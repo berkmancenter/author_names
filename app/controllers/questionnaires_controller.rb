@@ -13,12 +13,18 @@ class QuestionnairesController < ApplicationController
   
   def show
     @questionnaire = Questionnaire.find(params[:id])
+    unless params[:author_id].nil?
+      @user = Author.find(params[:author_id]).user_id
+    end  
     
     profile = Author.first(:conditions => {:email => current_user.email, :publisher_id => @questionnaire.publisher.id, :user_id => nil})
-    
+    p "profile"
+    p profile
     unless profile.nil?
+      p "in hereeeee"
       profile.user_id = current_user.id
       profile.save
+      p profile.user_id
       current_user.publisher_id = @questionnaire.publisher.id
       current_user.save
     end 
