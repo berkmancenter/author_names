@@ -1,6 +1,4 @@
-@import "bootstrap";
 body { padding-top: 100px; }
-@import "bootstrap-responsive";
 
 .navbar-inner .container {
 	width: 990px;
@@ -40,3 +38,28 @@ body { padding-top: 100px; }
 input, textarea {
   width: auto;
 }
+
+.label, .badge {
+  display: block;
+  font-size: 14px;
+  font-weight: bold;
+  color: black;
+  text-shadow: none;
+  background-color: #fff;
+}
+
+label {
+  font-weight: bold;
+}
+
+.choice label {
+  font-weight: normal;	
+}
+
+.choices {
+  margin-top: 15px;
+  margin-bottom: 15px;
+}
+
+
+
