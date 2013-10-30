@@ -4,7 +4,7 @@
 	<%= f.input :display_text, :as => :ckeditor, :label => 'Display Text' %>
 	<%= f.input :field_type, :as => :radio, :collection => FormItem::FIELD_TYPES, :label => 'Field Type' %>
 	<%= f.input :field_options, :label => 'Field Options' %>
-	<%= f.input :required, :label => 'Required Field?' %>
+	<%= f.input :required, :label => ' Required Field?', :hint => "If required, this field will automatically appear on all questionnaires." %>
 	<% if current_user.is_pub_admin? %>
 	  <%= f.input :publisher, :as => :hidden, :input_html => { :value => @form_item.publisher.nil? ? current_user.publisher.id : @form_item.publisher.id } %>
 	<% end %>  
