@@ -18,13 +18,9 @@ class QuestionnairesController < ApplicationController
     end  
     
     profile = Author.first(:conditions => {:email => current_user.email, :publisher_id => @questionnaire.publisher.id, :user_id => nil})
-    p "profile"
-    p profile
     unless profile.nil?
-      p "in hereeeee"
       profile.user_id = current_user.id
       profile.save
-      p profile.user_id
       current_user.publisher_id = @questionnaire.publisher.id
       current_user.save
     end 
@@ -32,6 +28,9 @@ class QuestionnairesController < ApplicationController
     unless params[:gather_response].nil?
       redirect_to gather_response_questionnaires_url(:answers => params[:gather_response])
     end  
+    unless params[:sort_items].nil?
+      redirect_to sort_items_questionnaires_url(:sort_items => params[:sort_items], :id => params[:id])
+    end
   end
   
   def new
@@ -133,6 +132,27 @@ class QuestionnairesController < ApplicationController
         format.json { head :no_content }
       end
     end
+  end
+  
+  def sort_items
+    @sorted_hash = params[:sort_items]
     
+    @sorted_hash.each_key do |field_name|
+      item = FormItem.first(:conditions => {:field_name => field_name})
+      form_item_q = FormItemsQuestionnaires.first(:conditions => {:form_item_id => item.id, :questionnaire_id => params[:id] })
+
+      FormItemsQuestionnaires.update_all(["position = ?", @sorted_hash[field_name].to_i], ["form_item_id = ? AND questionnaire_id = ?", item.id, params[:id].to_i])
+
+      form_item_q.save
+    end
+    
+    
+    
+    
+    
+    
+    
+    
+    redirect_to questionnaire_url(params[:id]), notice: 'Items sorted.'
   end
 end

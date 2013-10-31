@@ -15,7 +15,7 @@
 		    <p><%= raw item.display_text %></p>
 		  <% else %>
 		    <%= f.semantic_fields_for "#{item.field_name}", :html => { :method => :get } do |fi| %>
-			  <%= fi.input :response_text, :as => item.formtastic_field_map, :label => "#{item.display_text}", :collection => item.field_options.nil? ? '' : item.field_options.split(',') %>
+			  <%= fi.input :response_text, :as => item.formtastic_field_map, :label => item.display_text.html_safe, :collection => item.field_options.nil? ? '' : item.field_options.split(',') %>
 			  <%= fi.input :form_item_id, :as => :hidden, :value => item.id %>
 			  <%= fi.input :questionnaire_id, :as => :hidden, :value => @questionnaire.id %>
 	  	      <% if current_user.try(:admin?) && !@user.nil? %>
@@ -33,3 +33,19 @@
 	  
 	<% end %>
 </div>	
+
+<% if current_user.is_pub_admin? || current_user.is_pub_staff? %>
+<div>
+	<h3>Sort Order</h3>
+	<%= semantic_form_for :sort_items, :html => { :method => :get } do |f| %>
+      <% @questionnaire.form_items.each do |item| %>
+	    <%= f.inputs do %>
+	      Position <%= FormItemsQuestionnaires.first(:conditions => {:form_item_id => item.id, :questionnaire_id => @questionnaire.id }).position %> - <%= f.input item.field_name, :label => item.display_text.html_safe %>
+		<% end %> 
+      <% end %>
+  	  <%= f.actions do %>
+  	    <%= f.action :submit, :as => :button, :label => 'Submit Item Order ' %>
+  	  <% end %> 
+	<% end %>
+</div>	
+<% end %>
