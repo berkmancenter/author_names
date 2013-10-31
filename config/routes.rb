@@ -19,7 +19,7 @@ AuthorNames::Application.routes.draw do
       get 'gather_response'
       get 'send_questionnaire'
       get 'choose_authors'
-      get 'submit_positions'
+      get 'sort_items'
     end
   end  
 
