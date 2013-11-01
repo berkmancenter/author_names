@@ -49,9 +49,9 @@ ActiveRecord::Schema.define(:version => 20131024173630) do
     t.string   "field_type",                       :null => false
     t.string   "field_options"
     t.boolean  "required",      :default => false
+    t.integer  "publisher_id"
     t.datetime "created_at",                       :null => false
     t.datetime "updated_at",                       :null => false
-    t.integer  "publisher_id"
   end
 
   add_index "form_items", ["display_text"], :name => "index_form_items_on_display_text"
@@ -62,6 +62,7 @@ ActiveRecord::Schema.define(:version => 20131024173630) do
   create_table "form_items_questionnaires", :id => false, :force => true do |t|
     t.integer "form_item_id"
     t.integer "questionnaire_id"
+    t.integer "form_item_position", :default => 0, :null => false
   end
 
   create_table "libraries", :force => true do |t|
