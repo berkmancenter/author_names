@@ -6,6 +6,7 @@ class CreateFormItems < ActiveRecord::Migration
       t.string :field_type, :null => false
       t.string :field_options
       t.boolean :required, :default => false
+      t.references :publisher
       t.timestamps
     end
     
