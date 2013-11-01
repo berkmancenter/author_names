@@ -40,7 +40,7 @@
 	<%= semantic_form_for :sort_items, :html => { :method => :get } do |f| %>
       <% @questionnaire.form_items.each do |item| %>
 	    <%= f.inputs do %>
-	      Position <%= FormItemsQuestionnaires.first(:conditions => {:form_item_id => item.id, :questionnaire_id => @questionnaire.id }).position %> - <%= f.input item.field_name, :label => item.display_text.html_safe %>
+	      Position <%= FormItemsQuestionnaires.first(:conditions => {:form_item_id => item.id, :questionnaire_id => @questionnaire.id }).form_item_position %> - <%= f.input item.field_name, :label => item.display_text.html_safe %>
 		<% end %> 
       <% end %>
   	  <%= f.actions do %>
