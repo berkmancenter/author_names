@@ -141,7 +141,7 @@ class QuestionnairesController < ApplicationController
       item = FormItem.first(:conditions => {:field_name => field_name})
       form_item_q = FormItemsQuestionnaires.first(:conditions => {:form_item_id => item.id, :questionnaire_id => params[:id] })
 
-      FormItemsQuestionnaires.update_all(["position = ?", @sorted_hash[field_name].to_i], ["form_item_id = ? AND questionnaire_id = ?", item.id, params[:id].to_i])
+      FormItemsQuestionnaires.update_all(["form_item_position = ?", @sorted_hash[field_name].to_i], ["form_item_id = ? AND questionnaire_id = ?", item.id, params[:id].to_i])
 
       form_item_q.save
     end

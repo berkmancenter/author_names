@@ -3,7 +3,7 @@ class Questionnaire < ActiveRecord::Base
   include Rails.application.routes.url_helpers
   attr_accessible :name, :description, :version, :publisher, :form_item_ids
   
-  has_and_belongs_to_many :form_items, :order => "position"
+  has_and_belongs_to_many :form_items, :order => "form_item_position"
   belongs_to :publisher
   has_many :responses
   
