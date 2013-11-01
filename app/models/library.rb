@@ -1,5 +1,5 @@
 class Library < ActiveRecord::Base
-  attr_accessible :name, :contact_name, :phone, :email, :address_1, :address_2, :city, :state, :postal_code, :country, :website
+  attr_accessible :name, :contact_name, :phone, :email, :address_1, :address_2, :city, :state, :postal_code, :country, :website, :description
   
   has_many :users
   
