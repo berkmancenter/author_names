@@ -16,7 +16,7 @@ namespace :authornames do
   desc "Add the default libraries"
   task :default_libraries => :environment do
     ['Widener', 'Houghton', 'Fine Arts'].each do |library|
-      library = Library.new(:name => library, :contact_name => "Default Contact", :phone => "XXX-XXX-XXXX", :email => "contact@example.com", :address_1 => "1 Smart Lane", :city => "Boston", :state => "MA", :postal_code => "02111", :country => "US")
+      library = Library.new(:name => library, :contact_name => "Default Contact", :phone => "XXX-XXX-XXXX", :email => "contact@example.com", :address_1 => "1 Smart Lane", :city => "Boston", :state => "MA", :postal_code => "02111", :country => "United States")
       library.save
     end
     puts "Libraries Added!"
@@ -25,7 +25,7 @@ namespace :authornames do
   desc "Add the default publishers"
   task :default_publishers => :environment do
     ['Tupelo', 'Harvard', 'MIT'].each do |publisher|
-      publisher = Publisher.new(:name => publisher, :contact_name => "Default Contact", :phone => "XXX-XXX-XXXX", :email => "contact@example.com", :address_1 => "1 Smart Lane", :city => "Boston", :state => "MA", :postal_code => "02111", :country => "US")
+      publisher = Publisher.new(:name => publisher, :contact_name => "Default Contact", :phone => "XXX-XXX-XXXX", :email => "contact@example.com", :address_1 => "1 Smart Lane", :city => "Boston", :state => "MA", :postal_code => "02111", :country => "United States")
       publisher.save
     end
     puts "Publishers Added!"
