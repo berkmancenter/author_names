@@ -146,13 +146,6 @@ class QuestionnairesController < ApplicationController
       form_item_q.save
     end
     
-    
-    
-    
-    
-    
-    
-    
     redirect_to questionnaire_url(params[:id]), notice: 'Items sorted.'
   end
 end
