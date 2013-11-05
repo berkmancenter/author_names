@@ -28,9 +28,7 @@ class QuestionnairesController < ApplicationController
     unless params[:gather_response].nil?
       redirect_to gather_response_questionnaires_url(:answers => params[:gather_response])
     end  
-    unless params[:sort_items].nil?
-      redirect_to sort_items_questionnaires_url(:sort_items => params[:sort_items], :id => params[:id])
-    end
+    
   end
   
   def new
@@ -39,6 +37,9 @@ class QuestionnairesController < ApplicationController
   
   def edit
     @questionnaire = Questionnaire.find(params[:id])
+    unless params[:sort_items].nil?
+      redirect_to sort_items_questionnaires_url(:sort_items => params[:sort_items], :id => params[:id])
+    end
   end
   
   def create
@@ -69,7 +70,7 @@ class QuestionnairesController < ApplicationController
     
     respond_to do |format|
       if @questionnaire.update_attributes(params[:questionnaire])
-        format.html { redirect_to questionnaires_url, notice: 'Questionnaire was successfully updated.' }
+        format.html { redirect_to edit_questionnaire_url(@questionnaire.id), notice: 'Questionnaire was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -151,6 +152,6 @@ class QuestionnairesController < ApplicationController
       form_item_q.save
     end
     
-    redirect_to questionnaire_url(params[:id]), notice: 'Items sorted.'
+    redirect_to edit_questionnaire_url(params[:id]), notice: 'Items sorted.'
   end
 end
