@@ -12,7 +12,6 @@
  *= require jquery.ui.all
  *= require bootstrap
  *= require jquery-tablesorter/theme.dark
- *= require jquery-tablesorter/addons/pager/jquery.tablesorter.pager
  *= require_tree .
  */
 
@@ -55,6 +54,21 @@ form.formtastic fieldset > ol > li p.inline-errors {
 	float: right;
 	width: 45%;
 	
+}
+
+th {     
+    cursor: pointer; 
+    font-weight: bold;
+}
+
+.pager {
+	position: relative;
+	top: 0px;
+	padding-bottom: 20px;
+}
+
+.widget {
+	padding-bottom: 50px;
 }
 
 

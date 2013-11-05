@@ -1,8 +1,13 @@
 <h1>Form Items</h1>
 
 <% unless @form_items.nil? %>
-<div>
+<div class="widget">
 	<h3>Global</h3>
+	
+    <% if current_user.try(:superadmin?) %>
+      <p><%= link_to("Add New Form Item", new_form_item_path ) %> <br />
+  	  <%= link_to("Batch Upload", batch_upload_form_items_path ) %></p>
+    <% end %>
   	<table id="form_items-table" class="table table-condensed tablesorter">
 	<thead>
 	  <tr>
@@ -35,18 +40,17 @@
 	    <% end %>
 	</tbody>	
 	</table>
-  
-  <% if current_user.try(:superadmin?) %>
-    <%= link_to("Add New Form Item", new_form_item_path ) %> <br />
-	<%= link_to("Batch Upload", batch_upload_form_items_path ) %>
-  <% end %>
+	<%= render :partial => '/shared/tablesorter_pager', :locals => {:pager_id => "form_items-table" } %>
 </div>
 <% end %>
 
 <% unless @your_form_items.nil? %>
 <div>
 	<h3>Ours</h3>
-  	<table id="form_items-table" class="table table-condensed tablesorter">
+    <% if current_user.is_pub_admin? %>
+      <p><%= link_to("Add New Form Item", new_form_item_path ) %></p>
+    <% end %>
+  	<table id="form_items_ours-table" class="table table-condensed tablesorter">
 	<thead>
 	  <tr>
 		<th>Field Name</th>
@@ -82,9 +86,7 @@
 	    <% end %>
 	</tbody>	
 	</table>
-  
-  <% if current_user.is_pub_admin? %>
-    <%= link_to("Add New Form Item", new_form_item_path ) %>
-  <% end %>
+	
+	<%= render :partial => '/shared/tablesorter_pager', :locals => {:pager_id => "form_items_ours-table" } %>
 </div>
 <% end %>

@@ -1,6 +1,9 @@
 <h1>Questionnaires</h1>
 
-<div>
+<div class="widget">
+    <% if current_user.try(:superadmin?) || current_user.is_pub_admin? %>
+      <p><%= link_to("Add New Questionnaire", new_questionnaire_path ) %></p>
+    <% end %>
   	<table id="questionnaires-table" class="table table-condensed tablesorter">
 	<thead>
 	  <tr>
@@ -31,8 +34,7 @@
 	    <% end %>
 	</tbody>	
 	</table>
+	<%= render :partial => '/shared/tablesorter_pager', :locals => {:pager_id => "questionnaires-table" } %>
   
-  <% if current_user.try(:superadmin?) || current_user.is_pub_admin? %>
-    <%= link_to("Add New Questionnaire", new_questionnaire_path ) %>
-  <% end %>
+  
 </div>

@@ -6,8 +6,14 @@
 	  <%= f.input :username, :input_html => { :size => 30 } %>
 	  <%= f.input :email, :input_html => { :size => 30 } %>
 	<% end %>
-	<%= f.input :library, :as => :radio, :label => "Assign Library: " %>
-	<%= f.input :publisher, :as => :radio, :label => "Assign Publisher: " %>
+	<% if current_user.try(:superadmin?) %>
+      <%= f.input :library, :as => :radio, :label => "Assign Library: " %>
+      <%= f.input :publisher, :as => :radio, :label => "Assign Publisher: " %><br />
+	<% elsif current_user.is_lib_admin? %>  
+	  <p><%= check_box_tag :assign_library, "", checked = @user.library == current_user.library ? true : false %> Assign to <%= current_user.library.name %></p>
+	<% elsif current_user.is_pub_admin? %>
+	  <p><%= check_box_tag :assign_publisher, "", checked = @user.publisher == current_user.publisher ? true : false %> Assign to <%= current_user.publisher.name %></p>
+	<% end %>  
 	<br />
 	<% if current_user.try(:superadmin?) || current_user.try(:admin?) %>
 	  <span id='admin_box'>

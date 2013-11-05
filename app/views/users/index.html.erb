@@ -1,7 +1,60 @@
 <h1>Users</h1>
 
-<div>
+<div class="widget">
   	<table id="users-table" class="table table-condensed tablesorter">
+	<thead>
+	  <tr>
+		<th>First Name</th>
+		<th>Last Name</th>
+		<% if current_user.superadmin? %>
+		  <th>Affiliation</th>
+		<% end %>
+		<th>Email</th>
+		<% if current_user.superadmin? %>
+		  <th>Superadmin?</th>
+		  <th>Author?</th>
+		<% end %>  
+		<th>Admin?</th>
+		<th>Staff?</th>
+		<th>Actions</th>
+	  </tr>
+	</thead> 
+	<tbody>
+	    <% @users.each do |user| %>	
+	    <tr>
+		  <td><%= user.first_name %></td>
+		  <td><%= user.last_name %></td>
+  		  <% if current_user.superadmin? %>
+		    <% if !user.publisher.nil? %>
+			  <td><%= user.publisher.name %></td> 
+		    <% elsif !user.library.nil? %>
+		      <td><%= user.library.name %></td>
+		    <% else %>
+		      <td>Unaffiliated</td>		
+			<% end %>  
+  		  <% end %>
+	  	  <td><%= user.email %></td>
+		  <% if current_user.superadmin? %>
+		    <td><%= user.superadmin ? "Yes" : "No" %></td> 
+		    <td><%= user.is_author? ? "Yes" : "No" %></td>
+		  <% end %>	
+		  <td><%= user.admin ? "Yes" : "No" %></td>
+		  <td><%= user.staff ? "Yes" : "No" %></td>
+		  <td><%= link_to('Edit', edit_user_path(user), :class => "action-edit") %>
+	      <% if (current_user.try(:admin?) || current_user.try(:superadmin?)) && user != current_user %>
+	   		 | <%= link_to('Delete', user_path(user), :confirm => "Are you sure?", :method => :delete) %>
+	  	  <% end %>
+		  </td>
+	    </tr>
+	    <% end %>
+	</tbody>	
+	</table>
+	<%= render :partial => '/shared/tablesorter_pager', :locals => {:pager_id => "users-table" } %>
+</div>
+
+<div class="widget">
+	<h3>Unaffiliated Users</h3>
+  	<table id="unaffiliated-users-table" class="table table-condensed tablesorter">
 	<thead>
 	  <tr>
 		<th>First Name</th>
@@ -17,7 +70,7 @@
 	  </tr>
 	</thead> 
 	<tbody>
-	    <% @users.each do |user| %>	
+	    <% @unaffiliated.each do |user| %>	
 	    <tr>
 		  <td><%= user.first_name %></td>
 		  <td><%= user.last_name %></td>
@@ -37,5 +90,5 @@
 	    <% end %>
 	</tbody>	
 	</table>
+	<%= render :partial => '/shared/tablesorter_pager', :locals => {:pager_id => "unaffiliated-users-table" } %>
 </div>
-<%= will_paginate @users %>

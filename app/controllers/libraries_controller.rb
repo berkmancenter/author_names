@@ -2,7 +2,7 @@ class LibrariesController < ApplicationController
   before_filter :authenticate_superadmin!, :except => [:show, :edit, :update]
   
   def index
-    @libraries = Library.paginate(:page => params[:page], :per_page => 10)
+    @libraries = Library.all
   end
   
   def new

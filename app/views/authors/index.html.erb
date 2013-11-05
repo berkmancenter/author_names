@@ -1,7 +1,11 @@
 <h1>Author Profiles</h1>
 
 <h3>Existing Profiles</h3>
-<div>
+<div class="widget">
+    <% if (current_user.try(:admin?) || current_user.try(:superadmin?)) %>
+      <p><%= link_to("Add New Single Profile", new_author_path ) %></p>
+    <% end %>
+	
   	<table id="authors-table" class="table table-condensed tablesorter">
 	<thead>
 	  <tr>
@@ -27,10 +31,8 @@
 	    <% end %>
 	</tbody>	
 	</table>
-  
-  <% if (current_user.try(:admin?) || current_user.try(:superadmin?)) %>
-    <%= link_to("Add New Single Profile", new_author_path ) %>
-  <% end %>
+	<%= render :partial => '/shared/tablesorter_pager', :locals => {:pager_id => "authors-table" } %>
+	
 </div>
 
 <% if current_user.is_pub_admin? %>

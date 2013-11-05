@@ -1,6 +1,9 @@
 <h1>Libraries</h1>
 
-<div>
+<div class="widget">
+    <% if current_user.try(:superadmin?) %>
+      <p><%= link_to("Add New Library", new_library_path ) %></p>
+    <% end %>
   	<table id="libraries-table" class="table table-condensed tablesorter">
 	<thead>
 	  <tr>
@@ -21,9 +24,5 @@
 	    <% end %>
 	</tbody>	
 	</table>
-  
-  <% if current_user.try(:superadmin?) %>
-    <%= link_to("Add New Library", new_library_path ) %>
-  <% end %>
+	<%= render :partial => '/shared/tablesorter_pager', :locals => {:pager_id => "libraries-table" } %>
 </div>
-<%= will_paginate @libraries %>
