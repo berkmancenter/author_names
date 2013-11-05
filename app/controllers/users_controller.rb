@@ -3,7 +3,7 @@ class UsersController < ApplicationController
   
   def index
     if current_user.superadmin?
-      @users = User.order('email').paginate(:page => params[:page], :per_page => 50)
+      @users = User.all
     elsif current_user.is_lib_admin?
       @users = current_user.library.users.order('email').paginate(:page => params[:page], :per_page => 50) 
     elsif current_user.is_pub_admin?

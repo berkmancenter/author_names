@@ -1,11 +1,14 @@
 <h1>Users</h1>
 
-<div>
+<div class="widget">
   	<table id="users-table" class="table table-condensed tablesorter">
 	<thead>
 	  <tr>
 		<th>First Name</th>
 		<th>Last Name</th>
+		<% if current_user.superadmin? %>
+		  <th>Affiliation</th>
+		<% end %>
 		<th>Email</th>
 		<% if current_user.superadmin? %>
 		  <th>Superadmin?</th>
@@ -21,6 +24,15 @@
 	    <tr>
 		  <td><%= user.first_name %></td>
 		  <td><%= user.last_name %></td>
+  		  <% if current_user.superadmin? %>
+		    <% if !user.publisher.nil? %>
+			  <td><%= user.publisher.name %></td> 
+		    <% elsif !user.library.nil? %>
+		      <td><%= user.library.name %></td>
+		    <% else %>
+		      <td>Unaffiliated</td>		
+			<% end %>  
+  		  <% end %>
 	  	  <td><%= user.email %></td>
 		  <% if current_user.superadmin? %>
 		    <td><%= user.superadmin ? "Yes" : "No" %></td> 
@@ -37,12 +49,12 @@
 	    <% end %>
 	</tbody>	
 	</table>
+	<%= render :partial => '/shared/tablesorter_pager', :locals => {:pager_id => "users-table" } %>
 </div>
-<%= will_paginate @users %>
 
-<div>
+<div class="widget">
 	<h3>Unaffiliated Users</h3>
-  	<table id="users-table" class="table table-condensed tablesorter">
+  	<table id="unaffiliated-users-table" class="table table-condensed tablesorter">
 	<thead>
 	  <tr>
 		<th>First Name</th>
@@ -78,4 +90,5 @@
 	    <% end %>
 	</tbody>	
 	</table>
+	<%= render :partial => '/shared/tablesorter_pager', :locals => {:pager_id => "unaffiliated-users-table" } %>
 </div>

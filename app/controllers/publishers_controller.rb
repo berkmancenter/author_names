@@ -2,7 +2,7 @@ class PublishersController < ApplicationController
   before_filter :authenticate_superadmin!, :except => [:show, :edit, :update]
   
   def index
-    @publishers = Publisher.paginate(:page => params[:page], :per_page => 10)
+    @publishers = Publisher.all
   end
   
   def new

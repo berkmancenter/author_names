@@ -15,7 +15,46 @@
 //= require jquery-ui
 //= require jquery.ui.datepicker
 //= require jquery-tablesorter
+//= require jquery-tablesorter/jquery.metadata
+//= require jquery-tablesorter/jquery.tablesorter
+//= require jquery-tablesorter/jquery.tablesorter.widgets
+//= require jquery-tablesorter/addons/pager/jquery.tablesorter.pager
 //= require bootstrap
 //= require ckeditor/init
 //= require_tree .
 
+$(document).ready(function(){	
+  $("#users-table")
+  	.tablesorter()
+    .tablesorterPager({container: $("#pager-users-table")})
+  ;
+  $("#unaffiliated-users-table")
+  	.tablesorter()
+    .tablesorterPager({container: $("#pager-unaffiliated-users-table")})
+  ;
+  $("#publishers-table")
+  	.tablesorter()
+    .tablesorterPager({container: $("#pager-publishers-table")})
+  ;
+  $("#libraries-table")
+  	.tablesorter()
+    .tablesorterPager({container: $("#pager-libraries-table")})
+  ;
+  $("#authors-table")
+  	.tablesorter()
+    .tablesorterPager({container: $("#pager-authors-table")})
+  ;
+  $("#form_items-table")
+  	.tablesorter()
+    .tablesorterPager({container: $("#pager-form_items-table")})
+  ;
+  $("#form_items_ours-table")
+  	.tablesorter()
+    .tablesorterPager({container: $("#pager-form_items_ours-table")})
+  ;
+  $("#questionnaires-table")
+  	.tablesorter()
+    .tablesorterPager({container: $("#pager-questionnaires-table")})
+  ;
+  
+});

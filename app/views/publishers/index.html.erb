@@ -1,6 +1,9 @@
 <h1>Publishers</h1>
 
-<div>
+<div class="widget">
+    <% if current_user.try(:superadmin?) %>
+      <p><%= link_to("Add New Publisher", new_publisher_path ) %></p>
+    <% end %>
   	<table id="publishers-table" class="table table-condensed tablesorter">
 	<thead>
 	  <tr>
@@ -21,9 +24,7 @@
 	    <% end %>
 	</tbody>	
 	</table>
+	<%= render :partial => '/shared/tablesorter_pager', :locals => {:pager_id => "publishers-table" } %>
   
-  <% if current_user.try(:superadmin?) %>
-    <%= link_to("Add New Publisher", new_publisher_path ) %>
-  <% end %>
+  
 </div>
-<%= will_paginate @publishers %>
