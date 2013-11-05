@@ -2,6 +2,9 @@
 
 
 <div>
+	<% unless @questionnaire.publisher.logo_url.nil? %>
+	  <%= image_tag @questionnaire.publisher.logo_url.to_s, size: "200x200", alt: "Publisher Logo" %><br />
+	<% end %>
 	<strong>Description:</strong> <%= @questionnaire.description %><br />
 	<strong>Version:</strong> <%= @questionnaire.version %><br />
 	<strong>Publisher:</strong> <%= @questionnaire.publisher %><br />

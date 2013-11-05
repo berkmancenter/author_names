@@ -1,5 +1,5 @@
 class Publisher < ActiveRecord::Base
-  attr_accessible :name, :contact_name, :phone, :email, :address_1, :address_2, :city, :state, :postal_code, :country, :website, :description
+  attr_accessible :name, :contact_name, :phone, :email, :address_1, :address_2, :city, :state, :postal_code, :country, :website, :description, :logo, :remove_logo
   
   has_many :users
   has_many :questionnaires, :dependent => :destroy
@@ -7,6 +7,8 @@ class Publisher < ActiveRecord::Base
   has_many :form_items, :dependent => :destroy
   
   validates_presence_of :name, :contact_name, :phone, :email, :address_1, :city, :state, :postal_code, :country
+  
+  mount_uploader :logo, LogoUploader
   
   def to_s
     self.name

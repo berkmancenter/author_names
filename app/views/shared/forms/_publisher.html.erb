@@ -1,4 +1,23 @@
 <%= semantic_form_for(@publisher) do |f| %>
-  <%= f.inputs%>
+  <%= f.inputs do %>
+    <%= f.input :name %>
+    <%= f.input :contact_name %>
+    <%= f.input :email %>
+    <%= f.input :address_1 %>
+    <%= f.input :address_2 %>
+    <%= f.input :city %>
+    <%= f.input :state %>
+    <%= f.input :postal_code %>
+    <%= f.input :country %>
+    <%= f.input :website %>
+    <%= f.input :description %>
+	<h4>Logo</h4>
+	<% unless @publisher.logo.blank? %>	
+	  <%= link_to "Current Logo", @publisher.logo_url %><br />	
+	  <%= f.input :remove_logo, :as => :boolean, :label => " Delete Current Logo? " %>
+	<% end %>  
+	<br/ >
+    <%= f.input :logo, :as => :file, :label => "Upload Logo: " %>
+  <% end %>
   <%= f.actions %>
 <% end %>
