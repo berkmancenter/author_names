@@ -1,5 +1,9 @@
 body { padding-top: 100px; }
 
+.navbar .nav {
+  margin: 10px 10px 0 0;
+}
+
 .navbar-inner .container {
 	width: 990px;
 }
