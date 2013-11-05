@@ -1,4 +1,4 @@
-<%= image_tag "oaq_application_logo.gif", :class => "brand" %>
+<%= link_to (image_tag "oaq_application_logo.gif"), root_path, :class => 'brand' %>
 <ul class="nav">
 	<li><%= link_to "Home", root_path %></li>
 	<% if current_user.nil? %>
@@ -62,13 +62,14 @@
   	    </ul>	
   	  </li>
   	  <li><%= link_to "Manage Staff", users_path %></li>
-  	  <li><%= link_to "Edit Account", edit_user_registration_path %></li>
+	  <li><%= link_to "Edit Publisher Profile", edit_publisher_path(current_user.publisher.id) %></li>
+  	  <li><%= link_to "Edit Your Account", edit_user_registration_path %></li>
   	  <li><%= link_to "Sign Out", destroy_user_session_path, :method => :delete %></li>  
 	
 	<% else %>  
-	<% unless current_user.publisher.nil? %>
-	  <li><%= link_to "Edit Profile", edit_author_path(current_user.find_profile(current_user.publisher.id)) %></li>
-	<% end %>  
+	  <% unless current_user.publisher.nil? %>
+	    <li><%= link_to "Edit Profile", edit_author_path(current_user.find_profile(current_user.publisher.id)) %></li>
+	  <% end %>  
 	  <li><%= link_to "Edit Account", edit_user_registration_path %></li>
 	  <li><%= link_to "Sign Out", destroy_user_session_path, :method => :delete %></li>
 	<% end %>

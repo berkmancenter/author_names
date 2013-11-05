@@ -1,6 +1,16 @@
 <% unless current_user.nil? %>
-  <h3>Hello, <%= current_user.email %>!</h3>
+  <h3>Hello, <%= current_user.first_name.nil? ? current_user.username : current_user.full_name %>!</h3>
   
+  <% if current_user.is_author? %>
+    <% unless @author_profile.nil? %>
+      <% if @author_profile.first_name == "" || @author_profile.last_name == "" || @author_profile.phone == "" %>
+        <p>You have not yet completed your author profile, please do so <%= link_to "here", edit_author_path(current_user.find_profile(current_user.publisher.id)) %>.</p>
+	  <% end %>
+	<% end %>	
+  <% elsif current_user.is_publisher? %>	  
+    <h4>You are associated with <%= current_user.publisher.name %></h4>
+  <% end %>
+
   <h4>Getting started</h4>
   <p>Welcome to the Author Names application. We’ve set up an account for a fictional publisher to help you see what you can do.</p>
 
@@ -20,14 +30,7 @@
 
   <h4>Manage your staff accounts</h4>
   <p>We’ve created some imaginary staff members for you.</p>
-  
-  <% if current_user.is_author? %>
-    <% unless @author_profile.nil? %>
-      <% if @author_profile.first_name == "" || @author_profile.last_name == "" || @author_profile.phone == "" %>
-        <p>You have not yet completed your author profile, please do so <%= link_to "here", edit_author_path(current_user.find_profile(current_user.publisher.id)) %>.</p>
-	    <% end %>
-	  <% end %>	
-  <% end %>	  
+  	  
 <% else %>
   <h3>Welcome!</h3>
 <% end %>    

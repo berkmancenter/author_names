@@ -34,7 +34,7 @@ class User < ActiveRecord::Base
   end  
   
   def is_publisher?
-    if !self.publisher.nil?
+    if !self.is_author? && !self.publisher.nil?
       return true
     end  
   end
