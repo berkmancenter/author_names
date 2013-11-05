@@ -9,6 +9,7 @@ class UsersController < ApplicationController
     elsif current_user.is_pub_admin?
       @users = current_user.publisher.users.order('email').paginate(:page => params[:page], :per_page => 50)    
     end
+    @unaffiliated = User.all(:conditions => {:publisher_id => nil, :library_id => nil})
   end
   
   def new
@@ -70,6 +71,20 @@ class UsersController < ApplicationController
     unless current_user.try(:superadmin?) || current_user.try(:admin?) || @user.email == current_user.email
        redirect_to('/') and return
     end
+    if params[:assign_publisher].nil?
+      params[:user][:library_id] = nil
+    elsif params[:assign_library] == "1"
+      lib = Library.find(current_user.library.id)
+      params[:user][:library_id] = lib.id
+    end
+    if params[:assign_publisher].nil?
+      params[:user][:publisher_id] = nil
+    elsif params[:assign_publisher] == "1"
+      pub = Publisher.find(current_user.publisher.id)
+      params[:user][:publisher_id] = pub.id
+    end  
+    
+    
     admin = params[:user][:admin]
     staff = params[:user][:staff]
     superadmin = params[:user][:superadmin]
