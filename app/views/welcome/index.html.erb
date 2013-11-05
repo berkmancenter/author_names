@@ -1,5 +1,8 @@
 <% unless current_user.nil? %>
-  <h3>Hello, <%= current_user.first_name.nil? ? current_user.username : current_user.full_name %>!</h3>
+  <h3>OAQ: Online Author Questionniare</h3>
+  <p>OAQ is a tool for creating questionnaires, gathering author data in custom formats, and sharing it with libraries to make authors more discoverable.</p>
+  
+  <h4>Hello, <%= current_user.first_name.nil? ? current_user.username : current_user.full_name %>!</h4>
   
   <% if current_user.is_author? %>
     <% unless @author_profile.nil? %>
@@ -8,7 +11,7 @@
 	  <% end %>
 	<% end %>	
   <% elsif current_user.is_publisher? %>	  
-    <h4>You are associated with <%= current_user.publisher.name %></h4>
+    <p>You are associated with <%= current_user.publisher.name %></p>
   <% end %>
 
   <h4>Getting started</h4>
@@ -32,5 +35,6 @@
   <p>We’ve created some imaginary staff members for you.</p>
   	  
 <% else %>
-  <h3>Welcome!</h3>
+  <h3>OAQ: Online Author Questionniare</h3>
+  <p>OAQ is a tool for creating questionnaires, gathering author data in custom formats, and sharing it with libraries to make authors more discoverable.</p>
 <% end %>    
