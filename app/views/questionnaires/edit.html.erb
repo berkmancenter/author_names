@@ -1,2 +1,21 @@
 <h2>Edit <%= @questionnaire.name %></h2>
-<%= render :partial => 'shared/forms/questionnaire' %>
+
+<div id="welcome-left">
+  <%= render :partial => 'shared/forms/questionnaire' %>
+</div>
+
+<div id="welcome-right">
+  <% if current_user.is_pub_admin? || current_user.is_pub_staff? %>
+	<h3>Sort Order</h3>
+	<%= semantic_form_for :sort_items, :html => { :method => :get } do |f| %>
+      <% @questionnaire.form_items.each do |item| %>
+	    <%= f.inputs do %>
+	      Position <%= FormItemsQuestionnaires.first(:conditions => {:form_item_id => item.id, :questionnaire_id => @questionnaire.id }).form_item_position %> - <%= f.input item.field_name, :as => :select, :collection => (1..@questionnaire.form_items.count).to_a, :label => item.display_text.html_safe, :selected => FormItemsQuestionnaires.first(:conditions => {:form_item_id => item.id, :questionnaire_id => @questionnaire.id }).form_item_position.nil? ? '' : FormItemsQuestionnaires.first(:conditions => {:form_item_id => item.id, :questionnaire_id => @questionnaire.id }).form_item_position %>
+		<% end %> 
+      <% end %>
+  	  <%= f.actions do %>
+  	    <%= f.action :submit, :as => :button, :label => 'Submit Item Order ' %>
+  	  <% end %> 
+	<% end %>
+ <% end %>
+</div>
