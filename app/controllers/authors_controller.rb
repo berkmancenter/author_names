@@ -33,8 +33,12 @@ class AuthorsController < ApplicationController
 
     respond_to do |format|
       if @author.update_attributes(params[:author])
-        format.html { redirect_to authors_url, notice: 'Author was successfully updated.' }
-        format.json { head :no_content }
+        if current_user.try(:superadmin?)
+          format.html { redirect_to authors_url, notice: 'Author was successfully updated.' }
+        else   
+          format.html { redirect_to root_url, notice: 'Thank you. Your profile was successfully updated.' }
+        end  
+        format.json { head :no_content }  
       else
         format.html { render action: "edit" }
         format.json { render json: @author.errors, status: :unprocessable_entity }
