@@ -71,17 +71,20 @@ class UsersController < ApplicationController
     unless current_user.try(:superadmin?) || current_user.try(:admin?) || @user.email == current_user.email
        redirect_to('/') and return
     end
-    if params[:assign_publisher].nil?
-      params[:user][:library_id] = nil
-    elsif params[:assign_library] == "1"
-      lib = Library.find(current_user.library.id)
-      params[:user][:library_id] = lib.id
-    end
-    if params[:assign_publisher].nil?
-      params[:user][:publisher_id] = nil
-    elsif params[:assign_publisher] == "1"
-      pub = Publisher.find(current_user.publisher.id)
-      params[:user][:publisher_id] = pub.id
+    
+    unless current_user.try(:superadmin?) 
+      if params[:assign_library].nil?
+        params[:user][:library_id] = nil
+      elsif params[:assign_library] == "1" || params[:assign_library] == ""
+        lib = Library.find(current_user.library.id)
+        params[:user][:library_id] = lib.id
+      end
+      if params[:assign_publisher].nil?
+        params[:user][:publisher_id] = nil
+      elsif params[:assign_publisher] == "1" || params[:assign_publisher] == ""
+        pub = Publisher.find(current_user.publisher.id)
+        params[:user][:publisher_id] = pub.id
+      end  
     end  
     
     
