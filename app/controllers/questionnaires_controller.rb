@@ -127,10 +127,9 @@ class QuestionnairesController < ApplicationController
       @authors << emails
       @authors.flatten!
     end 
-    
     respond_to do |format|
       unless params[:emails].nil? && params[:more_emails].blank?
-        @questionnaire.send_questionnaire_email(@authors)
+        @questionnaire.send_questionnaire_email(@authors.collect{|e| e.strip})
         format.html { redirect_to questionnaires_url, notice: 'Questionnaire was successfully sent.' }
         format.json { head :no_content }
       else
