@@ -33,6 +33,9 @@ class QuestionnairesController < ApplicationController
   
   def new
     @questionnaire = Questionnaire.new
+    
+    @lib_req = FormItem.all(:conditions => {:publisher_id => nil, :required => true})
+    @pub_req = FormItem.all(:conditions => {:publisher_id => current_user.publisher.id, :required => true})
   end
   
   def edit

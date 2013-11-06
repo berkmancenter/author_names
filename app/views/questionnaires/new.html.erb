@@ -1,2 +1,24 @@
 <h2>New Questionnaire</h2>
-<%= render :partial => 'shared/forms/questionnaire' %>
+<div id="welcome-left">
+  <%= render :partial => 'shared/forms/questionnaire' %>
+</div>
+
+<div id="welcome-right">
+    <h4>Auto-Included Library Required Fields</h4>
+    <% unless @lib_req.nil? || @lib_req.empty? %>
+      <% @lib_req.each do |fi| %>
+        <%= fi.field_name %>
+      <% end %>	
+    <% else %>
+      None.
+    <% end %>	
+  
+    <h4>Auto-Included Publisher Required Fields</h4>
+    <% unless @pub_req.nil? || @pub_req.empty? %>
+      <% @pub_req.each do |fi| %>
+        <%= fi.field_name %>
+      <% end %>	
+    <% else %>
+      None.
+    <% end %>
+</div>
