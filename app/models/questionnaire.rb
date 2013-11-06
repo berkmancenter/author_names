@@ -19,7 +19,7 @@ class Questionnaire < ActiveRecord::Base
       :from => self.publisher.email,
       :reply_to => self.publisher.email,
       :to => self.publisher.email,
-      :bcc => emails.collect{|e| e.strip + ","},
+      :bcc => emails.join(", "),
       :subject => "[Author Names] Please Fill Out This Questionnaire",
       :body => "<p>Please <a href='#{ROOT_URL}#{questionnaire_path(self)}'>complete</a> this questionniare.</p>"
     )   
