@@ -12,27 +12,27 @@
 	<% end %>	
   <% elsif current_user.is_publisher? %>	  
     <p>You are associated with <%= current_user.publisher.name %></p>
-  <% end %>
+	
+    <h4>Getting started</h4>
+    <p>Welcome to the Author Names application. We’ve set up an account for a fictional publisher to help you see what you can do.</p>
 
-  <h4>Getting started</h4>
-  <p>Welcome to the Author Names application. We’ve set up an account for a fictional publisher to help you see what you can do.</p>
-
-  <h4>An example questionnaire</h4>
-  <p>This questionnaire includes some typical questions for authors. You can add or remove form elements or edit the sequence in which they appear.</p>
+    <h4>An example questionnaire</h4>
+    <p>This questionnaire includes some typical questions for authors. You can add or remove form elements or edit the sequence in which they appear.</p>
   
-  <h4>Send a questionnaire to new authors</h4>
-  <p>Drop in authors’ email addresses to send the example form to all of them.</p>
+    <h4>Send a questionnaire to new authors</h4>
+    <p>Drop in authors’ email addresses to send the example form to all of them.</p>
 
-  <h4>Questions for authors</h4>
-  <p>See all the questions on the form and other form items that have already been created. These are the pieces that you can use (and re-use) to build author questionnaires.</p>
+    <h4>Questions for authors</h4>
+    <p>See all the questions on the form and other form items that have already been created. These are the pieces that you can use (and re-use) to build author questionnaires.</p>
 
-  <p>You can create new form items, here, too.</p>
+    <p>You can create new form items, here, too.</p>
 
-  <h4>Create a new questionnaire</h4>
-  <p>Every new questionnaire comes with some built-in fields, but you can add more by checking boxes next to the names of fields you’d like to include.</p>
+    <h4>Create a new questionnaire</h4>
+    <p>Every new questionnaire comes with some built-in fields, but you can add more by checking boxes next to the names of fields you’d like to include.</p>
 
-  <h4>Manage your staff accounts</h4>
-  <p>We’ve created some imaginary staff members for you.</p>
+    <h4>Manage your staff accounts</h4>
+    <p>We’ve created some imaginary staff members for you.</p>
+  <% end %>
   	  
 <% else %>
   <h3>OAQ: Online Author Questionniare</h3>
