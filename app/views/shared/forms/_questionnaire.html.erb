@@ -9,7 +9,7 @@
 	  <%= f.input :publisher, :label => 'Publisher' %>
 	<% end %>  
 	<%= f.input :form_items, :as => :check_boxes, :collection => FormItem.all(:conditions => {:publisher_id => nil, :required => false}), :label => 'Global Form Items' %>
-	<%= f.input :form_items, :as => :check_boxes, :collection => FormItem.all(:conditions => {:publisher_id => current_user.publisher.id}), :label => 'Our Form Items' %>
+	<%= f.input :form_items, :as => :check_boxes, :collection => FormItem.all(:conditions => {:publisher_id => current_user.publisher.id, :required => false}), :label => 'Our Form Items' %>
   <% end %>
   <%= f.actions %>
 <% end %>
