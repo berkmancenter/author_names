@@ -98,7 +98,7 @@ namespace :authornames do
       emails = Email.to_send
       emails.each do |email|
         begin
-          Notification.send_queued(email).deliver
+          Notifications.send_queued(email).deliver
           email.message_sent = true
           email.date_sent = Time.now
           email.save
