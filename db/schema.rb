@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131105194207) do
+ActiveRecord::Schema.define(:version => 20131107205455) do
 
   create_table "authors", :force => true do |t|
     t.string   "first_name",                  :null => false
@@ -32,7 +32,7 @@ ActiveRecord::Schema.define(:version => 20131105194207) do
 
   create_table "emails", :force => true do |t|
     t.string   "to"
-    t.string   "bcc"
+    t.text     "bcc"
     t.string   "from"
     t.string   "reply_to"
     t.string   "subject"
