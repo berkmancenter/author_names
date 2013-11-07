@@ -11,28 +11,28 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20131105194207) do
+ActiveRecord::Schema.define(:version => 20131107205455) do
 
   create_table "authors", :force => true do |t|
-    t.string   "phone",                                       :null => false
-    t.string   "address_1",    :limit => 150,                 :null => false
+    t.string   "first_name",                  :null => false
+    t.string   "last_name",                   :null => false
+    t.string   "phone",                       :null => false
+    t.string   "email",                       :null => false
+    t.string   "address_1",    :limit => 150, :null => false
     t.string   "address_2",    :limit => 150
-    t.string   "city",         :limit => 100,                 :null => false
-    t.string   "state",        :limit => 100,                 :null => false
-    t.string   "postal_code",  :limit => 30,                  :null => false
+    t.string   "city",         :limit => 100, :null => false
+    t.string   "state",        :limit => 100, :null => false
+    t.string   "postal_code",  :limit => 30,  :null => false
+    t.string   "country",      :limit => 2,   :null => false
     t.integer  "publisher_id"
+    t.datetime "created_at",                  :null => false
+    t.datetime "updated_at",                  :null => false
     t.integer  "user_id"
-    t.datetime "created_at",                                  :null => false
-    t.datetime "updated_at",                                  :null => false
-    t.string   "country",      :limit => 100
-    t.string   "last_name",                   :default => "", :null => false
-    t.string   "first_name",                  :default => "", :null => false
-    t.string   "email",                       :default => "", :null => false
   end
 
   create_table "emails", :force => true do |t|
     t.string   "to"
-    t.string   "bcc"
+    t.text     "bcc"
     t.string   "from"
     t.string   "reply_to"
     t.string   "subject"
@@ -93,7 +93,7 @@ ActiveRecord::Schema.define(:version => 20131105194207) do
     t.string   "city",         :limit => 100, :null => false
     t.string   "state",        :limit => 100, :null => false
     t.string   "postal_code",  :limit => 30,  :null => false
-    t.string   "country",                     :null => false
+    t.string   "country",      :limit => 2,   :null => false
     t.string   "website"
     t.datetime "created_at",                  :null => false
     t.datetime "updated_at",                  :null => false
