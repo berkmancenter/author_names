@@ -4,6 +4,6 @@ class AddLogoPublishers < ActiveRecord::Migration
   end
 
   def down
-    remove_column :publishers, :string
+    remove_column :publishers, :logo
   end
 end
