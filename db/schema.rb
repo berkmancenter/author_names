@@ -32,7 +32,7 @@ ActiveRecord::Schema.define(:version => 20140313130100) do
 
   create_table "emails", :force => true do |t|
     t.string   "to"
-    t.string   "bcc"
+    t.text     "bcc"
     t.string   "from"
     t.string   "reply_to"
     t.string   "subject"
