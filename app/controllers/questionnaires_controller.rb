@@ -94,6 +94,12 @@ class QuestionnairesController < ApplicationController
   
   def gather_response
     params[:answers].each_value do |value|
+      if FormItem.find(value["form_item_id"].to_i).field_type == "Date"
+        value['response_text'] = Date.new(value['response_text(1i)'].to_i, value['response_text(2i)'].to_i, value['response_text(3i)'].to_i).to_s
+        value.delete('response_text(1i)')
+        value.delete('response_text(2i)')
+        value.delete('response_text(3i)')
+      end
       response = Response.create(value)
     end  
     
