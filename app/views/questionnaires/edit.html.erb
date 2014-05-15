@@ -1,7 +1,14 @@
 <h2>Edit <%= @questionnaire.name %></h2>
 
 <div id="welcome-left">
-  <%= render :partial => 'shared/forms/questionnaire' %>
+  <div class="col-lg-12">
+    <h2>Edit <%= @author.full_name %> Profile</h2>
+    <div class="row">
+      <div class="well">
+  	  <%= render :partial => 'shared/forms/questionnaire' %>
+      </div>
+    </div>	
+  </div>	
 </div>
 
 <div id="welcome-right">
@@ -27,16 +34,22 @@
 	
   <% if current_user.is_pub_admin? || current_user.is_pub_staff? %>
 	<h4>Sort Order</h4>
-	<%= semantic_form_for :sort_items, :html => { :method => :get } do |f| %>
-      <% @questionnaire.form_items.each do |item| %>
-	    <%= f.inputs do %>
-	      Position <%= FormItemsQuestionnaires.first(:conditions => {:form_item_id => item.id, :questionnaire_id => @questionnaire.id }).form_item_position %> - <%= word_wrap(item.display_text, :line_width => 56).html_safe %> <%= f.input item.field_name, :as => :select, :collection => (1..@questionnaire.form_items.count).to_a, :label => '', :selected => FormItemsQuestionnaires.first(:conditions => {:form_item_id => item.id, :questionnaire_id => @questionnaire.id }).form_item_position.nil? ? '' : FormItemsQuestionnaires.first(:conditions => {:form_item_id => item.id, :questionnaire_id => @questionnaire.id }).form_item_position %>
-		<% end %> 
-		
-      <% end %>
-  	  <%= f.actions do %>
-  	    <%= f.action :submit, :as => :button, :label => 'Submit Item Order ' %>
-  	  <% end %> 
-	<% end %>
+	<%= semantic_form_for :sort_items, :html => { :method => :get, :class => "form-horizontal" } do |f| %>
+	  <fieldset>
+	    <legend></legend>	
+		  <% @questionnaire.form_items.each do |item| %>    
+			<%= f.inputs do %>
+			  <div class="form-group"> 
+			    <label for="name" class="col-lg-2 control-label"></label>
+			    <div class="col-lg-10">
+		          Position <%= FormItemsQuestionnaires.first(:conditions => {:form_item_id => item.id, :questionnaire_id => @questionnaire.id }).form_item_position %> - <%= word_wrap(item.display_text, :line_width => 56).html_safe %> <%= f.input item.field_name, :as => :select, :collection => (1..@questionnaire.form_items.count).to_a, :label => '', :selected => FormItemsQuestionnaires.first(:conditions => {:form_item_id => item.id, :questionnaire_id => @questionnaire.id }).form_item_position.nil? ? '' : FormItemsQuestionnaires.first(:conditions => {:form_item_id => item.id, :questionnaire_id => @questionnaire.id }).form_item_position %>
+			    </div>	
+			  </div>
+			<% end %>
+			<%= f.actions do %>
+			  <%= f.action :submit, :as => :button, :button_html => { :class => "btn btn-primary"} %>
+			<% end %>
+		  <% end %>	
+	  </fieldset>
  <% end %>
 </div>

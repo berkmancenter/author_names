@@ -1,49 +1,49 @@
-<h1>Author Profiles</h1>
+<div class="col-lg-12">
+  <h1>Author Profiles</h1>
+  <h3>Existing Profiles</h3>
+  <div class="table-responsive">
+      <% if (current_user.try(:admin?) || current_user.try(:superadmin?)) %>
+        <p><%= link_to("Add New Single Profile", new_author_path ) %></p>
+      <% end %>
+	<table id="authors-table" class="table table-striped table-hover tablesorter">
+  	<thead>
+  	  <tr>
+  		<th>Name</th>
+  		<th>Email</th>
+  		<th>Publisher</th>
+  		<th>Actions</th>
+  	  </tr>
+  	</thead> 
+  	<tbody>
+  	    <% @authors.each do |author| %>
+  	    	<tr>
+  	  	  <td><%= author.full_name %></td>
+  		  <td><%= author.email %></td>
+  		  <td><%= author.publisher.name %></td>
+  		  <td>
+  	   		<%= link_to('Edit', edit_author_path(author), :class => "action-edit") %> 
+  			<% if (current_user.try(:admin?) || current_user.try(:superadmin?)) && author.user != current_user %>
+  			  | <%= link_to('Delete', author_path(author), :confirm => "Are you sure?", :method => :delete) %>
+  	  	    <% end %>
+  		  </td>
+  	    </tr>
+  	    <% end %>
+  	</tbody>	
+  	</table>
+  	<%= render :partial => '/shared/tablesorter_pager', :locals => {:pager_id => "authors-table" } %>
+	
+  </div>
 
-<h3>Existing Profiles</h3>
-<div class="widget">
-    <% if (current_user.try(:admin?) || current_user.try(:superadmin?)) %>
-      <p><%= link_to("Add New Single Profile", new_author_path ) %></p>
+  <% if current_user.is_pub_admin? %>
+    <h3>Bulk Create New Profiles</h3>
+    <%= form_tag bulk_authors_authors_path, :method => :get do %>
+    <p>
+      <%= hidden_field_tag :publisher_id, current_user.publisher.id %>
+      Email Addresses (comma separated):<br />
+      <%= text_area_tag 'new_emails', nil, :size => "50x10" %>
+      <br />
+      <%= submit_tag "Create" %>
+    </p>
     <% end %>
-	
-  	<table id="authors-table" class="table table-condensed tablesorter">
-	<thead>
-	  <tr>
-		<th>Name</th>
-		<th>Email</th>
-		<th>Publisher</th>
-		<th>Actions</th>
-	  </tr>
-	</thead> 
-	<tbody>
-	    <% @authors.each do |author| %>
-	    	<tr>
-	  	  <td><%= author.full_name %></td>
-		  <td><%= author.email %></td>
-		  <td><%= author.publisher.name %></td>
-		  <td>
-	   		<%= link_to('Edit', edit_author_path(author), :class => "action-edit") %> 
-			<% if (current_user.try(:admin?) || current_user.try(:superadmin?)) && author.user != current_user %>
-			  | <%= link_to('Delete', author_path(author), :confirm => "Are you sure?", :method => :delete) %>
-	  	    <% end %>
-		  </td>
-	    </tr>
-	    <% end %>
-	</tbody>	
-	</table>
-	<%= render :partial => '/shared/tablesorter_pager', :locals => {:pager_id => "authors-table" } %>
-	
-</div>
-
-<% if current_user.is_pub_admin? %>
-  <h3>Bulk Create New Profiles</h3>
-  <%= form_tag bulk_authors_authors_path, :method => :get do %>
-  <p>
-    <%= hidden_field_tag :publisher_id, current_user.publisher.id %>
-    Email Addresses (comma separated):<br />
-    <%= text_area_tag 'new_emails', nil, :size => "50x10" %>
-    <br />
-    <%= submit_tag "Create" %>
-  </p>
   <% end %>
-<% end %>
+</div>
