@@ -24,7 +24,7 @@ class FormItemsController < ApplicationController
       @questionnaires = Questionnaire.find(@questionnaire_ids)
       @q_links = ""
       @questionnaires.each do |q|
-        @q_links = @q_links + "<a href='http://#{ROOT_URL}#{questionnaire_path(q)}'>#{q.name}</a><br />"
+        @q_links = @q_links + "<a href='#{ROOT_URL}#{questionnaire_path(q)}'>#{q.name}</a><br />"
       end  
       flash[:notice] = "<p>Note these questionnaires are using this form item: <br />#{@q_links}</p>".html_safe
     end
