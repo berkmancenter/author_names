@@ -1,35 +1,30 @@
-<%= semantic_form_for @library, :html => { :class => "form-horizontal"} do |f| %>
+<%= semantic_form_for @author, :html => { :class => "form-horizontal"} do |f| %>
+
   <fieldset>
-    <legend>Profile</legend>	    
+    <legend>Author</legend>	    
 		<%= f.inputs do %>
-	      <div class="form-group"> 
-	        <label for="name" class="col-lg-2 control-label">Name</label>
-	        <div class="col-lg-10">
-	          <%= f.input :name, :label => false, :input_html => { :class => "form-control"} %>
-	        </div>	
-	      </div>
-	      <div class="form-group"> 
-	        <label for="name" class="col-lg-2 control-label">Description</label>
-	        <div class="col-lg-10">
-	          <%= f.input :description, :label => false, :input_html => { :class => "form-control"} %>
-	        </div>	
-	      </div>
 		  <div class="form-group"> 
-		    <label for="name" class="col-lg-2 control-label">Contact Name</label>
+		    <label for="name" class="col-lg-2 control-label">First Name</label>
 		    <div class="col-lg-10">
-		      <%= f.input :contact_name, :input_html => { :size => 30, :class => "form-control" } %>
+		      <%= f.input :first_name, :label => false, :input_html => { :size => 30, :class => "form-control" } %>
+		    </div>	
+		  </div>
+		  <div class="form-group"> 
+		    <label for="name" class="col-lg-2 control-label">Last Name</label>
+		    <div class="col-lg-10">
+		      <%= f.input :last_name, :label => false, :input_html => { :size => 30, :class => "form-control" } %>
 		    </div>	
 		  </div>
 		  <div class="form-group"> 
 		    <label for="name" class="col-lg-2 control-label">Email</label>
 		    <div class="col-lg-10">
-		      <%= f.input :email, :input_html => { :size => 30, :class => "form-control" } %>
+		      <%= f.input :email, :label => false, :input_html => { :size => 30, :class => "form-control" } %>
 		    </div>	
 		  </div>
 		  <div class="form-group"> 
 		    <label for="name" class="col-lg-2 control-label">Phone</label>
 		    <div class="col-lg-10">
-		      <%= f.input :phone, :input_html => { :size => 30, :class => "form-control" } %> 
+		      <%= f.input :phone, :label => false, :input_html => { :size => 30, :class => "form-control" } %> 
 		    </div>	
 		  </div>
 		  <div class="form-group"> 
@@ -68,15 +63,24 @@
 		      <%= f.input :country, :label => false, :input_html => { :class => "form-control"} %>
 		    </div>	
 		  </div>
-		  <div class="form-group"> 
-		    <label for="name" class="col-lg-2 control-label">Website</label>
-		    <div class="col-lg-10">
-		      <%= f.input :website, :label => false, :input_html => { :class => "form-control"} %>
-		    </div>	
-		  </div>
+	  	  <% if current_user.try(:superadmin?) || current_user.try(:admin?) %>
+  		    <div class="form-group"> 
+  		      <label for="name" class="col-lg-2 control-label">Publisher</label>
+  		      <div class="col-lg-10">
+  		        <%= f.input :publisher, :label => false, :input_html => { :class => "form-control"} %>
+  		      </div>	
+  		    </div>
+		    <div class="form-group"> 
+		      <label for="name" class="col-lg-2 control-label">User</label>
+		      <div class="col-lg-10">
+		        <%= f.input :user, :label => false, :input_html => { :class => "form-control"} %>
+		      </div>	
+		    </div>
+	  	  <% end %>
+		  
 		<% end %>
 		<%= f.actions do %>
 		  <%= f.action :submit, :as => :button, :button_html => { :class => "btn btn-primary"} %>
 		<% end %>
-  </fieldset>
-<% end %>
+  </fieldset>	
+<% end %>  

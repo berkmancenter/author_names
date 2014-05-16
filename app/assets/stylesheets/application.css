@@ -9,13 +9,30 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require_self
- *= require jquery.ui.all
- *= require bootstrap
- *= require jquery-tablesorter/theme.dark
  *= require_tree .
  */
 
-/* Set the fixed height of the footer here */
+@import "bootstrap";
+
+ol {
+	list-style-type: none;
+	padding: 0px;
+}
+
+.navbar {
+	position: relative;
+}
+
+.page-header {
+	margin-top: 22px;
+}
+
+.inline-errors {
+	color: red;
+}
+
+
+/* Set the fixed height of the footer here 
 #push, #footer {
   height: 60px;
 }
@@ -72,6 +89,6 @@ th {
 }
 
 
-
+*/
 
 
