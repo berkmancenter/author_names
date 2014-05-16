@@ -1,34 +1,70 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
+<div class="col-lg-12">
+  <h2>Edit <%= resource_name.to_s.humanize %></h2>
+  <div class="row">
+    <div class="well">
+	  <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f| %>
+	    <%= devise_error_messages! %>
+		<fieldset>
+	      <legend>Author</legend>	    
+	  		  <div class="form-group"> 
+	  		    <label for="name" class="col-lg-2 control-label">Username</label>
+	  		    <div class="col-lg-10">
+	  		      <%= f.text_field :username, :autofocus => true, :class => "form-control" %>
+	  		    </div>	
+	  		  </div>
+	  		  <div class="form-group"> 
+	  		    <label for="name" class="col-lg-2 control-label">First Name</label>
+	  		    <div class="col-lg-10">
+	  		      <%= f.text_field :first_name, :class => "form-control" %>
+	  		    </div>	
+	  		  </div>
+	  		  <div class="form-group"> 
+	  		    <label for="name" class="col-lg-2 control-label">Last Name</label>
+	  		    <div class="col-lg-10">
+	  		      <%= f.text_field :last_name, :class => "form-control" %>
+	  		    </div>	
+	  		  </div>
+	  		  <div class="form-group"> 
+	  		    <label for="name" class="col-lg-2 control-label">Email</label>
+	  		    <div class="col-lg-10">
+	  		      <%= f.email_field :email, :class => "form-control" %>
+	  		    </div>	
+	  		  </div>
+	  		  <div class="form-group"> 
+	  		    <label for="name" class="col-lg-2 control-label">Password (leave blank if you don't want to change it)</label>
+	  		    <div class="col-lg-10">
+	  		      <%= f.password_field :password, :autocomplete => "off", :class => "form-control" %>
+	  		    </div>	
+	  		  </div>
+	  		  <div class="form-group"> 
+	  		    <label for="name" class="col-lg-2 control-label">Confirm Password</label>
+	  		    <div class="col-lg-10">
+	  		      <%= f.password_field :password_confirmation, :class => "form-control" %>
+	  		    </div>	
+	  		  </div>
+	  		  <div class="form-group"> 
+	  		    <label for="name" class="col-lg-2 control-label">Current Password (we need your current password to confirm your changes)</label>
+	  		    <div class="col-lg-10">
+	  		      <%= f.password_field :current_password, :class => "form-control" %>
+	  		    </div>	
+	  		  </div>
+	  		  <div class="form-group"> 
+	  		    <label for="name" class="col-lg-2 control-label"></label>
+	  		    <div class="col-lg-10">
+	  		      <%= f.submit "Update", :class => "btn btn-primary" %>
+	  		    </div>	
+	  		  </div>
+			
+	    </fieldset>
+	<% end %>	
+	  <h3>Cancel my account</h3>
 
-<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f| %>
-  <%= devise_error_messages! %>
+	  <p>Unhappy? <%= link_to "Cancel my account", registration_path(resource_name), :data => { :confirm => "Are you sure?" }, :method => :delete %>.</p>
 
-  <div><%= f.label :username %>
-  <%= f.text_field :username, :autofocus => true %></div>
+	  <%= link_to "Back", :back %>
+    </div>
+  </div>	
+</div>
 
-  <div><%= f.label :first_name %>
-  <%= f.text_field :first_name %></div>
 
-  <div><%= f.label :last_name %>
-  <%= f.text_field :last_name %></div>
 
-  <div><%= f.label :email %>
-  <%= f.email_field :email, :autofocus => true %></div>
-
-  <div><%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
-  <%= f.password_field :password, :autocomplete => "off" %></div>
-
-  <div><%= f.label :password_confirmation %>
-  <%= f.password_field :password_confirmation %></div>
-
-  <div><%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i>
-  <%= f.password_field :current_password %></div>
-
-  <div><%= f.submit "Update" %></div>
-<% end %>
-
-<h3>Cancel my account</h3>
-
-<p>Unhappy? <%= link_to "Cancel my account", registration_path(resource_name), :data => { :confirm => "Are you sure?" }, :method => :delete %>.</p>
-
-<%= link_to "Back", :back %>

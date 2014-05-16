@@ -1,16 +1,32 @@
-<h2>Send Questionnaire</h2>
+<div class="col-lg-12">
+  <h2>Send Questionnaire</h2>
+  <div class="row">
+    <div class="well">
+	  <%= form_tag send_questionnaire_questionnaires_path, :method => :get do %>
+	    <fieldset>
+	      <legend>Select or Add Authors</legend>
+	    <% @authors.each do |author| %>
+	    <div class="form-group"> 
+	      <label for="name" class="col-lg-2 control-label"></label>
+	      <div class="col-lg-10">
+	        <%= check_box_tag("emails[]", author.email, false, :class => 'check') %> <%= author.email %>
+	      </div>	
+	    </div>
+	    <% end %>
+		
+	    <%= hidden_field_tag :publisher_id, @questionnaire.publisher.id %>
+	    <%= hidden_field_tag :questionnaire_id, @questionnaire.id %>	
+	    <div class="form-group"> 
+	      <label for="name" class="col-lg-2 control-label">Additional Emails (comma separated):</label>
+	      <div class="col-lg-10">
+	        <%= text_area_tag 'more_emails', nil, :size => "50x10", :class => "form-control" %>
+	      </div>	
+	    </div>
+	    <%= submit_tag "Send", :class => 'btn btn-primary' %>
 
-<%= form_tag send_questionnaire_questionnaires_path, :method => :get do %>
-<p>
-  <%= hidden_field_tag :publisher_id, @questionnaire.publisher.id %>
-  <%= hidden_field_tag :questionnaire_id, @questionnaire.id %>	
-  <% @authors.each do |author| %>
-    <%= check_box_tag("emails[]", author.email, false, :class => 'check') %> <%= author.email %><br />
-  <% end %>
-  <br />
-  Additional Emails (comma separated):<br />
-  <%= text_area_tag 'more_emails', nil, :size => "50x10" %>
-  <br />
-  <%= submit_tag "Send" %>
-</p>
-<% end %>
+	  <% end %>
+    </div>
+  </div>	
+</div>
+
+

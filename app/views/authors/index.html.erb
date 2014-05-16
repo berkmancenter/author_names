@@ -33,7 +33,7 @@
   	<%= render :partial => '/shared/tablesorter_pager', :locals => {:pager_id => "authors-table" } %>
 	
   </div>
-
+  <div class="table-responsive">
   <% if current_user.is_pub_admin? %>
     <h3>Bulk Create New Profiles</h3>
     <%= form_tag bulk_authors_authors_path, :method => :get do %>
@@ -46,4 +46,5 @@
     </p>
     <% end %>
   <% end %>
+  </div>
 </div>
