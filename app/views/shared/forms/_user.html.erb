@@ -45,14 +45,14 @@
 		  <div class="form-group"> 
 		    <label for="name" class="col-lg-2 control-label">Assign Library</label>
 		    <div class="col-lg-10">
-		      <p><%= check_box_tag :assign_library, "", checked = @user.library == current_user.library ? true : false %> Assign to <%= current_user.library.name %></p>
+			  <%= f.input :library, :as => :string, :label => false, :input_html => { :value => current_user.library, :readonly => true, :class => "form-control" } %>
 		    </div>	
 		  </div>
 		  <% elsif current_user.is_pub_admin? %>
 		  <div class="form-group"> 
 		    <label for="name" class="col-lg-2 control-label">Assign Publisher</label>
 		    <div class="col-lg-10">
-		      <p><%= check_box_tag :assign_publisher, "", checked = @user.publisher == current_user.publisher ? true : false %> Assign to <%= current_user.publisher.name %></p>
+				<%= f.input :publisher, :as => :string, :label => false, :input_html => { :value => current_user.publisher, :readonly => true, :class => "form-control" } %>
 		    </div>	
 		  </div>
 		  <% end %>
