@@ -41,6 +41,7 @@ AuthorNames::Application.routes.draw do
     collection do
       get 'authors'
       get 'bulk_users'
+      get 'make_staff'
     end
   end
   

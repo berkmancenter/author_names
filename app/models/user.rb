@@ -100,13 +100,13 @@ class User < ActiveRecord::Base
   def my_unassigned
     unassigned = Array.new
     if self.superadmin
-      admin = User.all(:conditions => ["admin is not true and staff is not true and author is not true"])
+      unassigned = User.all(:conditions => ["admin is not true and staff is not true and author is not true"])
     elsif self.is_pub_admin? || self.is_pub_staff?
-      admin = User.all(:conditions => ["admin is not true and staff is not true and author is not true and publisher_id = ?", self.publisher.id])
+      unassigned = User.all(:conditions => ["admin is not true and staff is not true and author is not true and publisher_id = ?", self.publisher.id])
     elsif self.is_lib_admin? || self.is_lib_staff?
-      admin = User.all(:conditions => ["admin is not true and staff is not true and author is not true and publisher_id = ?", self.library.id])   
+      unassigned = User.all(:conditions => ["admin is not true and staff is not true and author is not true and publisher_id = ?", self.library.id])   
     end
-    return admin
+    return unassigned
   end
   
   def affiliation

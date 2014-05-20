@@ -110,6 +110,16 @@ class UsersController < ApplicationController
     @authors = current_user.my_authors
   end
   
+  def make_staff
+    @user = User.find(params[:id])
+    @user.staff = true
+    @user.save
+    respond_to do |format|
+      format.html { redirect_to users_url, notice: 'User was changed to Staff.' }
+    end
+    
+  end  
+  
   def bulk_users
     emails = Array.new  
     unless params[:new_emails].blank?
