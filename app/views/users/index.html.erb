@@ -158,7 +158,10 @@
 			<% end %>  
   		  <% end %>
 	  	  <td><%= user.email %></td>
-		  <td><%= link_to('Make Staff', make_staff_users_path(:id => user.id), :class => "action-edit") %> | <%= link_to('Edit', edit_user_path(user), :class => "action-edit") %>
+		  <td><%= link_to('Make Staff', make_staff_users_path(:id => user.id), :class => "action-edit") %>
+		  <% if user != current_user %>	  
+			 | <%= link_to('Edit', edit_user_path(user), :class => "action-edit") %>
+		  <% end %>	 
 	      <% if (current_user.try(:admin?) || current_user.try(:superadmin?)) && user != current_user %>
 	   		 | <%= link_to('Delete', user_path(user), :confirm => "Are you sure?", :method => :delete) %>
 	  	  <% end %>
