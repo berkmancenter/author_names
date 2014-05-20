@@ -17,7 +17,7 @@
 		  <div class="form-group"> 
 		    <label for="name" class="col-lg-2 control-label">Version</label>
 		    <div class="col-lg-10">
-		      <%= f.input :version %>
+		      <%= f.input :version, :label => false, :input_html => { :class => "form-control"} %>
 		    </div>	
 		  </div>
 	  	  <% unless current_user.try(:superadmin?) %>
@@ -38,13 +38,13 @@
 		  <div class="form-group"> 
 		    <label for="name" class="col-lg-2 control-label">Global Form Items</label>
 		    <div class="col-lg-10">
-		      <%= f.input :form_items, :as => :check_boxes, :label => false, :input_html => { :class => "form-control"}, :collection => FormItem.all(:conditions => {:publisher_id => nil, :required => false}) %>
+		      <%= f.input :form_items, :as => :check_boxes, :label => false, :collection => FormItem.all(:conditions => {:publisher_id => nil, :required => false}) %>
 		    </div>	
 		  </div>
 		  <div class="form-group"> 
 		    <label for="name" class="col-lg-2 control-label">Our Form Items</label>
 		    <div class="col-lg-10">
-		      <%= f.input :form_items, :as => :check_boxes, :label => false, :input_html => { :class => "form-control"}, :collection => FormItem.all(:conditions => {:publisher_id => current_user.publisher.id, :required => false}) %>
+		      <%= f.input :form_items, :as => :check_boxes, :label => false, :collection => FormItem.all(:conditions => {:publisher_id => current_user.publisher.id, :required => false}) %>
 		    </div>	
 		  </div>
 		<% end %>

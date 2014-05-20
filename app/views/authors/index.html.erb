@@ -33,18 +33,4 @@
   	<%= render :partial => '/shared/tablesorter_pager', :locals => {:pager_id => "authors-table" } %>
 	
   </div>
-  <div class="table-responsive">
-  <% if current_user.is_pub_admin? %>
-    <h3>Bulk Create New Profiles</h3>
-    <%= form_tag bulk_authors_authors_path, :method => :get do %>
-    <p>
-      <%= hidden_field_tag :publisher_id, current_user.publisher.id %>
-      Email Addresses (comma separated):<br />
-      <%= text_area_tag 'new_emails', nil, :size => "50x10" %>
-      <br />
-      <%= submit_tag "Create" %>
-    </p>
-    <% end %>
-  <% end %>
-  </div>
 </div>

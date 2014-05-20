@@ -13,6 +13,7 @@ class CreatePublishers < ActiveRecord::Migration
       t.string :postal_code, :limit => 30, :null => false
       t.string :country, :null => false
       t.string :website
+      t.string :logo
       t.timestamps
     end
   end

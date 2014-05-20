@@ -2,13 +2,10 @@ class UsersController < ApplicationController
   before_filter :authenticate_superadmin_or_admin!, :except => [:edit, :update]
   
   def index
-    if current_user.superadmin?
-      @users = User.all
-    elsif current_user.is_lib_admin?
-      @users = current_user.library.users.order('email').paginate(:page => params[:page], :per_page => 50) 
-    elsif current_user.is_pub_admin?
-      @users = current_user.publisher.users.order('email').paginate(:page => params[:page], :per_page => 50)    
-    end
+    @staff = current_user.my_staff
+    @admin = current_user.my_admin
+    @authors = current_user.my_authors
+    @unassociated = current_user.my_unassigned
     @unaffiliated = User.all(:conditions => {:publisher_id => nil, :library_id => nil})
   end
   
@@ -90,11 +87,13 @@ class UsersController < ApplicationController
     
     admin = params[:user][:admin]
     staff = params[:user][:staff]
+    author = params[:user][:author]
     superadmin = params[:user][:superadmin]
-    params[:user] = params[:user].delete_if{|key, value| key == "admin" || key == "staff" || key == "superadmin" }
+    params[:user] = params[:user].delete_if{|key, value| key == "admin" || key == "staff" || key == "author" || key == "superadmin" }
     @user.attributes = params[:user]
     admin == "1" ? @user.admin = true : @user.admin = false
     staff == "1" ? @user.staff = true : @user.staff = false
+    author == "1" ? @user.author = true : @user.author = false
     superadmin == "1" ? @user.superadmin = true : @user.superadmin = false
     respond_to do|format|
       if @user.save
@@ -109,6 +108,37 @@ class UsersController < ApplicationController
   
   def authors
     @authors = current_user.my_authors
-    #@users = User.order('email').paginate(:page => params[:page], :per_page => 50)
+  end
+  
+  def bulk_users
+    emails = Array.new  
+    unless params[:new_emails].blank?
+      emails << params[:new_emails].split(",").each{|e| e.strip!}
+      emails.flatten!
+    end
+    
+    # emails.each do |email|
+#       author = Author.new(:email => email, :publisher_id => params[:publisher_id])
+#       author.first_name = ""
+#       author.last_name = ""
+#       author.phone = ""
+#       author.address_1 = ""
+#       author.city = ""
+#       author.state = ""
+#       author.postal_code = ""
+#       author.country = ""
+#       author.save
+#     end
+    
+    respond_to do |format|
+      unless params[:new_emails].blank?
+        current_user.send_new_user_email(emails.collect{|e| e.strip}, "#{new_user_registration_path(:publisher_id => current_user.publisher.id)}") 
+        format.html { redirect_to users_url, notice: 'Users were successfully invited.' }
+        format.json { head :no_content }
+      else
+        format.html { redirect_to users_url, notice: 'Please enter emails.' }
+        format.json { head :no_content }
+      end
+    end
   end
 end

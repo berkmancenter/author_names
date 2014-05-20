@@ -2,7 +2,7 @@ class CreateEmails < ActiveRecord::Migration
   def change
     create_table :emails do |t|
       t.string :to
-      t.string :bcc
+      t.text :bcc
       t.string :from
       t.string :reply_to
       t.string :subject

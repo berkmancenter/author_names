@@ -7,7 +7,7 @@
 	<% elsif current_user.try(:superadmin?) %>
 	  <li><%= link_to "Libraries", libraries_path %></li>
 	  <li><%= link_to "Publishers", publishers_path %></li>
-	  <li><%= link_to "Authors", authors_path %></li>
+	  <li><%= link_to "Author Profiles", authors_path %></li>
 	  <li><%= link_to "View Form Items", form_items_path %></li>
 	  <li><%= link_to "Users", users_path %></li>
 	  <li><%= link_to "Edit Account", edit_user_registration_path %></li>
@@ -24,7 +24,7 @@
   	  <li><%= link_to "New Author Data", root_path %></li>
   	  <li><%= link_to "Past Author Data", root_path %></li>
   	  <li><%= link_to "Export Data", root_path %></li>
-	  <li><%= link_to "Manage Staff", users_path %></li>
+	  <li><%= link_to "Manage Users", users_path %></li>
 	  <li><%= link_to "Edit Account", edit_user_registration_path %></li>
 	  <li><%= link_to "Sign Out", destroy_user_session_path, :method => :delete %></li>
     
@@ -40,7 +40,7 @@
 	      <li><%= link_to "New Author Data", responses_path %></li>
 	      <li><%= link_to "Past Author Data", responses_path %></li>
 	      <li><%= link_to "Export Data", root_path %></li>
-		  <li><%= link_to "View Authors", authors_path %></li>
+		  <li><%= link_to "View Author Profiles", authors_path %></li>
 	    </ul>	
 	  </li>
       <li><%= link_to "Edit Account", edit_user_registration_path %></li>
@@ -58,16 +58,16 @@
 	        <li><%= link_to "New Author Data", responses_path %></li>
 	        <li><%= link_to "Past Author Data", responses_path %></li>
 			<li><%= link_to "Export Data", export_responses_path %></li>
-			<li><%= link_to "View Authors", authors_path %></li>
+			<li><%= link_to "View Author Profiles", authors_path %></li>
   	    </ul>	
   	  </li>
-  	  <li><%= link_to "Manage Staff", users_path %></li>
+  	  <li><%= link_to "Manage Users", users_path %></li>
 	  <li><%= link_to "Edit Publisher Profile", edit_publisher_path(current_user.publisher.id) %></li>
   	  <li><%= link_to "Edit Your Account", edit_user_registration_path %></li>
   	  <li><%= link_to "Sign Out", destroy_user_session_path, :method => :delete %></li>  
 	
 	<% else %>  
-	  <% unless current_user.publisher.nil? %>
+	  <% unless current_user.find_profile(current_user.publisher.id).nil? %>
 	    <li><%= link_to "Edit Profile", edit_author_path(current_user.find_profile(current_user.publisher.id)) %></li>
 	  <% end %>  
 	  <li><%= link_to "Edit Account", edit_user_registration_path %></li>

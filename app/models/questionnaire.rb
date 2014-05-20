@@ -24,4 +24,16 @@ class Questionnaire < ActiveRecord::Base
       :body => "<p>Please <a href='#{ROOT_URL}#{questionnaire_path(self)}'>complete</a> this questionniare.</p>"
     )   
   end  
+  
+  def send_new_author_questionnaire_email(emails)
+    # send to selected authors with link to questionnaire
+    Email.create(
+      :from => self.publisher.email,
+      :reply_to => self.publisher.email,
+      :to => self.publisher.email,
+      :bcc => emails.join(", "),
+      :subject => "[Author Names] Please Fill Out This Questionnaire",
+      :body => "<p>Please <a href='#{ROOT_URL}#{new_user_registration_path(:publisher_id => self.publisher.id, :a => true)}'>create</a> an account and <a href='#{ROOT_URL}#{questionnaire_path(self)}'>complete</a> this questionniare.</p>"
+    )   
+  end  
 end

@@ -36,10 +36,12 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.boolean :admin, :default => false
       t.boolean :staff, :default => false
       t.boolean :superadmin, :default => false
+      t.boolean :author, :default => false
       t.references :library
       t.references :publisher
       t.string :first_name
       t.string :last_name
+      t.string :username, :null => false, :default => ""
 
       t.timestamps
     end
