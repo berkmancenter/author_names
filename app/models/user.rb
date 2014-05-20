@@ -6,7 +6,7 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   # Setup accessible (or protected) attributes for your model
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :admin, :staff, :first_name, :last_name, :publisher_id, :library_id, :username
+  attr_accessible :email, :password, :password_confirmation, :remember_me, :admin, :staff, :author, :first_name, :last_name, :publisher_id, :library_id, :username
   # attr_accessible :title, :body
   
   belongs_to :publisher
@@ -28,48 +28,85 @@ class User < ActiveRecord::Base
   end
   
   def is_librarian?
-    if !self.library.nil?
+    if self.is_lib_admin? || self.is_lib_staff?
       return true
     end  
   end  
   
   def is_publisher?
-    if !self.is_author? && !self.publisher.nil?
+    if self.is_pub_admin? || self.is_pub_staff?
       return true
     end  
   end
   
   def is_author?
-    if !self.authors.empty?
+    if self.author
       return true
     end  
   end
   
   def is_lib_admin?
-    self.try(:admin?) && self.is_librarian?
+    self.try(:admin?) && !self.library.nil?
   end  
   
   def is_lib_staff?
-    self.try(:staff?) && self.is_librarian?
+    self.try(:staff?) && !self.library.nil?
   end 
   
   def is_pub_admin?
-    self.try(:admin?) && self.is_publisher?
+    self.try(:admin?) && !self.publisher.nil?
   end 
   
   def is_pub_staff?
-    self.try(:staff?) && self.is_publisher?
+    self.try(:staff?) && !self.publisher.nil?
   end 
   
   def my_authors
     authors = Array.new
     if self.superadmin
-      authors << Author.all
+      authors = User.all(:conditions => {:author => true})
     elsif self.is_pub_admin? || self.is_pub_staff?
-      #Author.all.collect{|author| author.publisher == self.publisher ? authors << author : ''} 
-      authors = Author.all(:conditions => {:publisher_id => self.publisher.id})
+      authors = User.all(:conditions => {:publisher_id => self.publisher.id, :author => true})
+    elsif self.is_lib_admin? || self.is_lib_staff?
+      authors = User.all(:conditions => {:library_id => self.library.id, :author => true})  
     end
     return authors
+  end
+  
+  def my_staff
+    staff = Array.new
+    if self.superadmin
+      staff = User.all(:conditions => {:staff => true})
+    elsif self.is_pub_admin? || self.is_pub_staff?
+      staff = User.all(:conditions => {:publisher_id => self.publisher.id, :staff => true})
+    elsif self.is_lib_admin? || self.is_lib_staff?
+      staff = User.all(:conditions => {:library_id => self.library.id, :staff => true})   
+    end
+    return staff
+  end
+  
+  def my_admin
+    admin = Array.new
+    if self.superadmin
+      admin = User.all(:conditions => {:admin => true})
+    elsif self.is_pub_admin? || self.is_pub_staff?
+      admin = User.all(:conditions => {:publisher_id => self.publisher.id, :admin => true})
+    elsif self.is_lib_admin? || self.is_lib_staff?
+      admin = User.all(:conditions => {:library_id => self.library.id, :admin => true})   
+    end
+    return admin
+  end
+  
+  def my_unassigned
+    unassigned = Array.new
+    if self.superadmin
+      unassigned = User.all(:conditions => ["admin is not true and staff is not true and author is not true"])
+    elsif self.is_pub_admin? || self.is_pub_staff?
+      unassigned = User.all(:conditions => ["admin is not true and staff is not true and author is not true and publisher_id = ?", self.publisher.id])
+    elsif self.is_lib_admin? || self.is_lib_staff?
+      unassigned = User.all(:conditions => ["admin is not true and staff is not true and author is not true and publisher_id = ?", self.library.id])   
+    end
+    return unassigned
   end
   
   def affiliation
@@ -77,7 +114,18 @@ class User < ActiveRecord::Base
   end
   
   def find_profile(publisher)
-    p "in here"
     Author.first(:conditions => {:user_id => self.id, :publisher_id => publisher})
   end  
+  
+  def send_new_user_email(emails, path)
+    # send to selected users
+    Email.create(
+      :from => self.publisher.email,
+      :reply_to => self.publisher.email,
+      :to => self.publisher.email,
+      :bcc => emails.join(", "),
+      :subject => "[Author Names] Please Sign Up",
+      :body => "<p>Please <a href='#{ROOT_URL}#{path}'>create</a> an account.</p>"
+    )   
+  end 
 end

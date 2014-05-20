@@ -1,10 +1,5 @@
 AuthorNames::Application.routes.draw do
-  resources :authors do
-    collection do
-      get 'bulk_authors'
-    end
-  end  
-
+  resources :authors
 
   resources :responses do
     collection do
@@ -45,6 +40,8 @@ AuthorNames::Application.routes.draw do
   resources :users do
     collection do
       get 'authors'
+      get 'bulk_users'
+      get 'make_staff'
     end
   end
   

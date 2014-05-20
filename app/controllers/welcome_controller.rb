@@ -2,7 +2,7 @@ class WelcomeController < ApplicationController
   
   def index
     if current_user && current_user.is_author?
-      @author_profile = current_user.authors.where(:publisher_id => current_user.publisher_id).first
+      @author_profile = current_user.find_profile(current_user.publisher.id)
     end 
   end
   

@@ -1,5 +1,6 @@
-<div class="col-lg-12">
 <h1>Users</h1>
+<div class="col-lg-12">
+<h3>Admin</h3>
   <div class="table-responsive">
 	<table id="users-table" class="table table-striped table-hover tablesorter">
 	<thead>
@@ -10,17 +11,11 @@
 		  <th>Affiliation</th>
 		<% end %>
 		<th>Email</th>
-		<% if current_user.superadmin? %>
-		  <th>Superadmin?</th>
-		  <th>Author?</th>
-		<% end %>  
-		<th>Admin?</th>
-		<th>Staff?</th>
 		<th>Actions</th>
 	  </tr>
 	</thead> 
 	<tbody>
-	    <% @users.each do |user| %>	
+	    <% @admin.each do |user| %>	
 	    <tr>
 		  <td><%= user.first_name %></td>
 		  <td><%= user.last_name %></td>
@@ -34,12 +29,6 @@
 			<% end %>  
   		  <% end %>
 	  	  <td><%= user.email %></td>
-		  <% if current_user.superadmin? %>
-		    <td><%= user.superadmin ? "Yes" : "No" %></td> 
-		    <td><%= user.is_author? ? "Yes" : "No" %></td>
-		  <% end %>	
-		  <td><%= user.admin ? "Yes" : "No" %></td>
-		  <td><%= user.staff ? "Yes" : "No" %></td>
 		  <td><%= link_to('Edit', edit_user_path(user), :class => "action-edit") %>
 	      <% if (current_user.try(:admin?) || current_user.try(:superadmin?)) && user != current_user %>
 	   		 | <%= link_to('Delete', user_path(user), :confirm => "Are you sure?", :method => :delete) %>
@@ -52,6 +41,136 @@
 	<%= render :partial => '/shared/tablesorter_pager', :locals => {:pager_id => "users-table" } %>
   </div>
 </div>
+
+<div class="col-lg-12">
+<h3>Staff</h3>
+  <div class="table-responsive">
+	<table id="users-table" class="table table-striped table-hover tablesorter">
+	<thead>
+	  <tr>
+		<th>First Name</th>
+		<th>Last Name</th>
+		<% if current_user.superadmin? %>
+		  <th>Affiliation</th>
+		<% end %>
+		<th>Email</th>
+		<th>Actions</th>
+	  </tr>
+	</thead> 
+	<tbody>
+	    <% @staff.each do |user| %>	
+	    <tr>
+		  <td><%= user.first_name %></td>
+		  <td><%= user.last_name %></td>
+  		  <% if current_user.superadmin? %>
+		    <% if !user.publisher.nil? %>
+			  <td><%= user.publisher.name %></td> 
+		    <% elsif !user.library.nil? %>
+		      <td><%= user.library.name %></td>
+		    <% else %>
+		      <td>Unaffiliated</td>		
+			<% end %>  
+  		  <% end %>
+	  	  <td><%= user.email %></td>
+		  <td><%= link_to('Edit', edit_user_path(user), :class => "action-edit") %>
+	      <% if (current_user.try(:admin?) || current_user.try(:superadmin?)) && user != current_user %>
+	   		 | <%= link_to('Delete', user_path(user), :confirm => "Are you sure?", :method => :delete) %>
+	  	  <% end %>
+		  </td>
+	    </tr>
+	    <% end %>
+	</tbody>	
+	</table>
+	<%= render :partial => '/shared/tablesorter_pager', :locals => {:pager_id => "users-table" } %>
+  </div>
+</div>
+
+<div class="col-lg-12">
+<h3>Authors</h3>
+  <div class="table-responsive">
+	<table id="users-table" class="table table-striped table-hover tablesorter">
+	<thead>
+	  <tr>
+		<th>First Name</th>
+		<th>Last Name</th>
+		<% if current_user.superadmin? %>
+		  <th>Affiliation</th>
+		<% end %>
+		<th>Email</th>
+		<th>Actions</th>
+	  </tr>
+	</thead> 
+	<tbody>
+	    <% @authors.each do |user| %>	
+	    <tr>
+		  <td><%= user.first_name %></td>
+		  <td><%= user.last_name %></td>
+  		  <% if current_user.superadmin? %>
+		    <% if !user.publisher.nil? %>
+			  <td><%= user.publisher.name %></td> 
+		    <% elsif !user.library.nil? %>
+		      <td><%= user.library.name %></td>
+		    <% else %>
+		      <td>Unaffiliated</td>		
+			<% end %>  
+  		  <% end %>
+	  	  <td><%= user.email %></td>
+		  <td><%= link_to('Edit', edit_user_path(user), :class => "action-edit") %>
+	      <% if (current_user.try(:admin?) || current_user.try(:superadmin?)) && user != current_user %>
+	   		 | <%= link_to('Delete', user_path(user), :confirm => "Are you sure?", :method => :delete) %>
+	  	  <% end %>
+		  </td>
+	    </tr>
+	    <% end %>
+	</tbody>	
+	</table>
+	<%= render :partial => '/shared/tablesorter_pager', :locals => {:pager_id => "users-table" } %>
+  </div>
+</div>
+
+<div class="col-lg-12">
+<h3>Unassociated</h3>
+  <div class="table-responsive">
+	<table id="users-table" class="table table-striped table-hover tablesorter">
+	<thead>
+	  <tr>
+		<th>First Name</th>
+		<th>Last Name</th>
+		<% if current_user.superadmin? %>
+		  <th>Affiliation</th>
+		<% end %>
+		<th>Email</th>
+		<th>Actions</th>
+	  </tr>
+	</thead> 
+	<tbody>
+	    <% @unassociated.each do |user| %>	
+	    <tr>
+		  <td><%= user.first_name %></td>
+		  <td><%= user.last_name %></td>
+  		  <% if current_user.superadmin? %>
+		    <% if !user.publisher.nil? %>
+			  <td><%= user.publisher.name %></td> 
+		    <% elsif !user.library.nil? %>
+		      <td><%= user.library.name %></td>
+		    <% else %>
+		      <td>Unaffiliated</td>		
+			<% end %>  
+  		  <% end %>
+	  	  <td><%= user.email %></td>
+		  <td><%= link_to('Make Staff', make_staff_users_path(:id => user.id), :class => "action-edit") %> | <%= link_to('Edit', edit_user_path(user), :class => "action-edit") %>
+	      <% if (current_user.try(:admin?) || current_user.try(:superadmin?)) && user != current_user %>
+	   		 | <%= link_to('Delete', user_path(user), :confirm => "Are you sure?", :method => :delete) %>
+	  	  <% end %>
+		  </td>
+	    </tr>
+	    <% end %>
+	</tbody>	
+	</table>
+	<%= render :partial => '/shared/tablesorter_pager', :locals => {:pager_id => "users-table" } %>
+  </div>
+</div>
+<% if current_user.superadmin? %>
 <div class="col-lg-12">
   <div class="table-responsive">
 	<h3>Unaffiliated Users</h3>
@@ -94,3 +213,23 @@
 	<%= render :partial => '/shared/tablesorter_pager', :locals => {:pager_id => "unaffiliated-users-table" } %>
   </div>
 </div>
+<% end %>
+
+<% if current_user.is_pub_admin? %>
+<div class="col-lg-12">
+  <div class="table-responsive">
+  <% if current_user.is_pub_admin? || current_user.is_pub_staff? %>
+    <h3>Bulk Create New Users</h3>
+    <%= form_tag bulk_users_users_path, :method => :get do %>
+    <p>
+      <%= hidden_field_tag :publisher_id, current_user.publisher.id %>
+      Email Addresses (comma separated):<br />
+      <%= text_area_tag 'new_emails', nil, :size => "50x10" %>
+      <br />
+      <%= submit_tag "Create" %>
+    </p>
+    <% end %>
+  <% end %>
+  </div>
+</div>
+<% end %>

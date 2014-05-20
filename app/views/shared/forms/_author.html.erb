@@ -76,6 +76,9 @@
 		        <%= f.input :user, :label => false, :input_html => { :class => "form-control"} %>
 		      </div>	
 		    </div>
+		  <% else %>	
+			<%= f.input :user_id, :as => :hidden, :value => current_user.id %>
+			<%= f.input :publisher_id, :as => :hidden, :value => current_user.publisher.id %>
 	  	  <% end %>
 		  
 		<% end %>
