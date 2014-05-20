@@ -67,8 +67,10 @@
   	  <li><%= link_to "Sign Out", destroy_user_session_path, :method => :delete %></li>  
 	
 	<% else %>  
-	  <% unless current_user.find_profile(current_user.publisher.id).nil? %>
-	    <li><%= link_to "Edit Profile", edit_author_path(current_user.find_profile(current_user.publisher.id)) %></li>
+	  <% unless current_user.publisher.nil? %>
+	    <% unless current_user.find_profile(current_user.publisher.id).nil? %>
+	      <li><%= link_to "Edit Profile", edit_author_path(current_user.find_profile(current_user.publisher.id)) %></li>
+		<% end %>   
 	  <% end %>  
 	  <li><%= link_to "Edit Account", edit_user_registration_path %></li>
 	  <li><%= link_to "Sign Out", destroy_user_session_path, :method => :delete %></li>
