@@ -72,20 +72,14 @@ class UsersController < ApplicationController
     end
     
     unless current_user.try(:superadmin?) 
-      if params[:assign_library].nil?
-        params[:user][:library_id] = nil
-      elsif params[:assign_library] == "1" || params[:assign_library] == ""
-        lib = Library.find(current_user.library.id)
-        params[:user][:library_id] = lib.id
+      unless params[:user][:library].nil?
+        params[:user][:library_id] = Library.find_by_name(params[:user][:library]).id
       end
-      if params[:assign_publisher].nil?
-        params[:user][:publisher_id] = nil
-      elsif params[:assign_publisher] == "1" || params[:assign_publisher] == ""
-        pub = Publisher.find(current_user.publisher.id)
-        params[:user][:publisher_id] = pub.id
+      unless params[:user][:publisher].nil?
+        params[:user][:publisher_id] = Publisher.find_by_name(params[:user][:publisher]).id
       end  
     end  
-    
+    params[:user] = params[:user].delete_if{|key, value| key == "publisher" || key == "library" }
     # admin = params[:user][:admin]
     # staff = params[:user][:staff]
     # author = params[:user][:author]

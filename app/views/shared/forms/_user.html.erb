@@ -69,7 +69,7 @@
   		      <div class="form-group"> 
   		        <label for="name" class="col-lg-2 control-label">User Type</label>
   		        <div class="col-lg-10">
-  				  <%= select_tag :user_type, options_for_select(User::USER_TYPES, "Staff") %>  
+  				  <%= select_tag :user_type, options_for_select(User::USER_TYPES, @user.user_type) %>  
   		        </div>	
   		      </div>
 			<% end %>	
