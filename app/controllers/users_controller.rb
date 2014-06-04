@@ -6,7 +6,8 @@ class UsersController < ApplicationController
     @admin = current_user.my_admin
     @authors = current_user.my_authors
     @unassociated = current_user.my_unassigned
-    @unaffiliated = User.all(:conditions => {:publisher_id => nil, :library_id => nil})
+    @unaffiliated = User.all(:conditions => {:publisher_id => nil, :library_id => nil, :superadmin => false})
+    @superadmins = User.all(:conditions => {:superadmin => true})
   end
   
   def new
@@ -14,15 +15,16 @@ class UsersController < ApplicationController
   end
   
   def create
-    admin = params[:user][:admin]
-    staff = params[:user][:staff]
-    superadmin = params[:user][:superadmin]
-    params[:user] = params[:user].delete_if{|key, value| key == "admin" || key == "staff" || key == "superadmin" }
+    # admin = params[:user][:admin]
+    # staff = params[:user][:staff]
+    # superadmin = params[:user][:superadmin]
+    # params[:user] = params[:user].delete_if{|key, value| key == "admin" || key == "staff" || key == "superadmin" }
     @user = User.new(params[:user])
     @user.password = User.random_password
-    admin == "1" ? @user.admin = true : @user.admin = false
-    staff == "1" ? @user.staff = true : @user.staff = false
-    superadmin == "1" ? @user.superadmin = true : @user.superadmin = false
+    params[:user_type] == "Author" ? @user.author = true : @user.author = false
+    params[:user_type] == "Admin" ? @user.admin = true : @user.admin = false
+    params[:user_type] == "Staff" ? @user.staff = true : @user.staff = false
+    params[:user_type] == "Superadmin" ? @user.superadmin = true : @user.superadmin = false
   
     respond_to do|format|
       if @user.save
@@ -84,17 +86,18 @@ class UsersController < ApplicationController
       end  
     end  
     
+    # admin = params[:user][:admin]
+    # staff = params[:user][:staff]
+    # author = params[:user][:author]
+    # superadmin = params[:user][:superadmin]
+    # params[:user] = params[:user].delete_if{|key, value| key == "admin" || key == "staff" || key == "author" || key == "superadmin" }
     
-    admin = params[:user][:admin]
-    staff = params[:user][:staff]
-    author = params[:user][:author]
-    superadmin = params[:user][:superadmin]
-    params[:user] = params[:user].delete_if{|key, value| key == "admin" || key == "staff" || key == "author" || key == "superadmin" }
     @user.attributes = params[:user]
-    admin == "1" ? @user.admin = true : @user.admin = false
-    staff == "1" ? @user.staff = true : @user.staff = false
-    author == "1" ? @user.author = true : @user.author = false
-    superadmin == "1" ? @user.superadmin = true : @user.superadmin = false
+    params[:user_type] == "Author" ? @user.author = true : @user.author = false
+    params[:user_type] == "Admin" ? @user.admin = true : @user.admin = false
+    params[:user_type] == "Staff" ? @user.staff = true : @user.staff = false
+    params[:user_type] == "Superadmin" ? @user.superadmin = true : @user.superadmin = false
+    
     respond_to do|format|
       if @user.save
         flash[:notice] = %Q|#{@user} updated|
