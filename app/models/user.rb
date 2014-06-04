@@ -14,6 +14,9 @@ class User < ActiveRecord::Base
   has_many :authors
   has_many :responses
   
+  SUPER_USER_TYPES = ["", "Superadmin", "Admin", "Staff", "Author"]
+  USER_TYPES = ["", "Admin", "Staff", "Author"]
+  
   def to_s
     self.full_name
   end
@@ -44,6 +47,20 @@ class User < ActiveRecord::Base
       return true
     end  
   end
+  
+  def user_type
+    if self.author
+      return "Author"
+    elsif self.staff
+      return "Staff"
+    elsif self.admin
+      return "Admin"
+    elsif self.superadmin
+      return "Superadmin"
+    else
+      return "Unassigned"  
+    end 
+  end  
   
   def is_lib_admin?
     self.try(:admin?) && !self.library.nil?
@@ -100,7 +117,7 @@ class User < ActiveRecord::Base
   def my_unassigned
     unassigned = Array.new
     if self.superadmin
-      unassigned = User.all(:conditions => ["admin is not true and staff is not true and author is not true"])
+      unassigned = User.all(:conditions => ["admin is not true and staff is not true and author is not true and superadmin is not true"])
     elsif self.is_pub_admin? || self.is_pub_staff?
       unassigned = User.all(:conditions => ["admin is not true and staff is not true and author is not true and publisher_id = ?", self.publisher.id])
     elsif self.is_lib_admin? || self.is_lib_staff?

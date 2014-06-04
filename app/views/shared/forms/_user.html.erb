@@ -58,33 +58,21 @@
 		  <% end %>
 	  	  <% if current_user.try(:superadmin?) || current_user.try(:admin?) %>
 	  	  <span id='admin_box'>
-	  		Internal User Type:<br />
 	  		<% if current_user.try(:superadmin?) %>
-		    <div class="form-group"> 
-		      <label for="name" class="col-lg-2 control-label">Is Superadmin?</label>
-		      <div class="col-lg-10">
-		        <%= f.input :superadmin, :label => '' %>
-		      </div>	
-		    </div>
+		      <div class="form-group"> 
+		        <label for="name" class="col-lg-2 control-label">User Type</label>
+		        <div class="col-lg-10">
+				  <%= select_tag :user_type, options_for_select(User::SUPER_USER_TYPES, @user.user_type) %>  
+		        </div>	
+		      </div>
+			<% else %>
+  		      <div class="form-group"> 
+  		        <label for="name" class="col-lg-2 control-label">User Type</label>
+  		        <div class="col-lg-10">
+  				  <%= select_tag :user_type, options_for_select(User::USER_TYPES, "Staff") %>  
+  		        </div>	
+  		      </div>
 			<% end %>	
-		    <div class="form-group"> 
-		      <label for="name" class="col-lg-2 control-label">Is Admin?</label>
-		      <div class="col-lg-10">
-		        <%= f.input :admin, :label => '' %> 
-		      </div>	
-		    </div>
-		    <div class="form-group"> 
-		      <label for="name" class="col-lg-2 control-label">Is Staff?</label>
-		      <div class="col-lg-10">
-		        <%= f.input :staff, :label => '' %>
-		      </div>	
-		    </div>
-		    <div class="form-group"> 
-		      <label for="name" class="col-lg-2 control-label">Is Author?</label>
-		      <div class="col-lg-10">
-		        <%= f.input :author, :label => '' %>
-		      </div>	
-		    </div>
 		  </span>
 		  <% end %>
 		<% end %>
