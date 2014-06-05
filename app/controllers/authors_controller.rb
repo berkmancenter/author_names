@@ -40,7 +40,7 @@ class AuthorsController < ApplicationController
 
     respond_to do |format|
       if @author.update_attributes(params[:author])
-        if current_user.try(:superadmin?)
+        if current_user.try(:superadmin?) || current_user.try(:admin?)
           format.html { redirect_to authors_url, notice: 'Author was successfully updated.' }
         else   
           format.html { redirect_to root_url, notice: 'Thank you. Your profile was successfully updated.' }
@@ -58,7 +58,7 @@ class AuthorsController < ApplicationController
     @author.destroy
 
     respond_to do |format|
-      format.html { redirect_to authors_url }
+      format.html { redirect_to authors_url, notice: 'Author was successfully deleted.' }
       format.json { head :no_content }
     end
   end  

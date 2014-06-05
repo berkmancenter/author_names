@@ -68,7 +68,7 @@ class ResponsesController < ApplicationController
     @response.destroy
 
     respond_to do |format|
-      format.html { redirect_to questionnaires_url }
+      format.html { redirect_to questionnaires_url, notice: 'Response was successfully deleted.' }
       format.json { head :no_content }
     end
   end  

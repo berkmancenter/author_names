@@ -24,7 +24,37 @@
 			        <div class="form-group"> 
 			          <label for="name" class="col-lg-2 control-label"><%= item.display_text.html_safe %></label>
 			          <div class="col-lg-10">
-		      			<%= fi.input :response_text, :as => item.formtastic_field_map, :label => false, :collection => item.field_options.nil? ? '' : item.field_options.split(','), :input_html => { :class => "form-control"} %>
+						  <% if item.formtastic_field_map == "radio" || item.formtastic_field_map == "check_boxes" || item.formtastic_field_map ==  "select" %>
+						    <% unless item.field_options.nil? %>
+							  <% new_collection = Array.new %>
+							  <% item.field_options.split(',').each do |option| %>
+							    <% if !@gather_response.nil? && @gather_response["#{item.field_name}"]["response_text"].include?(option) %>
+								  <% if item.formtastic_field_map == "select" %>
+								    <% new_collection << ["#{option}", "#{option}", {:selected => "selected"}] %>
+								  <% else %>	
+							        <% new_collection << ["#{option}", "#{option}", {:checked => "checked"}] %>
+								  <% end %>	
+								<% else %>
+								  <% new_collection << ["#{option}", "#{option}"] %>  
+								<% end %>  
+							  <% end %>	
+							<% end %>
+					
+						    <%= fi.input :response_text, :as => item.formtastic_field_map, :label => false, :collection => item.field_options.nil? ? '' : new_collection %>	
+						  <% else %>
+						    <% if item.formtastic_field_map ==  "date_select" %>
+						      <%= fi.input :response_text, :as => item.formtastic_field_map, :label => false, :input_html => { :class => "form-control" }, :start_year => Time.now.year - 25, :end_year => Time.now.year + 10 %>	
+							<% else %>
+							  <%= fi.input :response_text, :as => item.formtastic_field_map, :label => false, :input_html => { :class => "form-control", :value => @gather_response.nil? ? "" : @gather_response["#{item.field_name}"]["response_text"]} %>	
+							<% end %>    
+						  <% end %>
+						  
+						  
+						  
+						  
+						  
+						  
+		      			
 			          </div>	
 			        </div>
 	  			    <%= fi.input :form_item_id, :as => :hidden, :value => item.id %>
