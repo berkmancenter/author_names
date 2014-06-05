@@ -26,7 +26,7 @@
 		  </td>
 		  <td>
 			  <%= form_tag questionnaire_path(questionnaire), :method => :get do %>
-			    <%= select_tag :author_id, options_from_collection_for_select(current_user.my_authors, "id", "email") %>
+			    <%= select_tag :author_user_id, options_from_collection_for_select(current_user.my_authors, "id", "email") %>
 			    <%= submit_tag "Go" %>
 			  <% end %>
 		  </td>

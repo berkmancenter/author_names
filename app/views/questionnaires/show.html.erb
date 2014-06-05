@@ -30,7 +30,7 @@
 	  			    <%= fi.input :form_item_id, :as => :hidden, :value => item.id %>
 	  			    <%= fi.input :questionnaire_id, :as => :hidden, :value => @questionnaire.id %>
 	  	  	        <% if current_user.try(:admin?) && !@user.nil? %>
-	  	  	          <%= fi.input :user_id, :as => :hidden, :value => @user %>
+	  	  	          <%= fi.input :user_id, :as => :hidden, :value => @user.id %>
 	  	  	        <% else %>
 	  			      <%= fi.input :user_id, :as => :hidden, :value => current_user.id %>
 	  			    <% end %>
