@@ -75,17 +75,21 @@
 		    </div>	
 		  </div>
 		  
-		  
-		  <h4>Logo</h4>
-		  <% unless @publisher.logo.blank? %>	
-		    <%= link_to "Current Logo", @publisher.logo_url %><br />	
-			<%= f.input :remove_logo, :as => :boolean, :label => " Delete Current Logo? " %>
-		  <% end %>  
-		  <br/ >
+		  <% unless @publisher.logo.blank? %>
+		    <div class="form-group"> 
+		      <label for="name" class="col-lg-2 control-label">Current Logo</label>
+		      <div class="col-lg-10">	
+			    <%= image_tag @publisher.logo_url.to_s, size: "200x200", alt: "Publisher Logo" %><br /><br />
+			    <%= link_to "Current Logo Full Size", @publisher.logo_url %><br /><br />
+				<%= f.input :remove_logo, :as => :boolean, :label => " Delete Current Logo? " %>
+		      </div>	
+		    </div>
+		  <% end %>
+
 		  <div class="form-group"> 
-		    <label for="name" class="col-lg-2 control-label">Upload Logo:</label>
+		    <label for="name" class="col-lg-2 control-label">Upload Logo:<br /><% unless @publisher.logo.blank? %>Current logo will be replaced.<% end %></label>
 		    <div class="col-lg-10">
-		      <%= f.input :logo, :as => :file, :label => false, :input_html => { :class => "form-control"} %>
+		      <%= f.input :logo, :as => :file, :label => false, :input_html => { :class => "form-control"}, :hint => "Logo will be resized to fit within a 200x200 pixel space. For best results, please upload an image of those dimensions or larger." %>
 		    </div>	
 		  </div>
 		  
