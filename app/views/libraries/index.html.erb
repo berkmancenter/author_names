@@ -17,8 +17,9 @@
 	    	<tr>
 	  	  <td><%= library.name %></td>
 		  <td>
+			<%= link_to('View', library_path(library)) %>
 	      <% if current_user.try(:superadmin?) %>
-	   		<%= link_to('Edit', edit_library_path(library), :class => "action-edit") %> | <%= link_to('Delete', library_path(library), :confirm => "Are you sure?", :method => :delete) %>
+	   		 | <%= link_to('Edit', edit_library_path(library), :class => "action-edit") %> | <%= link_to('Delete', library_path(library), :confirm => "Are you sure?", :method => :delete) %>
 	  	  <% end %>
 		  </td>
 	    </tr>

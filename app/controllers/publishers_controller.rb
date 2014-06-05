@@ -9,6 +9,10 @@ class PublishersController < ApplicationController
     @publisher = Publisher.new
   end
   
+  def show
+    @publisher = Publisher.find(params[:id])
+  end  
+  
   def edit
     @publisher = Publisher.find(params[:id])
   end
@@ -42,10 +46,11 @@ class PublishersController < ApplicationController
   
   def destroy
     @publisher = Publisher.find(params[:id])
+    publisher = @publisher.name
     @publisher.destroy
 
     respond_to do |format|
-      format.html { redirect_to publishers_url, notice: 'Publisher was successfully deleted.' }
+      format.html { redirect_to publishers_url, notice: "#{publisher} was successfully deleted." }
       format.json { head :no_content }
     end
   end

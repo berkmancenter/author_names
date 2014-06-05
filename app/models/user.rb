@@ -25,6 +25,10 @@ class User < ActiveRecord::Base
     return "#{self.first_name} #{self.last_name}"
   end
   
+  def full_name_email
+    return "#{self.first_name} #{self.last_name} (#{self.email})"
+  end
+  
   def self.random_password(size = 11)
     chars = (('a'..'z').to_a + ('0'..'9').to_a) - %w(i o 0 1 l 0)
     (1..size).collect{|a| chars[rand(chars.size)] }.join

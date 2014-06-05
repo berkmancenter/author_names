@@ -17,6 +17,10 @@ class AuthorsController < ApplicationController
     @author = Author.find(params[:id])
   end
   
+  def show
+    @author = Author.find(params[:id])
+  end  
+  
   def create
     @author = Author.new(params[:author])
     respond_to do |format|
