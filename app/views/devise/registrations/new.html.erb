@@ -45,6 +45,7 @@
 		  </div>
   
 	      <%= f.hidden_field :publisher_id, :value => params[:publisher_id] %>
+		  <%= f.hidden_field :library_id, :value => params[:library_id] %>
 		  
 		  <% if params[:a] == "true" %>
 		    <%= f.hidden_field :author, :value => true %>

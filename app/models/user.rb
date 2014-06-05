@@ -121,7 +121,7 @@ class User < ActiveRecord::Base
     elsif self.is_pub_admin? || self.is_pub_staff?
       unassigned = User.all(:conditions => ["admin is not true and staff is not true and author is not true and publisher_id = ?", self.publisher.id])
     elsif self.is_lib_admin? || self.is_lib_staff?
-      unassigned = User.all(:conditions => ["admin is not true and staff is not true and author is not true and publisher_id = ?", self.library.id])   
+      unassigned = User.all(:conditions => ["admin is not true and staff is not true and author is not true and library_id = ?", self.library.id])   
     end
     return unassigned
   end
@@ -134,12 +134,24 @@ class User < ActiveRecord::Base
     Author.first(:conditions => {:user_id => self.id, :publisher_id => publisher})
   end  
   
-  def send_new_user_email(emails, path)
+  def send_new_publisher_user_email(emails, path)
     # send to selected users
     Email.create(
       :from => self.publisher.email,
       :reply_to => self.publisher.email,
       :to => self.publisher.email,
+      :bcc => emails.join(", "),
+      :subject => "[Author Names] Please Sign Up",
+      :body => "<p>Please <a href='#{ROOT_URL}#{path}'>create</a> an account.</p>"
+    )   
+  end 
+  
+  def send_new_library_user_email(emails, path)
+    # send to selected users
+    Email.create(
+      :from => self.library.email,
+      :reply_to => self.library.email,
+      :to => self.library.email,
       :bcc => emails.join(", "),
       :subject => "[Author Names] Please Sign Up",
       :body => "<p>Please <a href='#{ROOT_URL}#{path}'>create</a> an account.</p>"

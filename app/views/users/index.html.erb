@@ -285,3 +285,22 @@
   </div>
 </div>
 <% end %>
+
+<% if current_user.is_lib_admin? %>
+<div class="col-lg-12">
+  <div class="table-responsive">
+  <% if current_user.is_lib_admin? || current_user.is_lib_staff? %>
+    <h3>Bulk Create New Users</h3>
+    <%= form_tag bulk_users_users_path, :method => :get do %>
+    <p>
+      <%= hidden_field_tag :library_id, current_user.library.id %>
+      Email Addresses (comma separated):<br />
+      <%= text_area_tag 'new_emails', nil, :size => "50x10" %>
+      <br />
+      <%= submit_tag "Create" %>
+    </p>
+    <% end %>
+  <% end %>
+  </div>
+</div>
+<% end %>

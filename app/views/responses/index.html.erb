@@ -1,6 +1,7 @@
 <h1>Responses</h1>
 
 <div>
+<% unless @response_hash.nil? %>	
   <% @response_hash.each_key do |questionnaire| %>
 	<h2><%= questionnaire.name %></h2>
 	<strong>Description:</strong> <%= questionnaire.description %><br />
@@ -24,4 +25,5 @@
   <% if current_user.try(:superadmin?) || current_user.is_pub_admin? %>
     <%= link_to("Add New Response", new_response_path ) %>
   <% end %>
+<% end %>  
 </div>

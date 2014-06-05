@@ -139,7 +139,12 @@ class UsersController < ApplicationController
     
     respond_to do |format|
       unless params[:new_emails].blank?
-        current_user.send_new_user_email(emails.collect{|e| e.strip}, "#{new_user_registration_path(:publisher_id => current_user.publisher.id)}") 
+        unless params[:publisher_id].nil?
+          current_user.send_new_publisher_user_email(emails.collect{|e| e.strip}, "#{new_user_registration_path(:publisher_id => params[:publisher_id])}") 
+        end
+        unless params[:library_id].nil?
+          current_user.send_new_library_user_email(emails.collect{|e| e.strip}, "#{new_user_registration_path(:library_id => params[:library_id])}") 
+        end  
         format.html { redirect_to users_url, notice: 'Users were successfully invited.' }
         format.json { head :no_content }
       else
