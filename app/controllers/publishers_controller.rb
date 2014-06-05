@@ -45,7 +45,7 @@ class PublishersController < ApplicationController
     @publisher.destroy
 
     respond_to do |format|
-      format.html { redirect_to publishers_url }
+      format.html { redirect_to publishers_url, notice: 'Publisher was successfully deleted.' }
       format.json { head :no_content }
     end
   end

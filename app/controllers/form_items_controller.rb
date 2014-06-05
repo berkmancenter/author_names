@@ -67,7 +67,7 @@ class FormItemsController < ApplicationController
     @form_item.destroy
 
     respond_to do |format|
-      format.html { redirect_to form_items_url }
+      format.html { redirect_to form_items_url, notice: 'Form Item was successfully deleted.' }
       format.json { head :no_content }
     end
   end 

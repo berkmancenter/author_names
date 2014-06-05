@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
   
   belongs_to :publisher
   belongs_to :library
-  has_many :authors
+  has_many :authors, dependent: :destroy
   has_many :responses
   
   SUPER_USER_TYPES = ["", "Superadmin", "Admin", "Staff", "Author"]
