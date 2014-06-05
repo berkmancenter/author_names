@@ -9,6 +9,10 @@ class PublishersController < ApplicationController
     @publisher = Publisher.new
   end
   
+  def show
+    @publisher = Publisher.find(params[:id])
+  end  
+  
   def edit
     @publisher = Publisher.find(params[:id])
   end

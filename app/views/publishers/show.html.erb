@@ -1,0 +1,21 @@
+<div class="col-lg-12">
+  <h2><%= @publisher.name %></h2>
+  <div class="row">
+    <div class="well">
+	  Description: <%= @publisher.description %><br />
+	  Contact Name: <%= @publisher.contact_name %><br />
+	  Email: <%= @publisher.email %><br />
+	  Phone: <%= @publisher.phone %><br />
+	  Address 1: <%= @publisher.address_1 %><br />
+	  Address 2: <%= @publisher.address_2 %><br />
+	  City: <%= @publisher.city %><br />
+	  State: <%= @publisher.state %><br />
+	  Postal Code: <%= @publisher.postal_code %><br />
+	  Country: <%= @publisher.country %><br />
+	  Website: <%= @publisher.website %>
+	  <% unless @publisher.logo.blank? %>
+	    <br />Logo: <%= image_tag @publisher.logo_url.to_s, size: "200x200", alt: "Publisher Logo" %>
+	  <% end %>	
+    </div>
+  </div>	
+</div>

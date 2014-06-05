@@ -21,6 +21,7 @@
   		  <td><%= author.email %></td>
   		  <td><%= author.publisher.name %></td>
   		  <td>
+			<%= link_to('View', author_path(author)) %> |   
   	   		<%= link_to('Edit', edit_author_path(author), :class => "action-edit") %> 
   			<% if (current_user.try(:admin?) || current_user.try(:superadmin?)) && author.user != current_user %>
   			  | <%= link_to('Delete', author_path(author), :confirm => "Are you sure?", :method => :delete) %>

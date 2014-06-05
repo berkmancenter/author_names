@@ -16,8 +16,9 @@
 	    	<tr>
 	  	  <td><%= publisher.name %></td>
 		  <td>
+			<%= link_to('View', publisher_path(publisher)) %>  
 	      <% if current_user.try(:superadmin?) %>
-	   		<%= link_to('Edit', edit_publisher_path(publisher), :class => "action-edit") %> | <%= link_to('Delete', publisher_path(publisher), :confirm => "Are you sure?", :method => :delete) %>
+	   		 | <%= link_to('Edit', edit_publisher_path(publisher), :class => "action-edit") %> | <%= link_to('Delete', publisher_path(publisher), :confirm => "Are you sure?", :method => :delete) %>
 	  	  <% end %>
 		  </td>
 	    </tr>
