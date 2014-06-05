@@ -5,6 +5,10 @@ class Library < ActiveRecord::Base
   
   validates_presence_of :name, :contact_name, :phone, :email, :address_1, :city, :state, :postal_code, :country
   
+  def to_s
+    self.name
+  end
+  
   def all_staff
     User.find(:all, :conditions => {:admin => true, :library_id => self.id})
   end
