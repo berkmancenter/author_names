@@ -42,10 +42,11 @@ class LibrariesController < ApplicationController
   
   def destroy
     @library = Library.find(params[:id])
+    library = @library.name
     @library.destroy
 
     respond_to do |format|
-      format.html { redirect_to libraries_url, notice: 'Library was successfully deleted.' }
+      format.html { redirect_to libraries_url, notice: "#{library} was successfully deleted." }
       format.json { head :no_content }
     end
   end  

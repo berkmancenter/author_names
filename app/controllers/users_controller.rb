@@ -56,9 +56,9 @@ class UsersController < ApplicationController
        redirect_to('/') and return
     end
     
-    user = @user.email
+    user = @user
     if @user.destroy
-      flash[:notice] = %Q|Deleted user #{user}|
+      flash[:notice] = %Q|Deleted user #{user.full_name_email}|
       redirect_to :action => :index
     else
 
