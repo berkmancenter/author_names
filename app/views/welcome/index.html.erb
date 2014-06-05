@@ -3,12 +3,13 @@
   <% unless current_user.nil? %>  
     <p>OAQ is a tool for creating questionnaires, gathering author data in custom formats, and sharing it with libraries to make authors more discoverable.</p>
   
-    <h4>Hello, <%= current_user.first_name.nil? ? current_user.username : current_user.full_name %>!</h4>
+    <h4>Hello, <%= current_user.first_name.nil? ? current_user.username : current_user.full_name %> at <%= current_user.affiliation %>!</h4>
   
     <% if current_user.is_author? %>
       <% if @author_profile.nil? %>
           <p>You have not yet completed your author profile, please do so <%= link_to "here", new_author_path %>.</p>
-  	<% end %>	
+  	  <% end %>	
+	  <p>You have successfully logged in using credentials that you created to answer a publisher's questionnaire. If you are here to fill out a questionnaire, please open the questionnaire url you were sent via email.</p>
     <% elsif current_user.is_publisher? %>	  
       <p>You are associated with <%= current_user.publisher.name %></p>
 	

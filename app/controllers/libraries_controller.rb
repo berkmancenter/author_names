@@ -31,7 +31,7 @@ class LibrariesController < ApplicationController
 
     respond_to do |format|
       if @library.update_attributes(params[:library])
-        format.html { redirect_to libraries_url, notice: 'Library was successfully updated.' }
+        format.html { redirect_to edit_library_url(@library), notice: 'Library was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

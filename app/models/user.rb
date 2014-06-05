@@ -127,7 +127,13 @@ class User < ActiveRecord::Base
   end
   
   def affiliation
-    # spit out all publishers, libraries and/or author profiles associated with self.
+    if !self.publisher.nil?
+      return self.publisher.name
+    elsif !self.library.nil?
+      return self.library.name
+    else
+      return "Unaffiliated"
+    end      
   end
   
   def find_profile(publisher)
