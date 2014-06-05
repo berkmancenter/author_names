@@ -1,4 +1,6 @@
 class AuthorsController < ApplicationController
+  before_filter :authenticate_user!
+  
   def index
     if current_user.try(:superadmin?)
       @authors = Author.all
