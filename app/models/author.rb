@@ -4,7 +4,7 @@ class Author < ActiveRecord::Base
   belongs_to :publisher
   belongs_to :user
   
-  #validates_presence_of :phone, :address_1, :city, :state, :postal_code, :country, :email, :first_name, :last_name
+  validates_presence_of :publisher_id
   
   def to_s
     self.full_name
