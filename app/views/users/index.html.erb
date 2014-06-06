@@ -5,20 +5,17 @@
 	<table id="users-table" class="table table-striped table-hover tablesorter">
 	<thead>
 	  <tr>
-		<th>First Name</th>
-		<th>Last Name</th>
+		<th>Name</th>
 		<% if current_user.superadmin? %>
 		  <th>Affiliation</th>
 		<% end %>
-		<th>Email</th>
 		<th>Actions</th>
 	  </tr>
 	</thead> 
 	<tbody>
 	    <% @admin.each do |user| %>	
 	    <tr>
-		  <td><%= user.first_name %></td>
-		  <td><%= user.last_name %></td>
+		  <td><%= user.full_name_email %></td>
   		  <% if current_user.superadmin? %>
 		    <% if !user.publisher.nil? %>
 			  <td><%= user.publisher.name %></td> 
@@ -28,7 +25,6 @@
 		      <td>Unaffiliated</td>		
 			<% end %>  
   		  <% end %>
-	  	  <td><%= user.email %></td>
 		  <td>
 		  <% if user != current_user %>	  
 			 <%= link_to('Edit', edit_user_path(user), :class => "action-edit") %>
@@ -51,20 +47,17 @@
 	<table id="users-table" class="table table-striped table-hover tablesorter">
 	<thead>
 	  <tr>
-		<th>First Name</th>
-		<th>Last Name</th>
+		<th>Name</th>
 		<% if current_user.superadmin? %>
 		  <th>Affiliation</th>
 		<% end %>
-		<th>Email</th>
 		<th>Actions</th>
 	  </tr>
 	</thead> 
 	<tbody>
 	    <% @staff.each do |user| %>	
 	    <tr>
-		  <td><%= user.first_name %></td>
-		  <td><%= user.last_name %></td>
+		  <td><%= user.full_name_email %></td>
   		  <% if current_user.superadmin? %>
 		    <% if !user.publisher.nil? %>
 			  <td><%= user.publisher.name %></td> 
@@ -74,7 +67,6 @@
 		      <td>Unaffiliated</td>		
 			<% end %>  
   		  <% end %>
-	  	  <td><%= user.email %></td>
 		  <td>
 		  <% if user != current_user %>	  
 			 <%= link_to('Edit', edit_user_path(user), :class => "action-edit") %>
@@ -97,20 +89,17 @@
 	<table id="users-table" class="table table-striped table-hover tablesorter">
 	<thead>
 	  <tr>
-		<th>First Name</th>
-		<th>Last Name</th>
+		<th>Name</th>
 		<% if current_user.superadmin? %>
 		  <th>Affiliation</th>
 		<% end %>
-		<th>Email</th>
 		<th>Actions</th>
 	  </tr>
 	</thead> 
 	<tbody>
 	    <% @authors.each do |user| %>	
 	    <tr>
-		  <td><%= user.first_name %></td>
-		  <td><%= user.last_name %></td>
+		  <td><%= user.full_name_email %></td>
   		  <% if current_user.superadmin? %>
 		    <% if !user.publisher.nil? %>
 			  <td><%= user.publisher.name %></td> 
@@ -120,7 +109,6 @@
 		      <td>Unaffiliated</td>		
 			<% end %>  
   		  <% end %>
-	  	  <td><%= user.email %></td>
 		  <td>
 		  <% if user != current_user %>	  
 			 <%= link_to('Edit', edit_user_path(user), :class => "action-edit") %>
@@ -143,20 +131,17 @@
 	<table id="users-table" class="table table-striped table-hover tablesorter">
 	<thead>
 	  <tr>
-		<th>First Name</th>
-		<th>Last Name</th>
+		<th>Name</th>
 		<% if current_user.superadmin? %>
 		  <th>Affiliation</th>
 		<% end %>
-		<th>Email</th>
 		<th>Actions</th>
 	  </tr>
 	</thead> 
 	<tbody>
 	    <% @unassociated.each do |user| %>	
 	    <tr>
-		  <td><%= user.first_name %></td>
-		  <td><%= user.last_name %></td>
+		  <td><%= user.full_name_email %></td>
   		  <% if current_user.superadmin? %>
 		    <% if !user.publisher.nil? %>
 			  <td><%= user.publisher.name %></td> 
@@ -166,7 +151,6 @@
 		      <td>Unaffiliated</td>		
 			<% end %>  
   		  <% end %>
-	  	  <td><%= user.email %></td>
 		  <td>
 		  <% unless current_user.try(:superadmin?) %>
 		    <%= link_to('Make Staff', make_staff_users_path(:id => user.id), :class => "action-edit") %> | 
@@ -192,9 +176,7 @@
 	<table id="unaffiliated-users-table" class="table table-striped table-hover tablesorter">	
 	<thead>
 	  <tr>
-		<th>First Name</th>
-		<th>Last Name</th>
-		<th>Email</th>
+		<th>Name</th>
 		<% if current_user.superadmin? %>
 		  <th>Superadmin?</th>
 		  <th>Author?</th>
@@ -207,9 +189,7 @@
 	<tbody>
 	    <% @unaffiliated.each do |user| %>	
 	    <tr>
-		  <td><%= user.first_name %></td>
-		  <td><%= user.last_name %></td>
-	  	  <td><%= user.email %></td>
+		  <td><%= user.full_name_email %></td>
 		  <% if current_user.superadmin? %>
 		    <td><%= user.superadmin ? "Yes" : "No" %></td> 
 		    <td><%= user.is_author? ? "Yes" : "No" %></td>
@@ -238,18 +218,14 @@
 	<table id="superadmin-users-table" class="table table-striped table-hover tablesorter">	
 	<thead>
 	  <tr>
-		<th>First Name</th>
-		<th>Last Name</th>
-		<th>Email</th>
+		<th>Name</th>
 		<th>Actions</th>
 	  </tr>
 	</thead> 
 	<tbody>
 	    <% @superadmins.each do |user| %>	
 	    <tr>
-		  <td><%= user.first_name %></td>
-		  <td><%= user.last_name %></td>
-	  	  <td><%= user.email %></td>
+		  <td><%= user.full_name_email %></td>
 		  <td>
 		  <% if user != current_user %>	  
 			 <%= link_to('Edit', edit_user_path(user), :class => "action-edit") %>

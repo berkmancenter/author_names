@@ -9,7 +9,6 @@
   	<thead>
   	  <tr>
   		<th>Name</th>
-  		<th>Email</th>
   		<th>Publisher</th>
   		<th>Actions</th>
   	  </tr>
@@ -17,8 +16,7 @@
   	<tbody>
   	    <% @authors.each do |author| %>
   	    	<tr>
-  	  	  <td><%= author.full_name %></td>
-  		  <td><%= author.email %></td>
+  	  	  <td><%= author.full_name_email %></td>
   		  <td><%= author.publisher.name %></td>
   		  <td>
 			<%= link_to('View', author_path(author)) %> |   
