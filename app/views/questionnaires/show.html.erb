@@ -9,8 +9,6 @@
 	<strong>Version:</strong> <%= @questionnaire.version %><br />
 	<strong>Publisher:</strong> <%= @questionnaire.publisher %><br />
 	<br />
-	<strong>Form Items:</strong><br />
-	<br />
 	
 	<%= semantic_form_for :gather_response, :html => { :method => :get, :class => "form-horizontal" } do |f| %>
 	  <fieldset>
@@ -18,7 +16,12 @@
 			<%= f.inputs do %>
 	  	      <% @questionnaire.form_items.each do |item| %>
 	  		    <% if item.field_type == "Label" %>
-	  		      <p><%= raw item.display_text %></p>
+		        <div class="form-group"> 
+		          <label for="name" class="col-lg-2 control-label"></label>
+		          <div class="col-lg-10">
+	  		        <p><%= raw item.display_text %></p>
+		          </div>	
+		        </div>	
 	  		    <% else %>
 	  		      <%= f.semantic_fields_for "#{item.field_name}", :html => { :method => :get } do |fi| %>
 			        <div class="form-group"> 
