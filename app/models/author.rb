@@ -14,4 +14,8 @@ class Author < ActiveRecord::Base
     return "#{self.first_name} #{self.last_name}"
   end
   
+  def full_name_email
+    return "#{self.first_name} #{self.last_name} (#{self.email})"
+  end
+  
 end

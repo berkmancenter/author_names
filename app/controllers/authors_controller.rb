@@ -59,10 +59,11 @@ class AuthorsController < ApplicationController
   
   def destroy
     @author = Author.find(params[:id])
+    author = @author
     @author.destroy
 
     respond_to do |format|
-      format.html { redirect_to authors_url, notice: 'Author was successfully deleted.' }
+      format.html { redirect_to authors_url, notice: "#{author.full_name_email} was successfully deleted." }
       format.json { head :no_content }
     end
   end  
