@@ -79,6 +79,17 @@ class UsersController < ApplicationController
         params[:user][:publisher_id] = Publisher.find_by_name(params[:user][:publisher]).id
       end  
     end  
+    
+    if current_user.try(:superadmin?) 
+      if !@user.publisher.nil? && !params[:user][:library_id].nil?
+        p "was publisher now library"
+        params[:user][:publisher_id] = nil
+      end
+      if !@user.library.nil? && !params[:user][:publisher_id].nil?
+        p "was library now publisher"
+        params[:user][:library_id] = nil
+      end
+    end 
     params[:user] = params[:user].delete_if{|key, value| key == "publisher" || key == "library" }
     # admin = params[:user][:admin]
     # staff = params[:user][:staff]
@@ -91,6 +102,11 @@ class UsersController < ApplicationController
     params[:user_type] == "Admin" ? @user.admin = true : @user.admin = false
     params[:user_type] == "Staff" ? @user.staff = true : @user.staff = false
     params[:user_type] == "Superadmin" ? @user.superadmin = true : @user.superadmin = false
+
+    if @user.superadmin
+      @user.publisher = nil
+      @user.library = nil
+    end  
     
     respond_to do|format|
       if @user.save

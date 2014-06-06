@@ -57,4 +57,20 @@ $(document).ready(function(){
     .tablesorterPager({container: $("#pager-questionnaires-table")})
   ;
   
+  $('#pub_affiliation_dropdown').hide();
+  $('#lib_affiliation_dropdown').hide();
+  
+});
+
+jQuery(function(){
+
+  $('#affiliation_Publisher').change(function() {
+	$('#pub_affiliation_dropdown').show();
+	$('#lib_affiliation_dropdown').hide();
+   });
+   
+  $('#affiliation_Library').change(function() {
+ 	$('#pub_affiliation_dropdown').hide();
+ 	$('#lib_affiliation_dropdown').show();
+    }); 
 });

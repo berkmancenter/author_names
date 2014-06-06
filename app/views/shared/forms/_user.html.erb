@@ -29,18 +29,48 @@
 		  </div>
 	  	  <% end %>
 	  	  <% if current_user.try(:superadmin?) %>
+		  
+		  <div class="form-group"> 
+		    <label for="name" class="col-lg-2 control-label">Affiliation: </label>
+		    <div class="col-lg-10">
+			  <% unless @user.publisher.nil? %>	
+			    <%= radio_button_tag("affiliation", "Publisher", checked = true) %> Publisher <br />
+	  		    <script type="text/javascript">
+	  		      $(document).ready(function(){
+	  		      $('#pub_affiliation_dropdown').show();
+	  		    });  
+	  		    </script>
+			  <% else %>	
+			    <%= radio_button_tag("affiliation", "Publisher", checked = false) %> Publisher <br />
+			  <% end %>	
+			  <% unless @user.library.nil? %>
+			    <%= radio_button_tag("affiliation", "Library", checked = true) %> Library
+	  		    <script type="text/javascript">
+	  		      $(document).ready(function(){
+	  		      $('#lib_affiliation_dropdown').show();
+	  		    });  
+	  		    </script>
+			  <% else %>
+			    <%= radio_button_tag("affiliation", "Library", checked = false) %> Library
+			  <% end %>	
+		    </div>	
+		  </div>
+		  <span id="lib_affiliation_dropdown">
 		  <div class="form-group"> 
 		    <label for="name" class="col-lg-2 control-label">Assign Library: </label>
 		    <div class="col-lg-10">
 		      <%= f.input :library, :as => :select, :label => false, :input_html => { :class => "form-control"} %>
 		    </div>	
 		  </div>
+	      </span>
+		  <span id="pub_affiliation_dropdown">
 		  <div class="form-group"> 
 		    <label for="name" class="col-lg-2 control-label">Assign Publisher: </label>
 		    <div class="col-lg-10">
 		      <%= f.input :publisher, :as => :select, :label => false, :input_html => { :class => "form-control"} %>
 		    </div>	
 		  </div>
+	      </span>
 		  <% elsif current_user.is_lib_admin? %>  
 		  <div class="form-group"> 
 		    <label for="name" class="col-lg-2 control-label">Assign Library</label>
