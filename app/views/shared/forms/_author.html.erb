@@ -73,7 +73,7 @@
 		    <div class="form-group"> 
 		      <label for="name" class="col-lg-2 control-label">User</label>
 		      <div class="col-lg-10">
-		        <%= f.input :user, :label => false, :input_html => { :class => "form-control"} %>
+		        <%= f.input :user, :label => false, :collection => User.find(:all, :conditions => {:author => true}), :input_html => { :class => "form-control"} %>
 		      </div>	
 		    </div>
 		  <% else %>	
