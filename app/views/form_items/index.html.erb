@@ -13,7 +13,6 @@
 		<th>Field Name</th>
 		<th>Display Text</th>
 		<th>Field Type</th>
-		<th>Field Options</th>
 		<th>Required?</th>
 		<th>Actions</th>
 	  </tr>
@@ -22,9 +21,8 @@
 	    <% @form_items.each do |form_item| %>
 	    	<tr>
 	  	  <td><%= form_item.field_name %></td>
-		  <td><%= raw form_item.display_text %></td>
+		  <td><%= truncate(form_item.display_text.html_safe) %></td>
 		  <td><%= form_item.field_type %></td>
-		  <td><%= form_item.field_options %></td>
 		  <td><%= form_item.required %></td>
 		  <td>
 	      <% if current_user.try(:superadmin?) %>
@@ -56,18 +54,16 @@
 		<th>Field Name</th>
 		<th>Display Text</th>
 		<th>Field Type</th>
-		<th>Field Options</th>
 		<th>Required?</th>
 		<th>Actions</th>
 	  </tr>
 	</thead> 
 	<tbody>
 	    <% @your_form_items.each do |form_item| %>
-	    	<tr>
+	    <tr>
 	  	  <td><%= form_item.field_name %></td>
-		  <td><%= raw form_item.display_text %></td>
+		  <td><%= truncate(form_item.display_text.html_safe) %></td>
 		  <td><%= form_item.field_type %></td>
-		  <td><%= form_item.field_options %></td>
 		  <td><%= form_item.required %></td>
 		  <td>
 			  <%= link_to('View Field', view_field_form_item_path(form_item), :class => "action-edit") %>
