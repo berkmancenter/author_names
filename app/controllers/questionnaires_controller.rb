@@ -42,6 +42,10 @@ class QuestionnairesController < ApplicationController
   
   def edit
     @questionnaire = Questionnaire.find(params[:id])
+    
+    @lib_req = FormItem.all(:conditions => {:publisher_id => nil, :required => true})
+    @pub_req = FormItem.all(:conditions => {:publisher_id => current_user.publisher.id, :required => true})
+    
     unless params[:sort_items].nil?
       redirect_to sort_items_questionnaires_url(:sort_items => params[:sort_items], :id => params[:id])
     end

@@ -11,7 +11,7 @@
 		  <div class="form-group"> 
 		    <label for="name" class="col-lg-2 control-label">Description</label>
 		    <div class="col-lg-10">
-		      <%= f.input :description, :size => "50x10", :label => false, :input_html => { :class => "form-control"} %>
+		      <%= f.input :description, :label => false, :input_html => { :class => "form-control", :size => "10x10"} %>
 		    </div>	
 		  </div>
 		  <div class="form-group"> 
@@ -36,13 +36,13 @@
 	      </div> 
 	  	  <% end %>
 		  <div class="form-group"> 
-		    <label for="name" class="col-lg-2 control-label">Global Form Items</label>
+		    <label for="name" class="col-lg-2 control-label">Optional Global Form Items</label>
 		    <div class="col-lg-10">
 		      <%= f.input :form_items, :as => :check_boxes, :label => false, :collection => FormItem.all(:conditions => {:publisher_id => nil, :required => false}) %>
 		    </div>	
 		  </div>
 		  <div class="form-group"> 
-		    <label for="name" class="col-lg-2 control-label">Our Form Items</label>
+		    <label for="name" class="col-lg-2 control-label">Optional Our Form Items</label>
 		    <div class="col-lg-10">
 		      <%= f.input :form_items, :as => :check_boxes, :label => false, :collection => FormItem.all(:conditions => {:publisher_id => current_user.publisher.id, :required => false}) %>
 		    </div>	
