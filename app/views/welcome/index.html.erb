@@ -1,8 +1,9 @@
 <div class="col-lg-12">
   <h1>OAQ: Online Author Questionniare</h1>
+  <br />
   <% unless current_user.nil? %>  
     <p>OAQ is a tool for creating questionnaires, gathering author data in custom formats, and sharing it with libraries to make authors more discoverable.</p>
-  
+    <br />
     <h4>Hello, <%= current_user.first_name.nil? ? current_user.username : current_user.full_name %> at <%= current_user.affiliation %>!</h4>
   
     <% if current_user.is_author? %>
