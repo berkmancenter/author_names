@@ -26,6 +26,7 @@
 	    <% end %>
 	</tbody>	
 	</table>
+	<%= render :partial => '/shared/tablesorter_pager', :locals => {:pager_id => "users-table" } %>
   </div>
 <% else %>
 None yet!
