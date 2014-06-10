@@ -31,6 +31,11 @@ ol {
 	color: red;
 }
 
+th {     
+    cursor: pointer; 
+    font-weight: bold;
+}
+
 
 /* Set the fixed height of the footer here 
 #push, #footer {

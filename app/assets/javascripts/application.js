@@ -28,9 +28,29 @@ $(document).ready(function(){
   	.tablesorter()
     .tablesorterPager({container: $("#pager-users-table")})
   ;
+  $("#users-admin-table")
+  	.tablesorter()
+    .tablesorterPager({container: $("#pager-users-admin-table")})
+  ;
+  $("#users-staff-table")
+  	.tablesorter()
+    .tablesorterPager({container: $("#pager-users-staff-table")})
+  ;
+  $("#users-authors-table")
+  	.tablesorter()
+    .tablesorterPager({container: $("#pager-users-authors-table")})
+  ;
+  $("#users-unassociated-table")
+  	.tablesorter()
+    .tablesorterPager({container: $("#pager-users-unassociated-table")})
+  ;
   $("#unaffiliated-users-table")
   	.tablesorter()
     .tablesorterPager({container: $("#pager-unaffiliated-users-table")})
+  ;
+  $("#superadmin-users-table")
+  	.tablesorter()
+    .tablesorterPager({container: $("#pager-superadmin-users-table")})
   ;
   $("#publishers-table")
   	.tablesorter()
@@ -55,6 +75,10 @@ $(document).ready(function(){
   $("#questionnaires-table")
   	.tablesorter()
     .tablesorterPager({container: $("#pager-questionnaires-table")})
+  ;
+  $("#responses-table")
+  	.tablesorter()
+    .tablesorterPager({container: $("#pager-responses-table")})
   ;
   
   $('#pub_affiliation_dropdown').hide();
