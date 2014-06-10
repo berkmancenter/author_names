@@ -3,16 +3,14 @@
 </div>
 
 <div class="col-lg-6">
-  	<h3>PDF</h3>
-	Choose Questionnaire <br />
-	All Authors or Subset of Authors <br />
-	All Questions or Subset of Questions <br />
-	
+  <h3>CSV</h3>
+  <% unless @csv_export.nil? %>
+    <% @questionnaires.each do |q| %>
+      <%= link_to "Download #{q.name} CSV", "/uploads/export_#{q.name.gsub(/ /, '-')}.csv" %><br /><br />
+	<% end %>
+  <% end %>
 </div>
 
-<div class="col-lg-6">
-  	<h3>CSV</h3>
-	Choose Questionnaire <br />
-	All Authors or Subset of Authors <br />
-	All Questions or Subset of Questions <br />
-</div>
+
+
+			  

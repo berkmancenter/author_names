@@ -63,13 +63,17 @@
 		      <%= f.input :country, :label => false, :input_html => { :class => "form-control"} %>
 		    </div>	
 		  </div>
-	  	  <% if current_user.try(:superadmin?) || current_user.try(:admin?) %>
+	  	  <% if current_user.try(:superadmin?) %>
   		    <div class="form-group"> 
   		      <label for="name" class="col-lg-2 control-label">Publisher</label>
   		      <div class="col-lg-10">
   		        <%= f.input :publisher, :label => false, :input_html => { :class => "form-control"} %>
   		      </div>	
   		    </div>
+		  <% else %>
+		    <%= f.input :publisher_id, :as => :hidden, :value => current_user.publisher.id %>
+		  <% end %>
+		  <% if current_user.try(:superadmin?) || current_user.try(:admin?) %>	
 		    <div class="form-group"> 
 		      <label for="name" class="col-lg-2 control-label">User</label>
 		      <div class="col-lg-10">
@@ -78,7 +82,6 @@
 		    </div>
 		  <% else %>	
 			<%= f.input :user_id, :as => :hidden, :value => current_user.id %>
-			<%= f.input :publisher_id, :as => :hidden, :value => current_user.publisher.id %>
 	  	  <% end %>
 		  
 		<% end %>
