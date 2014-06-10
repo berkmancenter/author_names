@@ -5,6 +5,7 @@ AuthorNames::Application.routes.draw do
     collection do
       get 'author_response'
       get 'export'
+      get 'export_single'
     end
   end  
 
