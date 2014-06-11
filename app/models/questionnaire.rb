@@ -25,7 +25,7 @@ class Questionnaire < ActiveRecord::Base
     )   
   end  
   
-  def send_new_author_questionnaire_email(email, publication)
+  def send_new_author_questionnaire_email(email)
     # send to selected authors with link to questionnaire
     Email.create(
       :from => self.publisher.email,
