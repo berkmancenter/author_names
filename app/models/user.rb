@@ -13,6 +13,7 @@ class User < ActiveRecord::Base
   belongs_to :library
   has_many :authors, dependent: :destroy
   has_many :responses
+  has_many :publications
   
   SUPER_USER_TYPES = ["", "Superadmin", "Admin", "Staff", "Author"]
   USER_TYPES = ["", "Admin", "Staff", "Author"]
@@ -26,7 +27,7 @@ class User < ActiveRecord::Base
   end
   
   def full_name_email
-    return "#{self.first_name} #{self.last_name} (#{self.email})"
+    return "#{self.last_name}, #{self.first_name} (#{self.email})"
   end
   
   def self.random_password(size = 11)
@@ -144,25 +145,23 @@ class User < ActiveRecord::Base
     Author.first(:conditions => {:user_id => self.id, :publisher_id => publisher})
   end  
   
-  def send_new_publisher_user_email(emails, path)
+  def send_new_publisher_user_email(email, path)
     # send to selected users
     Email.create(
       :from => self.publisher.email,
       :reply_to => self.publisher.email,
-      :to => self.publisher.email,
-      :bcc => emails.join(", "),
+      :to => email,
       :subject => "[Author Names] Please Sign Up",
       :body => "<p>Please <a href='#{ROOT_URL}#{path}'>create</a> an account.</p>"
     )   
   end 
   
-  def send_new_library_user_email(emails, path)
+  def send_new_library_user_email(email, path)
     # send to selected users
     Email.create(
       :from => self.library.email,
       :reply_to => self.library.email,
-      :to => self.library.email,
-      :bcc => emails.join(", "),
+      :to => email,
       :subject => "[Author Names] Please Sign Up",
       :body => "<p>Please <a href='#{ROOT_URL}#{path}'>create</a> an account.</p>"
     )   

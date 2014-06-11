@@ -3,6 +3,7 @@ class Author < ActiveRecord::Base
   
   belongs_to :publisher
   belongs_to :user
+  has_many :publications
   
   validates_presence_of :publisher_id
   
@@ -15,7 +16,7 @@ class Author < ActiveRecord::Base
   end
   
   def full_name_email
-    return "#{self.first_name} #{self.last_name} (#{self.email})"
+    return "#{self.last_name}, #{self.first_name} (#{self.email})"
   end
   
 end
