@@ -139,27 +139,17 @@ class UsersController < ApplicationController
       emails << params[:new_emails].split(",").each{|e| e.strip!}
       emails.flatten!
     end
-    
-    # emails.each do |email|
-#       author = Author.new(:email => email, :publisher_id => params[:publisher_id])
-#       author.first_name = ""
-#       author.last_name = ""
-#       author.phone = ""
-#       author.address_1 = ""
-#       author.city = ""
-#       author.state = ""
-#       author.postal_code = ""
-#       author.country = ""
-#       author.save
-#     end
-    
     respond_to do |format|
       unless params[:new_emails].blank?
         unless params[:publisher_id].nil?
-          current_user.send_new_publisher_user_email(emails.collect{|e| e.strip}, "#{new_user_registration_path(:publisher_id => params[:publisher_id])}") 
+          emails.collect{|e| e.strip}.each do |email|
+            current_user.send_new_publisher_user_email(email, "#{new_user_registration_path(:publisher_id => params[:publisher_id], :email => email)}") 
+          end  
         end
         unless params[:library_id].nil?
-          current_user.send_new_library_user_email(emails.collect{|e| e.strip}, "#{new_user_registration_path(:library_id => params[:library_id])}") 
+          emails.collect{|e| e.strip}.each do |email|
+            current_user.send_new_library_user_email(email, "#{new_user_registration_path(:library_id => params[:library_id], :email => email)}") 
+          end  
         end  
         format.html { redirect_to users_url, notice: 'Users were successfully invited.' }
         format.json { head :no_content }

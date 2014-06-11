@@ -25,59 +25,59 @@
 
 $(document).ready(function(){	
   $("#users-table")
-  	.tablesorter()
+  	.tablesorter({sortList: [[0,0]]})
     .tablesorterPager({container: $("#pager-users-table")})
   ;
   $("#users-admin-table")
-  	.tablesorter()
+  	.tablesorter({sortList: [[0,0]]})
     .tablesorterPager({container: $("#pager-users-admin-table")})
   ;
   $("#users-staff-table")
-  	.tablesorter()
+  	.tablesorter({sortList: [[0,0]]})
     .tablesorterPager({container: $("#pager-users-staff-table")})
   ;
   $("#users-authors-table")
-  	.tablesorter()
+  	.tablesorter({sortList: [[0,0]]})
     .tablesorterPager({container: $("#pager-users-authors-table")})
   ;
   $("#users-unassociated-table")
-  	.tablesorter()
+  	.tablesorter({sortList: [[0,0]]})
     .tablesorterPager({container: $("#pager-users-unassociated-table")})
   ;
   $("#unaffiliated-users-table")
-  	.tablesorter()
+  	.tablesorter({sortList: [[0,0]]})
     .tablesorterPager({container: $("#pager-unaffiliated-users-table")})
   ;
   $("#superadmin-users-table")
-  	.tablesorter()
+  	.tablesorter({sortList: [[0,0]]})
     .tablesorterPager({container: $("#pager-superadmin-users-table")})
   ;
   $("#publishers-table")
-  	.tablesorter()
+  	.tablesorter({sortList: [[0,0]]})
     .tablesorterPager({container: $("#pager-publishers-table")})
   ;
   $("#libraries-table")
-  	.tablesorter()
+  	.tablesorter({sortList: [[0,0]]})
     .tablesorterPager({container: $("#pager-libraries-table")})
   ;
   $("#authors-table")
-  	.tablesorter()
+  	.tablesorter({sortList: [[0,0]]})
     .tablesorterPager({container: $("#pager-authors-table")})
   ;
   $("#form_items-table")
-  	.tablesorter()
+  	.tablesorter({sortList: [[0,0]]})
     .tablesorterPager({container: $("#pager-form_items-table")})
   ;
   $("#form_items_ours-table")
-  	.tablesorter()
+  	.tablesorter({sortList: [[0,0]]})
     .tablesorterPager({container: $("#pager-form_items_ours-table")})
   ;
   $("#questionnaires-table")
-  	.tablesorter()
+  	.tablesorter({sortList: [[0,0]]})
     .tablesorterPager({container: $("#pager-questionnaires-table")})
   ;
   $("#responses-table")
-  	.tablesorter()
+  	.tablesorter({sortList: [[0,0]]})
     .tablesorterPager({container: $("#pager-responses-table")})
   ;
   

@@ -1,4 +1,7 @@
 AuthorNames::Application.routes.draw do
+  resources :publications
+
+
   resources :authors
 
   resources :responses do

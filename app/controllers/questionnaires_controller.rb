@@ -125,31 +125,18 @@ class QuestionnairesController < ApplicationController
     end  
     unless params[:more_emails].blank?
       @new_authors = params[:more_emails].split(",").each{|e| e.strip!}
-      # emails = Array.new
-#       emails << params[:more_emails].split(",").each{|e| e.strip!}
-#       emails.flatten!
-#       emails.each do |email|
-#         author = Author.new(:email => email, :publisher_id => params[:publisher_id])
-#         author.first_name = ""
-#         author.last_name = ""
-#         author.phone = ""
-#         author.address_1 = ""
-#         author.city = ""
-#         author.state = ""
-#         author.postal_code = ""
-#         author.country = ""
-#         author.save
-#       end
-      # @authors << emails
-      # @authors.flatten!
     end 
     respond_to do |format|
       unless params[:emails].nil? && params[:more_emails].blank?
         unless params[:emails].nil?
-          @questionnaire.send_questionnaire_email(@authors.collect{|e| e.strip})
+          @authors.collect{|e| e.strip}.each do |email|
+            @questionnaire.send_questionnaire_email(email)
+          end  
         end
         unless params[:more_emails].blank?
-          @questionnaire.send_new_author_questionnaire_email(@new_authors.collect{|e| e.strip})
+          @new_authors.collect{|e| e.strip}.each do |email|
+            @questionnaire.send_new_author_questionnaire_email(email)
+          end
         end 
         format.html { redirect_to questionnaires_url, notice: 'Questionnaire was successfully sent.' }
         format.json { head :no_content }
