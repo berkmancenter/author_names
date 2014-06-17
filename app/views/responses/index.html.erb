@@ -2,7 +2,7 @@
   <h1>Questionnaire Responses</h1>
   <% unless @response_hash.nil? %>
   <div class="table-responsive">
-    <% if current_user.try(:superadmin?) || current_user.is_pub_admin? || current_user.is_lib_admin? || current_user.is_pub_staff? || current_user.is_lib_staff? %>
+    <% if current_user.is_pub_admin? || current_user.is_lib_admin? || current_user.is_pub_staff? || current_user.is_lib_staff? %>
       <%= link_to("Export All Responses", export_responses_path ) %>
     <% end %>  
 	<table id="responses-table" class="table table-striped table-hover tablesorter">
@@ -10,7 +10,11 @@
   	  <tr>
   		<th>Name</th>
   		<th>Date</th>
-  		<th>Questionnaire</th>
+		<% if current_user.is_pub_admin? || current_user.is_pub_staff? %>
+  		  <th>Questionnaire</th>
+		<% elsif current_user.is_lib_staff? || current_user.is_lib_admin? %>
+		  <th>Publisher</th>
+		<% end %>    
 		<th>Title</th>
 		<th>Actions</th>
   	  </tr>
@@ -18,12 +22,13 @@
   	<tbody>
   	  <% @response_hash.each_key do |questionnaire| %>
 		<% @response_hash[questionnaire].each_key do |user| %>
-		  <% resp_date, q_name, resp = "", "", "" %>
+		  <% resp_date, q_name, pub_name, resp = "", "", "" %>
   	      <tr>
   	  	  <td><%= User.find(user).full_name_email %></td>
 		  <% @response_hash[questionnaire][user].each do |response| %>
 		    <% resp_date = response.created_at.strftime("%m/%d/%Y") %>
 			<% q_name = response.questionnaire.name %>
+			<% pub_name = response.questionnaire.publisher.name %>
 		    <% if response.form_item.field_name == "Title" %>
   		      <% resp = response.response_text %>
 		    <% else %>	
@@ -31,7 +36,11 @@
 		    <% end %>	
 		  <% end %>	
 		  <td><%= resp_date %></td>
-		  <td><%= q_name %></td>
+  		  <% if current_user.is_pub_admin? || current_user.is_pub_staff? %>
+    		<td><%= q_name %></td>
+  		  <% elsif current_user.is_lib_staff? || current_user.is_lib_admin? %>
+  		    <td><%= pub_name %></td>
+  		  <% end %>
 		  <td><%= resp %></td>
 		  <td>
 			  <%= link_to "View", author_response_responses_path(:questionnaire => questionnaire, :user => user) %> | <%= link_to "Export Single", export_single_responses_path(:questionnaire => questionnaire, :user => user) %>
