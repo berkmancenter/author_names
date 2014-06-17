@@ -10,7 +10,7 @@ class AuthorsController < ApplicationController
   end
   
   def new
-    unless current_user.try(:superadmin?) || current_user.is_pub_admin? || current_user.is_pub_staff?
+    if current_user.is_lib_admin? || current_user.is_lib_staff?
        redirect_to('/') and return
     end
     @author = Author.new
