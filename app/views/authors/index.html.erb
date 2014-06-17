@@ -1,6 +1,6 @@
 <div class="col-lg-12">
-  <h1>Author Profiles</h1>
-  <h3>Existing Profiles</h3>
+  <h1>Author Contact Information</h1>
+  <h3>Existing Contact Information</h3>
   <div class="table-responsive">
       <% if (current_user.try(:admin?) || current_user.try(:superadmin?)) %>
         <p><%= link_to("Add New Single Profile", new_author_path ) %></p>
