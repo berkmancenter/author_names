@@ -4,8 +4,12 @@ class ResponsesController < ApplicationController
   before_filter :authenticate_user!
   
   def index
-    if current_user.is_pub_admin? || current_user.is_pub_staff?
-      @questionnaires = Questionnaire.all(:conditions => {:publisher_id => current_user.publisher.id})
+    unless current_user.is_author?
+      if current_user.is_pub_admin? || current_user.is_pub_staff?
+        @questionnaires = Questionnaire.all(:conditions => {:publisher_id => current_user.publisher.id})
+      elsif current_user.is_lib_admin? || current_user.is_lib_staff?
+        @questionnaires = Questionnaire.all
+      end  
       @response_hash = Hash.new
       @questionnaires.each do |q|
         @response_hash[q] = {}
@@ -81,7 +85,7 @@ class ResponsesController < ApplicationController
   def author_response
     @questionnaire = Questionnaire.find(params[:questionnaire].to_i)
     @user = User.find(params[:user].to_i)
-    if current_user.is_pub_admin? || current_user.is_pub_staff?
+    if current_user.is_pub_admin? || current_user.is_pub_staff? || current_user.is_lib_admin? || current_user.is_lib_staff?
       @responses = Response.all(:conditions => {:questionnaire_id => @questionnaire.id, :user_id => @user.id})
       p "responses"
       p @responses  
@@ -122,8 +126,12 @@ class ResponsesController < ApplicationController
   end  
   
   def export
+    if current_user.is_pub_admin? || current_user.is_pub_staff?
+      @questionnaires = Questionnaire.all(:conditions => {:publisher_id => current_user.publisher.id})
+    elsif current_user.is_lib_admin? || current_user.is_lib_staff?
+      @questionnaires = Questionnaire.all
+    end
     @csv_export = nil
-    @questionnaires = Questionnaire.all(:conditions => {:publisher_id => current_user.publisher.id})
     @response_hash = Hash.new
     @questionnaires.each do |q|
       @response_hash[q] = {}
