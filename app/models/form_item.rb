@@ -10,6 +10,7 @@ class FormItem < ActiveRecord::Base
   
   FIELD_TYPES = ['Checkbox', 'Dropdown', 'File', 'Radio', 'String', 'Textarea', 'Date', 'Label' ]
   FIELD_OPTIONS = ['']
+  AUTHOR_INFO = ['creator_given_name', 'creator_surname', 'author_email', 'home_phone', 'home_address_1', 'home_address_2', 'home_address_city', 'home_address_state', 'home_address_postalcode', 'home_address_country']
   
   def to_s
     self.field_name
@@ -34,4 +35,31 @@ class FormItem < ActiveRecord::Base
       as_param = "date_select"  
     end            
   end 
+  
+  def author_profile_map(author)
+    p "author"
+    p author
+    a = Author.find(author)
+    if self.field_name == "creator_given_name"
+      return a.first_name
+    elsif self.field_name == "creator_surname"
+      return a.last_name
+    elsif self.field_name == "author_email"
+      return a.email
+    elsif self.field_name == "home_phone"
+      return a.phone
+    elsif self.field_name == "home_address_1"
+      return a.address_1
+    elsif self.field_name == "home_address_2"
+      return a.address_2
+    elsif self.field_name == "home_address_city"
+      return a.city
+    elsif self.field_name == "home_address_state"
+      return a.state
+    elsif self.field_name == "home_address_postalcode"
+      return a.postal_code
+    elsif self.field_name == "home_address_country"          
+      return a.country
+    end      
+  end  
 end
