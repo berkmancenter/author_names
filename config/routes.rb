@@ -10,6 +10,7 @@ AuthorNames::Application.routes.draw do
       get 'export'
       get 'export_single'
       get 'mark_exported'
+      get 'delete_group'
     end
   end  
 
