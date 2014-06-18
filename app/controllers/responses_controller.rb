@@ -9,7 +9,7 @@ class ResponsesController < ApplicationController
       if current_user.is_publisher?
         @questionnaires = Questionnaire.all(:conditions => {:publisher_id => current_user.publisher.id})
         type = "pub_exported_flag"
-      elsif current_user.is_librarian?
+      elsif current_user.is_librarian? || current_user.try(:superadmin?)
         @questionnaires = Questionnaire.all
         type = "lib_exported_flag"
       end  
@@ -19,17 +19,31 @@ class ResponsesController < ApplicationController
         @response_hash_new[q] = {}
         @response_hash_past[q] = {}
         q.responses.each do |r|
-          if r.send("#{type}") == false
-            if @response_hash_new[q][r.user_id].nil?
-              @response_hash_new[q][r.user_id] = []
-            end  
-            @response_hash_new[q][r.user_id]<< r
+          if current_user.try(:superadmin?)
+            if r.pub_exported_flag && r.lib_exported_flag
+              if @response_hash_past[q][r.user_id].nil?
+                @response_hash_past[q][r.user_id] = []
+              end  
+              @response_hash_past[q][r.user_id]<< r
+            else
+              if @response_hash_new[q][r.user_id].nil?
+                @response_hash_new[q][r.user_id] = []
+              end  
+              @response_hash_new[q][r.user_id]<< r
+            end
           else
-            if @response_hash_past[q][r.user_id].nil?
-              @response_hash_past[q][r.user_id] = []
-            end  
-            @response_hash_past[q][r.user_id]<< r
-          end    
+            if r.send("#{type}") == false
+              if @response_hash_new[q][r.user_id].nil?
+                @response_hash_new[q][r.user_id] = []
+              end  
+              @response_hash_new[q][r.user_id]<< r
+            else
+              if @response_hash_past[q][r.user_id].nil?
+                @response_hash_past[q][r.user_id] = []
+              end  
+              @response_hash_past[q][r.user_id]<< r
+            end   
+          end      
         end   
       end
       
@@ -140,7 +154,7 @@ class ResponsesController < ApplicationController
   def export
     if current_user.is_publisher?
       @questionnaires = Questionnaire.all(:conditions => {:publisher_id => current_user.publisher.id})
-    elsif current_user.is_librarian?
+    elsif current_user.is_librarian? || current_user.try(:superadmin?)
       @questionnaires = Questionnaire.all
     end
     @csv_export = nil
@@ -206,6 +220,19 @@ class ResponsesController < ApplicationController
     end  
     
     flash[:notice] = 'Response has been marked as exported!'
+    redirect_to responses_path(:questionnaire => @questionnaire.id, :user => @user)
+  end  
+  
+  def delete_group
+    @questionnaire = Questionnaire.find(params[:questionnaire].to_i)
+    @user = User.find(params[:user].to_i)
+    @responses = Response.all(:conditions => {:questionnaire_id => @questionnaire.id, :user_id => @user.id})
+    
+    @responses.each do |response|
+      response.destroy
+    end  
+    
+    flash[:notice] = 'Response has been deleted!'
     redirect_to responses_path(:questionnaire => @questionnaire.id, :user => @user)
   end  
       
