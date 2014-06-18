@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140617192130) do
+ActiveRecord::Schema.define(:version => 20140618195224) do
 
   create_table "authors", :force => true do |t|
     t.string   "phone",                       :null => false
@@ -47,7 +47,7 @@ ActiveRecord::Schema.define(:version => 20140617192130) do
     t.string   "field_name",                       :null => false
     t.text     "display_text"
     t.string   "field_type",                       :null => false
-    t.string   "field_options"
+    t.text     "field_options"
     t.boolean  "required",      :default => false
     t.integer  "publisher_id"
     t.datetime "created_at",                       :null => false
