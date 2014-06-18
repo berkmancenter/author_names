@@ -3,7 +3,7 @@ class FormItemsController < ApplicationController
   
   def index
     @form_items = FormItem.find(:all, :conditions => {:publisher_id => nil})
-    if current_user.is_pub_admin? || current_user.is_pub_staff?
+    if current_user.is_publisher?
       @your_form_items = FormItem.find(:all, :conditions => {:publisher_id => current_user.publisher.id})
     end  
   end

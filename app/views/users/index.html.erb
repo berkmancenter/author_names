@@ -246,7 +246,7 @@
 <% if current_user.is_pub_admin? %>
 <div class="col-lg-12">
   <div class="table-responsive">
-  <% if current_user.is_pub_admin? || current_user.is_pub_staff? %>
+  <% if current_user.is_publisher? %>
     <h3>Bulk Create New Users</h3>
     <%= form_tag bulk_users_users_path, :method => :get do %>
     <p>
@@ -265,7 +265,7 @@
 <% if current_user.is_lib_admin? %>
 <div class="col-lg-12">
   <div class="table-responsive">
-  <% if current_user.is_lib_admin? || current_user.is_lib_staff? %>
+  <% if current_user.is_librarian? %>
     <h3>Bulk Create New Users</h3>
     <%= form_tag bulk_users_users_path, :method => :get do %>
     <p>

@@ -9,6 +9,7 @@ AuthorNames::Application.routes.draw do
       get 'author_response'
       get 'export'
       get 'export_single'
+      get 'mark_exported'
     end
   end  
 

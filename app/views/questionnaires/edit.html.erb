@@ -31,7 +31,7 @@
 	
   <hr>
 	
-  <% if current_user.is_pub_admin? || current_user.is_pub_staff? %>
+  <% if current_user.is_publisher? %>
 	<h4>Sort Order</h4>
 	<%= semantic_form_for :sort_items, :html => { :method => :get, :class => "form-horizontal" } do |f| %>
 	  <fieldset>

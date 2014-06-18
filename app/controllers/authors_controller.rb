@@ -4,13 +4,13 @@ class AuthorsController < ApplicationController
   def index
     if current_user.try(:superadmin?)
       @authors = Author.all
-    elsif current_user.is_pub_admin? || current_user.is_pub_staff?
+    elsif current_user.is_publisher?
       @authors = Author.all(:conditions => {:publisher_id => current_user.publisher.id}) 
     end 
   end
   
   def new
-    if current_user.is_lib_admin? || current_user.is_lib_staff?
+    if current_user.is_librarian?
        redirect_to('/') and return
     end
     @author = Author.new
