@@ -4,5 +4,6 @@ class Response < ActiveRecord::Base
   belongs_to :user
   belongs_to :questionnaire
   belongs_to :form_item
+  belongs_to :publication
    
 end

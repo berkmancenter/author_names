@@ -5,4 +5,5 @@ class Publication < ActiveRecord::Base
   belongs_to :author
   belongs_to :publisher
   belongs_to :questionnaire
+  has_many :responses
 end

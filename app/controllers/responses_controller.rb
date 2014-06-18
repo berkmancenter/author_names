@@ -5,19 +5,31 @@ class ResponsesController < ApplicationController
   
   def index
     unless current_user.is_author?
-      if current_user.is_pub_admin? || current_user.is_pub_staff?
+      type = ""
+      if current_user.is_publisher?
         @questionnaires = Questionnaire.all(:conditions => {:publisher_id => current_user.publisher.id})
-      elsif current_user.is_lib_admin? || current_user.is_lib_staff?
+        type = "pub_exported_flag"
+      elsif current_user.is_librarian?
         @questionnaires = Questionnaire.all
+        type = "lib_exported_flag"
       end  
-      @response_hash = Hash.new
+      @response_hash_new = Hash.new
+      @response_hash_past = Hash.new
       @questionnaires.each do |q|
-        @response_hash[q] = {}
+        @response_hash_new[q] = {}
+        @response_hash_past[q] = {}
         q.responses.each do |r|
-          if @response_hash[q][r.user_id].nil?
-            @response_hash[q][r.user_id] = []
-          end  
-          @response_hash[q][r.user_id]<< r
+          if r.send("#{type}") == false
+            if @response_hash_new[q][r.user_id].nil?
+              @response_hash_new[q][r.user_id] = []
+            end  
+            @response_hash_new[q][r.user_id]<< r
+          else
+            if @response_hash_past[q][r.user_id].nil?
+              @response_hash_past[q][r.user_id] = []
+            end  
+            @response_hash_past[q][r.user_id]<< r
+          end    
         end   
       end
       
@@ -85,7 +97,7 @@ class ResponsesController < ApplicationController
   def author_response
     @questionnaire = Questionnaire.find(params[:questionnaire].to_i)
     @user = User.find(params[:user].to_i)
-    if current_user.is_pub_admin? || current_user.is_pub_staff? || current_user.is_lib_admin? || current_user.is_lib_staff?
+    if current_user.is_publisher? || current_user.is_librarian?
       @responses = Response.all(:conditions => {:questionnaire_id => @questionnaire.id, :user_id => @user.id})
       p "responses"
       p @responses  
@@ -126,9 +138,9 @@ class ResponsesController < ApplicationController
   end  
   
   def export
-    if current_user.is_pub_admin? || current_user.is_pub_staff?
+    if current_user.is_publisher?
       @questionnaires = Questionnaire.all(:conditions => {:publisher_id => current_user.publisher.id})
-    elsif current_user.is_lib_admin? || current_user.is_lib_staff?
+    elsif current_user.is_librarian?
       @questionnaires = Questionnaire.all
     end
     @csv_export = nil
@@ -176,5 +188,25 @@ class ResponsesController < ApplicationController
     end 
     @csv_export = true
   end
+  
+  def mark_exported
+    @questionnaire = Questionnaire.find(params[:questionnaire].to_i)
+    @user = User.find(params[:user].to_i)
+    @responses = Response.all(:conditions => {:questionnaire_id => @questionnaire.id, :user_id => @user.id})
+    type = ""
+    if current_user.is_publisher?
+      type = "pub_exported_flag"
+    elsif current_user.is_librarian?
+      type = "lib_exported_flag"
+    end
+    
+    @responses.each do |response|
+      response.send("#{type}=", true)
+      response.save  
+    end  
+    
+    flash[:notice] = 'Response has been marked as exported!'
+    redirect_to responses_path(:questionnaire => @questionnaire.id, :user => @user)
+  end  
       
 end

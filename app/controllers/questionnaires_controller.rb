@@ -4,7 +4,7 @@ class QuestionnairesController < ApplicationController
   def index
     if current_user.try(:superadmin?)
       @questionnaires = Questionnaire.all
-    elsif current_user.is_pub_admin? || current_user.is_pub_staff?
+    elsif current_user.is_publisher?
       @questionnaires = Questionnaire.all(:conditions => {:publisher_id => current_user.publisher.id})
     elsif current_user.is_author?
       redirect_to('/') and return

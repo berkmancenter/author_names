@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140610193843) do
+ActiveRecord::Schema.define(:version => 20140617192130) do
 
   create_table "authors", :force => true do |t|
     t.string   "phone",                       :null => false
@@ -119,13 +119,15 @@ ActiveRecord::Schema.define(:version => 20140610193843) do
   end
 
   create_table "responses", :force => true do |t|
-    t.integer  "questionnaire_id",                    :null => false
-    t.integer  "user_id",                             :null => false
-    t.integer  "form_item_id",                        :null => false
+    t.integer  "questionnaire_id",                     :null => false
+    t.integer  "user_id",                              :null => false
+    t.integer  "form_item_id",                         :null => false
     t.text     "response_text"
-    t.boolean  "exported_flag",    :default => false
-    t.datetime "created_at",                          :null => false
-    t.datetime "updated_at",                          :null => false
+    t.boolean  "lib_exported_flag", :default => false
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
+    t.boolean  "pub_exported_flag", :default => false
+    t.integer  "publication_id"
   end
 
   create_table "users", :force => true do |t|
