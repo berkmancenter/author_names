@@ -15,7 +15,7 @@ en:
   devise:
     failure:
       already_authenticated: 'You are already signed in.'
-      unauthenticated: 'You need to sign in before continuing.'
+      unauthenticated: 'You must be signed in to OAQ to access this page. If you do not yet have an OAQ account, please refer to the invitation that you received via email.'
       unconfirmed: 'You have to confirm your account before continuing.'
       locked: 'Your account is locked.'
       not_found_in_database: 'Invalid email or password.'
