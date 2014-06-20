@@ -1,5 +1,6 @@
 require 'csv'
 class FormItemsController < ApplicationController
+  before_filter :authenticate_user!
   
   def index
     @form_items = FormItem.find(:all, :conditions => {:publisher_id => nil})
