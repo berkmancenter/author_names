@@ -48,7 +48,11 @@
 						      <%= fi.input :response_text, :as => item.formtastic_field_map, :label => false, :input_html => { :class => "form-control" }, :start_year => Time.now.year - 25, :end_year => Time.now.year + 10 %>	
 							<% else %>
 							  <% if FormItem::AUTHOR_INFO.include?(item.field_name) && !@user.nil? %>
-							    <%= fi.input :response_text, :as => item.formtastic_field_map, :label => false, :input_html => { :class => "form-control", :value => @gather_response.nil? ? item.author_profile_map(@user.find_profile(@user.publisher)) : @gather_response["#{item.field_name}"]["response_text"]} %>	
+							    <% unless @user.find_profile(@user.publisher).nil? %>
+							      <%= fi.input :response_text, :as => item.formtastic_field_map, :label => false, :input_html => { :class => "form-control", :value => @gather_response.nil? ? item.author_profile_map(@user.find_profile(@user.publisher)) : @gather_response["#{item.field_name}"]["response_text"]} %>	
+								<% else %>
+								  <%= fi.input :response_text, :as => item.formtastic_field_map, :label => false, :input_html => { :class => "form-control", :value => @gather_response.nil? ? "" : @gather_response["#{item.field_name}"]["response_text"]} %>  
+								<% end %>  
 							  <% else %>
 							    <%= fi.input :response_text, :as => item.formtastic_field_map, :label => false, :input_html => { :class => "form-control", :value => @gather_response.nil? ? "" : @gather_response["#{item.field_name}"]["response_text"]} %>	
 							  <% end %>		
