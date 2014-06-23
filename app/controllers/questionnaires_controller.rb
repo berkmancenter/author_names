@@ -16,16 +16,19 @@ class QuestionnairesController < ApplicationController
     unless params[:author_user_id].nil?
       @user = User.find(params[:author_user_id])
     else
-      @user = current_user  
+      unless current_user.try(:superadmin?) || current_user.is_publisher? || current_user.is_librarian?
+        @user = current_user  
+      end  
     end  
-    
-    profile = Author.first(:conditions => {:email => @user.email, :publisher_id => @questionnaire.publisher.id})
-    unless profile.nil?
-      profile.user_id = @user.id
-      profile.save
-      @user.publisher_id = @questionnaire.publisher.id
-      @user.save
-    end 
+    unless @user.nil?
+      profile = Author.first(:conditions => {:email => @user.email, :publisher_id => @questionnaire.publisher.id})
+      unless profile.nil?
+        profile.user_id = @user.id
+        profile.save
+        @user.publisher_id = @questionnaire.publisher.id
+        @user.save
+      end 
+    end  
     
     unless params[:gather_response].nil?
       redirect_to gather_response_questionnaires_url(:answers => params[:gather_response])
