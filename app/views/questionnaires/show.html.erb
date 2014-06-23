@@ -68,8 +68,10 @@
 	  		    <% end %>
 	  	      <% end %>		
 			<% end %>
-			<%= f.actions do %>
-			  <%= f.action :submit, :as => :button, :button_html => { :class => "btn btn-primary"} %>
+			<% unless @user.nil? %>
+			  <%= f.actions do %>
+			    <%= f.action :submit, :as => :button, :button_html => { :class => "btn btn-primary"} %>
+			  <% end %>	
 			<% end %>
 	  </fieldset>
 	<% end %>
