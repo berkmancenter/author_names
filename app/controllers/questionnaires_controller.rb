@@ -28,11 +28,7 @@ class QuestionnairesController < ApplicationController
         @user.publisher_id = @questionnaire.publisher.id
         @user.save
       end 
-    end  
-    
-    unless params[:gather_response].nil?
-      redirect_to gather_response_questionnaires_url(:answers => params[:gather_response])
-    end  
+    end 
     
   end
   
@@ -102,7 +98,7 @@ class QuestionnairesController < ApplicationController
   end  
   
   def gather_response
-    params[:answers].each_value do |value|
+    params[:gather_response].each_value do |value|
       if FormItem.find(value["form_item_id"].to_i).field_type == "Date"
         value['response_text'] = Date.new(value['response_text(1i)'].to_i, value['response_text(2i)'].to_i, value['response_text(3i)'].to_i).to_s
         value.delete('response_text(1i)')
