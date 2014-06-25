@@ -10,7 +10,7 @@
 	<strong>Publisher:</strong> <%= @questionnaire.publisher %><br />
 	<br />
 	
-	<%= semantic_form_for :gather_response, :html => { :method => :get, :class => "form-horizontal" } do |f| %>
+	<%= semantic_form_for :gather_response, :url => gather_response_questionnaires_path, :html => { :method => :post, :class => "form-horizontal" } do |f| %>
 	  <fieldset>
 	    <legend></legend>	    
 			<%= f.inputs do %>

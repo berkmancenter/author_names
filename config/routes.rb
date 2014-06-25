@@ -17,7 +17,7 @@ AuthorNames::Application.routes.draw do
 
   resources :questionnaires do
     collection do
-      get 'gather_response'
+      post 'gather_response'
       get 'send_questionnaire'
       get 'choose_authors'
       get 'sort_items'
