@@ -3,7 +3,7 @@
   <% unless @response_hash_new.nil? %>
   <div class="table-responsive">
     <% if current_user.is_publisher? || current_user.is_librarian? || current_user.try(:superadmin?) %>
-      <%= link_to("Export All Responses", export_responses_path ) %>
+      <%= link_to("Export All Responses", export_responses_path ) %> | <%= link_to "Retrieve as XML", isni_responses_path(:format => 'xml') %>
     <% end %>  
 	<table id="responses-table" class="table table-striped table-hover tablesorter">
   	<thead>
@@ -74,7 +74,7 @@
   <% unless @response_hash_past.nil? %>
   <div class="table-responsive">
     <% if current_user.is_publisher? || current_user.is_librarian? || current_user.try(:superadmin?) %>
-      <%= link_to("Export All Responses", export_responses_path ) %>
+      <%= link_to("Export All Responses", export_responses_path ) %> | <%= link_to "Retrieve as XML", isni_responses_path(:format => 'xml') %>
     <% end %>  
 	<table id="responses-table" class="table table-striped table-hover tablesorter">
   	<thead>
