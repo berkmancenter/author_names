@@ -25,7 +25,7 @@
 	  		    <% else %>
 	  		      <%= f.semantic_fields_for "#{item.field_name}", :html => { :method => :get } do |fi| %>
 			        <div class="form-group"> 
-			          <label for="name" class="col-lg-2 control-label"><%= item.display_text.html_safe %></label>
+			          <label for="name" class="col-lg-2 control-label"><%= raw item.display_text.html_safe %></label>
 			          <div class="col-lg-10">
 						  <% if item.formtastic_field_map == "radio" || item.formtastic_field_map == "check_boxes" || item.formtastic_field_map ==  "select" %>
 						    <% unless item.field_options.nil? %>

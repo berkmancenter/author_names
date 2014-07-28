@@ -105,6 +105,12 @@ class QuestionnairesController < ApplicationController
         value.delete('response_text(2i)')
         value.delete('response_text(3i)')
       end
+      if FormItem.find(value["form_item_id"].to_i).field_type == "File"
+        p "file field"
+        p value['response_text'].class
+        p value
+        # value['response_text'] =
+      end
       response = Response.create(value)
     end  
     
