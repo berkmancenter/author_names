@@ -15,7 +15,7 @@
 	  	      <% @response.form_items.each do |item| %>
 	  		    <%= f.semantic_fields_for "#{item.field_name}", :html => { :method => :get } do |fi| %>
 			    <div class="form-group"> 
-			      <label for="name" class="col-lg-2 control-label"><%= item.display_text %></label>
+			      <label for="name" class="col-lg-2 control-label"><%= raw item.display_text %></label>
 			      <div class="col-lg-10">
 		            <%= fi.input :response_text, :as => item.formtastic_field_map, :label => false, :input_html => { :class => "form-control"} %>
 			      </div>	

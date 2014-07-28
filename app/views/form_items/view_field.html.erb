@@ -7,7 +7,7 @@
       <legend></legend>	    
   		<%= f.inputs do %>
   		  <div class="form-group"> 
-  		    <label for="name" class="col-lg-2 control-label"><%= @form_item.display_text %></label>
+  		    <label for="name" class="col-lg-2 control-label"><%= raw @form_item.display_text %></label>
   		    <div class="col-lg-10">
 		      <%= f.input @form_item.field_name, :as => @form_item.formtastic_field_map, :label => false, :collection => @form_item.field_options.nil? ? '' : @form_item.field_options.split(','), :input_html => { :class => "form-control"} %>
   		    </div>	

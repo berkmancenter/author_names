@@ -39,11 +39,12 @@
 		  <% @questionnaire.form_items.each do |item| %>    
 			<%= f.inputs do %>
 			  <div class="form-group"> 
-			    <label for="name" class="col-lg-2 control-label">Set Position: <%= f.input item.field_name, :as => :select, :collection => (1..@questionnaire.form_items.count).to_a, :label => false, :selected => FormItemsQuestionnaires.first(:conditions => {:form_item_id => item.id, :questionnaire_id => @questionnaire.id }).form_item_position.nil? ? '' : FormItemsQuestionnaires.first(:conditions => {:form_item_id => item.id, :questionnaire_id => @questionnaire.id }).form_item_position %></label>
+			    <label for="name" class="col-lg-2 control-label">Position: <%= f.input item.field_name, :as => :select, :collection => (1..@questionnaire.form_items.count).to_a, :label => false, :selected => FormItemsQuestionnaires.first(:conditions => {:form_item_id => item.id, :questionnaire_id => @questionnaire.id }).form_item_position.nil? ? '' : FormItemsQuestionnaires.first(:conditions => {:form_item_id => item.id, :questionnaire_id => @questionnaire.id }).form_item_position %></label>
 			    <div class="col-lg-10">
-		          <%= word_wrap(item.display_text, :line_width => 56).html_safe %>
+		          <%= raw item.display_text %>
 			    </div>	
 			  </div>
+			  <hr />
 			<% end %>
 		  <% end %>	
 		<%= f.actions do %>
