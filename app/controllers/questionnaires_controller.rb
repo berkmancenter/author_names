@@ -109,7 +109,8 @@ class QuestionnairesController < ApplicationController
         p "file field"
         p value['response_text'].class
         p value
-        # value['response_text'] =
+        value['author_upload'] = value['response_text']
+        value['response_text'] = "File Upload"
       end
       response = Response.create(value)
     end  
