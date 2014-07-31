@@ -21,7 +21,12 @@ class Questionnaire < ActiveRecord::Base
       :reply_to => self.publisher.email,
       :to => email,
       :subject => "[Author Names] Please Fill Out This Questionnaire",
-      :body => "<p>Please <a href='#{ROOT_URL}#{questionnaire_path(self)}'>complete</a> this questionniare.</p>"
+      :body => "<p>Welcome to OAQ, the Online Author Questionnaire system.</p>
+                <p>Staff from #{self.publisher.name} have asked you to complete a questionnaire. This information will be used by #{self.publisher.name} to take advantage of your knowledge of your own work in order to best promote your book.</p>
+                <p>Please <a href='#{ROOT_URL}#{questionnaire_path(self)}'>complete the questionnaire</a>. Having this information will help with promotion efforts, so completing the questionnaire in a timely fashion will be greatly appreciated.</p>
+                <p>If you have any questions, please feel free to contact your editor.</p>
+                <p>Thank you very much,<br />
+                   #{self.publisher.name} staff</p>"
     )   
   end  
   
@@ -32,7 +37,12 @@ class Questionnaire < ActiveRecord::Base
       :reply_to => self.publisher.email,
       :to => email,
       :subject => "[Author Names] Please Fill Out This Questionnaire",
-      :body => "<p>Please <a href='#{ROOT_URL}#{new_user_registration_path(:publisher_id => self.publisher.id, :a => true, :email => email)}'>create</a> an account and <a href='#{ROOT_URL}#{questionnaire_path(self)}'>complete</a> this questionniare.</p>"
+      :body => "<p>Welcome to OAQ, the Online Author Questionnaire system.</p>
+                <p>Staff from #{self.publisher.name} have asked you to complete a questionnaire. This information will be used by #{self.publisher.name} to take advantage of your knowledge of your own work in order to best promote your book.</p>
+                <p>Please <a href='#{ROOT_URL}#{new_user_registration_path(:publisher_id => self.publisher.id, :a => true, :email => email)}'>create an account</a>, and then <a href='#{ROOT_URL}#{questionnaire_path(self)}'>complete the questionnaire</a>. Having this information will help with promotion efforts, so completing the questionnaire in a timely fashion will be greatly appreciated.</p>
+                <p>If you have any questions, please feel free to contact your editor.</p>
+                <p>Thank you very much,<br />
+                   #{self.publisher.name} staff</p>"
     )   
   end  
 end
