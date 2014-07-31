@@ -217,6 +217,24 @@ class ResponsesController < ApplicationController
     end 
   end
   
+  def responses
+    if current_user.is_publisher?
+      @questionnaires = Questionnaire.all(:conditions => {:publisher_id => current_user.publisher.id})
+    elsif current_user.is_librarian? || current_user.try(:superadmin?)
+      @questionnaires = Questionnaire.all
+    end
+    @response_hash = Hash.new
+    @questionnaires.each do |q|
+      @response_hash[q] = {}
+      q.responses.each do |r|
+        if @response_hash[q][r.user_id].nil?
+          @response_hash[q][r.user_id] = []
+        end  
+        @response_hash[q][r.user_id]<< r
+      end   
+    end 
+  end
+  
   def mark_exported
     @questionnaire = Questionnaire.find(params[:questionnaire].to_i)
     @user = User.find(params[:user].to_i)

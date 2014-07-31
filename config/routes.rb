@@ -12,6 +12,7 @@ AuthorNames::Application.routes.draw do
       get 'mark_exported'
       get 'delete_group'
       get 'isni'
+      get 'responses'
     end
   end  
 
