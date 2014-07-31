@@ -9,6 +9,7 @@
   	<thead>
   	  <tr>
   		<th>Name</th>
+		<th>Publication ID</th>
   		<th>Date</th>
 		<% if current_user.is_publisher? %>
   		  <th>Questionnaire</th>
@@ -22,28 +23,31 @@
   	<tbody>
   	  <% @response_hash_new.each_key do |questionnaire| %>
 		<% @response_hash_new[questionnaire].each_key do |user| %>
-		  <% resp_date, q_name, pub_name, resp = "", "", "" %>
-  	      <tr>
-  	  	  <td><%= User.find(user).full_name_email %></td>
-		  <% @response_hash_new[questionnaire][user].each do |response| %>
-		    <% resp_date = response.created_at.strftime("%m/%d/%Y") %>
-			<% q_name = response.questionnaire.name %>
-			<% pub_name = response.questionnaire.publisher.name %>
-		    <% if response.form_item.field_name == "Title" %>
-  		      <% resp = response.response_text %>
-		    <% else %>	
-  		      <% resp = "None" %>
+		  <% resp_date, q_name, pub_name, resp, publication_id = "", "", "", "" %>
+		  <% @response_hash_new[questionnaire][user].each_key do |publication| %>
+  	        <tr>
+  	  	    <td><%= User.find(user).full_name_email %></td>
+		    <% @response_hash_new[questionnaire][user][publication].each do |response| %>
+		      <% publication_id = response.publication.id %>
+			  <% resp_date = response.created_at.strftime("%m/%d/%Y") %>
+			  <% q_name = response.questionnaire.name %>
+			  <% pub_name = response.questionnaire.publisher.name %>
+		      <% if response.form_item.field_name == "Title" %>
+  		        <% resp = response.response_text %>
+		      <% else %>	
+  		        <% resp = "None" %>
+		      <% end %>	
 		    <% end %>	
-		  <% end %>	
-		  <td><%= resp_date %></td>
-  		  <% if current_user.is_publisher? %>
-    		<td><%= q_name %></td>
-  		  <% elsif current_user.is_librarian? %>
-  		    <td><%= pub_name %></td>
-  		  <% end %>
-		  <td><%= resp %></td>
-		  <td>
-			  <%= link_to "View", author_response_responses_path(:questionnaire => questionnaire, :user => user) %> | <%= link_to "Export Single", export_single_responses_path(:questionnaire => questionnaire, :user => user) %>
+		    <td><%= publication_id %></td>
+		    <td><%= resp_date %></td>
+  		    <% if current_user.is_publisher? %>
+    		  <td><%= q_name %></td>
+  		    <% elsif current_user.is_librarian? %>
+  		      <td><%= pub_name %></td>
+  		    <% end %>
+		    <td><%= resp %></td>
+		    <td>
+			  <%= link_to "View", author_response_responses_path(:questionnaire => questionnaire, :user => user, :publication => publication) %> | <%= link_to "Export Single", export_single_responses_path(:questionnaire => questionnaire, :user => user, :publication => publication) %>
 		  	  <% unless @csv.nil? %>
 			    <% if @user == user %>
 			      | <%= link_to "Download CSV", "/uploads/export_single_#{user}.csv" %>
@@ -52,8 +56,9 @@
 			    <% unless current_user.try(:superadmin?) %>  
 			       | <%= link_to "Mark as Exported", mark_exported_responses_path(:questionnaire => questionnaire, :user => user) %>
 				<% end %>  
-		  </td>
-  	      </tr>
+		    </td>
+  	        </tr>
+		  <% end %>	
   	    <% end %>
 	  <% end %>	
   	</tbody>	
@@ -80,6 +85,7 @@
   	<thead>
   	  <tr>
   		<th>Name</th>
+		<th>Publication ID</th>
   		<th>Date</th>
 		<% if current_user.is_publisher? %>
   		  <th>Questionnaire</th>
@@ -93,38 +99,42 @@
   	<tbody>
   	  <% @response_hash_past.each_key do |questionnaire| %>
 		<% @response_hash_past[questionnaire].each_key do |user| %>
-		  <% resp_date, q_name, pub_name, resp = "", "", "" %>
-  	      <tr>
-  	  	  <td><%= User.find(user).full_name_email %></td>
-		  <% @response_hash_past[questionnaire][user].each do |response| %>
-		    <% resp_date = response.created_at.strftime("%m/%d/%Y") %>
-			<% q_name = response.questionnaire.name %>
-			<% pub_name = response.questionnaire.publisher.name %>
-		    <% if response.form_item.field_name == "Title" %>
-  		      <% resp = response.response_text %>
-		    <% else %>	
-  		      <% resp = "None" %>
+		  <% resp_date, q_name, pub_name, resp, publication_id = "", "", "", "" %>
+		  <% @response_hash_past[questionnaire][user].each_key do |publication| %>
+  	        <tr>
+  	  	    <td><%= User.find(user).full_name_email %></td>
+		    <% @response_hash_past[questionnaire][user][publication].each do |response| %>
+		      <% publication_id = response.publication.id %>
+			  <% resp_date = response.created_at.strftime("%m/%d/%Y") %>
+			  <% q_name = response.questionnaire.name %>
+			  <% pub_name = response.questionnaire.publisher.name %>
+		      <% if response.form_item.field_name == "Title" %>
+  		        <% resp = response.response_text %>
+		      <% else %>	
+  		        <% resp = "None" %>
+		      <% end %>	
 		    <% end %>	
-		  <% end %>	
-		  <td><%= resp_date %></td>
-  		  <% if current_user.is_publisher? %>
-    		<td><%= q_name %></td>
-  		  <% elsif current_user.is_librarian? %>
-  		    <td><%= pub_name %></td>
-  		  <% end %>
-		  <td><%= resp %></td>
-		  <td>
-			  <%= link_to "View", author_response_responses_path(:questionnaire => questionnaire, :user => user) %> | <%= link_to "Export Single", export_single_responses_path(:questionnaire => questionnaire, :user => user) %>
+		    <td><%= publication_id %></td>
+		    <td><%= resp_date %></td>
+  		    <% if current_user.is_publisher? %>
+    		  <td><%= q_name %></td>
+  		    <% elsif current_user.is_librarian? %>
+  		      <td><%= pub_name %></td>
+  		    <% end %>
+		    <td><%= resp %></td>
+		    <td>
+			  <%= link_to "View", author_response_responses_path(:questionnaire => questionnaire, :user => user, :publication => publication) %> | <%= link_to "Export Single", export_single_responses_path(:questionnaire => questionnaire, :user => user, :publication => publication) %>
 		  	  <% unless @csv.nil? %>
 			    <% if @user == user %>
 			      | <%= link_to "Download CSV", "/uploads/export_single_#{user}.csv" %>
 				<% end %>
 			  <% end %>
-		    <% if current_user.try(:superadmin?) %>
-			   | <%= link_to "Delete", delete_group_responses_path(:questionnaire => questionnaire, :user => user), :confirm => "Are you sure? This action cannot be undone." %>
-			<% end %>
-		  </td>
-  	      </tr>
+			    <% unless current_user.try(:superadmin?) %>  
+			       | <%= link_to "Mark as Exported", mark_exported_responses_path(:questionnaire => questionnaire, :user => user) %>
+				<% end %>  
+		    </td>
+  	        </tr>
+		  <% end %>	
   	    <% end %>
 	  <% end %>	
   	</tbody>	

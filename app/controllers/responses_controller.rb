@@ -19,34 +19,39 @@ class ResponsesController < ApplicationController
         @response_hash_new[q] = {}
         @response_hash_past[q] = {}
         q.responses.each do |r|
+          if @response_hash_new[q][r.user_id].nil?
+            @response_hash_new[q][r.user_id] = {}
+          end
+          if @response_hash_past[q][r.user_id].nil?
+            @response_hash_past[q][r.user_id] = {}
+          end
           if current_user.try(:superadmin?)
             if r.pub_exported_flag && r.lib_exported_flag
-              if @response_hash_past[q][r.user_id].nil?
-                @response_hash_past[q][r.user_id] = []
+              if @response_hash_past[q][r.user_id][r.publication_id].nil?
+                @response_hash_past[q][r.user_id][r.publication_id] = []
               end  
-              @response_hash_past[q][r.user_id]<< r
+              @response_hash_past[q][r.user_id][r.publication_id]<< r
             else
-              if @response_hash_new[q][r.user_id].nil?
-                @response_hash_new[q][r.user_id] = []
+              if @response_hash_new[q][r.user_id][r.publication_id].nil?
+                @response_hash_new[q][r.user_id][r.publication_id] = []
               end  
-              @response_hash_new[q][r.user_id]<< r
+              @response_hash_new[q][r.user_id][r.publication_id]<< r
             end
           else
             if r.send("#{type}") == false
-              if @response_hash_new[q][r.user_id].nil?
-                @response_hash_new[q][r.user_id] = []
+              if @response_hash_new[q][r.user_id][r.publication_id].nil?
+                @response_hash_new[q][r.user_id][r.publication_id] = []
               end  
-              @response_hash_new[q][r.user_id]<< r
+              @response_hash_new[q][r.user_id][r.publication_id]<< r
             else
-              if @response_hash_past[q][r.user_id].nil?
-                @response_hash_past[q][r.user_id] = []
+              if @response_hash_past[q][r.user_id][r.publication_id].nil?
+                @response_hash_past[q][r.user_id][r.publication_id] = []
               end  
-              @response_hash_past[q][r.user_id]<< r
+              @response_hash_past[q][r.user_id][r.publication_id]<< r
             end   
           end      
         end   
       end
-      
       unless params[:csv].nil?
         @csv = params[:csv]
         @user = params[:user].to_i
@@ -111,8 +116,9 @@ class ResponsesController < ApplicationController
   def author_response
     @questionnaire = Questionnaire.find(params[:questionnaire].to_i)
     @user = User.find(params[:user].to_i)
+    @publication = Publication.find(params[:publication].to_i)
     if current_user.is_publisher? || current_user.is_librarian?
-      @responses = Response.all(:conditions => {:questionnaire_id => @questionnaire.id, :user_id => @user.id}) 
+      @responses = Response.all(:conditions => {:questionnaire_id => @questionnaire.id, :user_id => @user.id, :publication_id => @publication.id}) 
     end 
   end
   
@@ -120,19 +126,15 @@ class ResponsesController < ApplicationController
     @csv = nil
     @questionnaire = Questionnaire.find(params[:questionnaire].to_i)
     @user = User.find(params[:user].to_i)
-    #@author = Author.find(:first, :conditions => {:user_id => @user.id, :publisher_id => @questionnaire.publisher.id})
+    @publication = Publication.find(params[:publication].to_i)
     @form_items = @questionnaire.form_items
-    #@author_headers = Author.columns.collect {|a| a.name }-["id", "publisher_id", "user_id", "created_at", "updated_at"]
     @form_headers = @form_items.collect {|item| item.field_name }
-    @headers = @form_headers
-    @responses = Response.all(:conditions => {:questionnaire_id => @questionnaire.id, :user_id => @user.id})
+    @headers = @form_headers 
+    @responses = Response.all(:conditions => {:questionnaire_id => @questionnaire.id, :user_id => @user.id, :publication_id => @publication.id})
  
     CSV.open("#{Rails.root}/public/uploads/export_single_#{@user.id}.csv", "w") do |csv|
       csv << @headers
       row = Array.new
-      #@author_headers.each do |ah|
-      #  row << @author.send(ah)
-      #end  
       @form_items.each do |item|
         response = @responses.select{|resp| resp.form_item_id == item.id}[0]
         unless response.nil?
@@ -161,15 +163,17 @@ class ResponsesController < ApplicationController
       @response_hash[q] = {}
       q.responses.each do |r|
         if @response_hash[q][r.user_id].nil?
-          @response_hash[q][r.user_id] = []
+          @response_hash[q][r.user_id] = {}
+        end
+        if @response_hash[q][r.user_id][r.publication_id].nil?
+          @response_hash[q][r.user_id][r.publication_id] = []
         end  
-        @response_hash[q][r.user_id]<< r
+        @response_hash[q][r.user_id][r.publication_id]<< r
       end   
     end 
     
 	  @response_hash.each_key do |questionnaire| 
 	    CSV.open("#{Rails.root}/public/uploads/export_#{questionnaire.name.gsub(/ /, '-')}.csv", "w") do |csv|
-        #@author_headers = Author.columns.collect {|a| a.name }-["id", "publisher_id", "user_id", "created_at", "updated_at"]  
         @form_items = questionnaire.form_items
         @form_headers = @form_items.collect {|item| item.field_name }
         @headers = @form_headers
@@ -177,12 +181,8 @@ class ResponsesController < ApplicationController
         
         @response_hash[questionnaire].each_key do |user| 
           @user = User.find(user)
-          #@author = Author.find(:first, :conditions => {:user_id => @user.id, :publisher_id => questionnaire.publisher.id})
           @responses = Response.all(:conditions => {:questionnaire_id => questionnaire.id, :user_id => @user.id})
           row = Array.new
-          #@author_headers.each do |ah|
-          #  row << @author.send(ah)
-          #end  
           @form_items.each do |item|
             response = @responses.select{|resp| resp.form_item_id == item.id}[0]
             unless response.nil?
