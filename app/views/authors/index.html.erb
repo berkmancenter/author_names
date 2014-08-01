@@ -3,7 +3,7 @@
   <h3>Existing Contact Information</h3>
   <div class="table-responsive">
       <% if (current_user.try(:admin?) || current_user.try(:superadmin?)) %>
-        <p><%= link_to("Add New Single Profile", new_author_path ) %></p>
+        <p><%= link_to("Add New Single Contact Info", new_author_path ) %></p>
       <% end %>
 	<table id="authors-table" class="table table-striped table-hover tablesorter">
   	<thead>

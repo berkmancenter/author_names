@@ -11,23 +11,23 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140618195224) do
+ActiveRecord::Schema.define(:version => 20140731170115) do
 
   create_table "authors", :force => true do |t|
-    t.string   "first_name",                  :null => false
-    t.string   "last_name",                   :null => false
     t.string   "phone",                       :null => false
     t.string   "email",                       :null => false
+    t.string   "first_name",                  :null => false
+    t.string   "last_name",                   :null => false
     t.string   "address_1",    :limit => 150, :null => false
     t.string   "address_2",    :limit => 150
     t.string   "city",         :limit => 100, :null => false
     t.string   "state",        :limit => 100, :null => false
     t.string   "postal_code",  :limit => 30,  :null => false
-    t.string   "country",      :limit => 2,   :null => false
+    t.string   "country",                     :null => false
     t.integer  "publisher_id"
+    t.integer  "user_id"
     t.datetime "created_at",                  :null => false
     t.datetime "updated_at",                  :null => false
-    t.integer  "user_id"
   end
 
   create_table "emails", :force => true do |t|
@@ -76,7 +76,7 @@ ActiveRecord::Schema.define(:version => 20140618195224) do
     t.string   "city",         :limit => 100, :null => false
     t.string   "state",        :limit => 100, :null => false
     t.string   "postal_code",  :limit => 30,  :null => false
-    t.string   "country",      :limit => 2,   :null => false
+    t.string   "country",                     :null => false
     t.string   "website"
     t.datetime "created_at",                  :null => false
     t.datetime "updated_at",                  :null => false
@@ -102,11 +102,11 @@ ActiveRecord::Schema.define(:version => 20140618195224) do
     t.string   "city",         :limit => 100, :null => false
     t.string   "state",        :limit => 100, :null => false
     t.string   "postal_code",  :limit => 30,  :null => false
-    t.string   "country",      :limit => 2,   :null => false
+    t.string   "country",                     :null => false
     t.string   "website"
+    t.string   "logo"
     t.datetime "created_at",                  :null => false
     t.datetime "updated_at",                  :null => false
-    t.string   "logo"
   end
 
   create_table "questionnaires", :force => true do |t|
@@ -123,11 +123,12 @@ ActiveRecord::Schema.define(:version => 20140618195224) do
     t.integer  "user_id",                              :null => false
     t.integer  "form_item_id",                         :null => false
     t.text     "response_text"
+    t.boolean  "lib_exported_flag", :default => false
     t.datetime "created_at",                           :null => false
     t.datetime "updated_at",                           :null => false
-    t.boolean  "lib_exported_flag", :default => false
     t.boolean  "pub_exported_flag", :default => false
     t.integer  "publication_id"
+    t.string   "author_upload"
   end
 
   create_table "users", :force => true do |t|
@@ -144,13 +145,14 @@ ActiveRecord::Schema.define(:version => 20140618195224) do
     t.boolean  "admin",                  :default => false
     t.boolean  "staff",                  :default => false
     t.boolean  "superadmin",             :default => false
+    t.boolean  "author",                 :default => false
     t.integer  "library_id"
     t.integer  "publisher_id"
     t.string   "first_name"
     t.string   "last_name"
+    t.string   "username",               :default => "",    :null => false
     t.datetime "created_at",                                :null => false
     t.datetime "updated_at",                                :null => false
-    t.string   "username",               :default => "",    :null => false
   end
 
   add_index "users", ["email"], :name => "index_users_on_email", :unique => true

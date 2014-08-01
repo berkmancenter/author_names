@@ -27,6 +27,9 @@ class QuestionnairesController < ApplicationController
         profile.save
         @user.publisher_id = @questionnaire.publisher.id
         @user.save
+        @publication = Publication.create(:user_id => @user.id, :author_id => profile.id, :publisher_id => @questionnaire.publisher.id, :questionnaire_id => @questionnaire.id)
+      else
+        @publication = Publication.create(:user_id => @user.id, :publisher_id => @questionnaire.publisher.id, :questionnaire_id => @questionnaire.id)
       end 
     end 
     
@@ -109,7 +112,8 @@ class QuestionnairesController < ApplicationController
         p "file field"
         p value['response_text'].class
         p value
-        # value['response_text'] =
+        value['author_upload'] = value['response_text']
+        value['response_text'] = "File Upload"
       end
       response = Response.create(value)
     end  
