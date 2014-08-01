@@ -61,7 +61,9 @@
 
 			          </div>	
 			        </div>
-					<%= fi.input :publication_id, :as => :hidden, :value => @publication.id %>
+					<% unless @publication.nil? %>
+					  <%= fi.input :publication_id, :as => :hidden, :value => @publication.id %>
+					<% end %>  
 	  			    <%= fi.input :form_item_id, :as => :hidden, :value => item.id %>
 	  			    <%= fi.input :questionnaire_id, :as => :hidden, :value => @questionnaire.id %>
 	  	  	        <% unless @user.nil? %>
