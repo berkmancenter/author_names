@@ -1,0 +1,76 @@
+  <% unless response_hash.nil? %>
+  <div class="table-responsive">
+    <% if current_user.is_publisher? || current_user.is_librarian? || current_user.try(:superadmin?) %>
+      Download all responses as <%= link_to("CSV", export_responses_path ) %> or <%= link_to "ISNI XML", isni_responses_path(:format => 'xml') %> <br />
+	  Download all file attachements as <%= link_to("ZIP", "#" ) %><br /><br />
+    <% end %>  
+	<table id="responses-table" class="table table-striped table-hover tablesorter">
+  	<thead>
+  	  <tr>
+		<th>Title</th>
+  		<th>Name</th>
+		<th>Publication ID</th>
+  		<th>Date</th>
+		<% if current_user.is_publisher? %>
+  		  <th>Questionnaire</th>
+		<% elsif current_user.is_librarian? %>
+		  <th>Publisher</th>
+		<% end %>    
+		<th>Download</th>
+		<% if done_flag == true %>
+		  <th>Done?</th>
+		<% end %>
+  	  </tr>
+  	</thead> 
+  	<tbody>
+  	  <% response_hash.each_key do |questionnaire| %>
+		<% response_hash[questionnaire].each_key do |user| %>
+		  <% resp_date, q_name, pub_name, resp, publication_id = "", "", "", "" %>
+		  <% response_hash[questionnaire][user].each_key do |publication| %>
+  	        <tr>
+		    <% response_hash[questionnaire][user][publication].each do |response| %>
+		      <% publication_id = response.publication.id %>
+			  <% resp_date = response.created_at.strftime("%m/%d/%Y") %>
+			  <% q_name = response.questionnaire.name %>
+			  <% pub_name = response.questionnaire.publisher.name %>
+		      <% if response.form_item.field_name == "Title" %>
+  		        <% resp = response.response_text %>
+		      <% else %>	
+  		        <% resp = "None" %>
+		      <% end %>	
+		    <% end %>	
+		    <td><%= link_to resp, author_response_responses_path(:questionnaire => questionnaire, :user => user, :publication => publication) %></td>
+			<td><%= User.find(user).full_name_email %></td>
+		    <td><%= publication_id %></td>
+			<td><%= resp_date %></td>
+  		    <% if current_user.is_publisher? %>
+    		  <td><%= q_name %></td>
+  		    <% elsif current_user.is_librarian? %>
+  		      <td><%= pub_name %></td>
+  		    <% end %>
+		    
+		    <td>
+			  <%= link_to "CSV", export_single_responses_path(:questionnaire => questionnaire, :user => user, :publication => publication) %>
+		  	  <% unless @csv.nil? %>
+			    <% if @user == user %>
+			      | <%= link_to "Download CSV", "/uploads/export_single_#{user}.csv" %>
+				<% end %>
+			  <% end %>
+	  		  <% if done_flag == true %>
+  			    <% unless current_user.try(:superadmin?) %>  
+  			      <td><%= link_to (image_tag "done.png"), mark_exported_responses_path(:questionnaire => questionnaire, :user => user, :publication => publication) %></td>
+  			    <% end %>
+	  		  <% end %>  
+		    </td>
+  	        </tr>
+		  <% end %>	
+  	    <% end %>
+	  <% end %>	
+  	</tbody>	
+  	</table>
+  	<%= render :partial => '/shared/tablesorter_pager', :locals => {:pager_id => "responses-table" } %>
+  </div>
+  <% else %>
+    <br />
+    No Responses
+  <% end %>

@@ -5,13 +5,13 @@ class ResponsesController < ApplicationController
   
   def index
     unless current_user.is_author?
-      type = ""
+      @type = ""
       if current_user.is_publisher?
         @questionnaires = Questionnaire.all(:conditions => {:publisher_id => current_user.publisher.id})
-        type = "pub_exported_flag"
+        @type = "pub_exported_flag"
       elsif current_user.is_librarian? || current_user.try(:superadmin?)
         @questionnaires = Questionnaire.all
-        type = "lib_exported_flag"
+        @type = "lib_exported_flag"
       end  
       @response_hash_new = Hash.new
       @response_hash_past = Hash.new
@@ -38,7 +38,7 @@ class ResponsesController < ApplicationController
               @response_hash_new[q][r.user_id][r.publication_id]<< r
             end
           else
-            if r.send("#{type}") == false
+            if r.send("#{@type}") == false
               if @response_hash_new[q][r.user_id][r.publication_id].nil?
                 @response_hash_new[q][r.user_id][r.publication_id] = []
               end  
@@ -238,7 +238,8 @@ class ResponsesController < ApplicationController
   def mark_exported
     @questionnaire = Questionnaire.find(params[:questionnaire].to_i)
     @user = User.find(params[:user].to_i)
-    @responses = Response.all(:conditions => {:questionnaire_id => @questionnaire.id, :user_id => @user.id})
+    @publication = Publication.find(params[:publication].to_i)
+    @responses = Response.all(:conditions => {:questionnaire_id => @questionnaire.id, :user_id => @user.id, :publication_id => @publication.id})
     type = ""
     if current_user.is_publisher?
       type = "pub_exported_flag"
