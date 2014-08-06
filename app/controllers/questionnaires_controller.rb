@@ -103,15 +103,9 @@ class QuestionnairesController < ApplicationController
   def gather_response
     params[:gather_response].each_value do |value|
       if FormItem.find(value["form_item_id"].to_i).field_type == "Date"
-        value['response_text'] = Date.new(value['response_text(1i)'].to_i, value['response_text(2i)'].to_i, value['response_text(3i)'].to_i).to_s
-        value.delete('response_text(1i)')
-        value.delete('response_text(2i)')
-        value.delete('response_text(3i)')
+        value['response_text'] = Date.strptime(value['response_text'], '%m/%d/%Y')
       end
       if FormItem.find(value["form_item_id"].to_i).field_type == "File"
-        p "file field"
-        p value['response_text'].class
-        p value
         value['author_upload'] = value['response_text']
         value['response_text'] = "File Upload"
       end
