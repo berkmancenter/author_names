@@ -24,6 +24,9 @@
 //= require_tree .
 
 $(document).ready(function(){	
+  $('.datePicker').datepicker();
+	
+	
   $("#users-table")
   	.tablesorter({sortList: [[0,0]]})
     .tablesorterPager({container: $("#pager-users-table")})
