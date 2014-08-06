@@ -5,7 +5,7 @@ class Publisher < ActiveRecord::Base
   has_many :questionnaires, :dependent => :destroy
   has_many :authors, :dependent => :destroy
   has_many :form_items, :dependent => :destroy
-  has_many :puclications
+  has_many :publications
   
   validates_presence_of :name, :contact_name, :phone, :email, :address_1, :city, :state, :postal_code, :country
   

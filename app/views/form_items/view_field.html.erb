@@ -9,7 +9,11 @@
   		  <div class="form-group"> 
   		    <label for="name" class="col-lg-2 control-label"><%= raw @form_item.display_text %></label>
   		    <div class="col-lg-10">
-		      <%= f.input @form_item.field_name, :as => @form_item.formtastic_field_map, :label => false, :collection => @form_item.field_options.nil? ? '' : @form_item.field_options.split(','), :input_html => { :class => "form-control"} %>
+		      <% if @form_item.formtastic_field_map ==  "date_select" %>
+		        <%= f.input @form_item.field_name, :as => :date_picker, :label => false, :input_html => { :class => "form-control" }%>	
+			  <% else %>	
+		        <%= f.input @form_item.field_name, :as => @form_item.formtastic_field_map, :label => false, :collection => @form_item.field_options.nil? ? '' : @form_item.field_options.split(','), :input_html => { :class => "form-control"} %>
+			  <% end %>	
   		    </div>	
   		  </div>
   		<% end %>
