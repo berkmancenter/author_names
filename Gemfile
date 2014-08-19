@@ -16,6 +16,7 @@ gem 'formtastic-bootstrap'
 gem 'jquery-tablesorter'
 gem 'ckeditor'
 gem 'country_select'
+gem 'acts_as_list'
 
 
 # Gems used only for assets and not required

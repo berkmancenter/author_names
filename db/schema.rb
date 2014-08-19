@@ -47,7 +47,7 @@ ActiveRecord::Schema.define(:version => 20140731170115) do
     t.string   "field_name",                       :null => false
     t.text     "display_text"
     t.string   "field_type",                       :null => false
-    t.text     "field_options"
+    t.string   "field_options"
     t.boolean  "required",      :default => false
     t.integer  "publisher_id"
     t.datetime "created_at",                       :null => false
@@ -59,10 +59,10 @@ ActiveRecord::Schema.define(:version => 20140731170115) do
   add_index "form_items", ["field_options"], :name => "index_form_items_on_field_options"
   add_index "form_items", ["field_type"], :name => "index_form_items_on_field_type"
 
-  create_table "form_items_questionnaires", :id => false, :force => true do |t|
+  create_table "form_items_questionnaires", :force => true do |t|
     t.integer "form_item_id"
     t.integer "questionnaire_id"
-    t.integer "form_item_position", :default => 0, :null => false
+    t.integer "position",         :default => 0, :null => false
   end
 
   create_table "libraries", :force => true do |t|

@@ -10,10 +10,10 @@ class CreateFormItems < ActiveRecord::Migration
       t.timestamps
     end
     
-    create_table(:form_items_questionnaires, :id => false) do|t|
+    create_table(:form_items_questionnaires) do|t|
       t.references :form_item
       t.references :questionnaire
-      t.integer :form_item_position, :null => false, :default => 0
+      t.integer :position, :null => false, :default => 0
     end
     
     [:field_name, :display_text, :field_type, :field_options].each do|col|
