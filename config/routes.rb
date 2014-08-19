@@ -23,6 +23,9 @@ AuthorNames::Application.routes.draw do
       get 'send_questionnaire'
       get 'choose_authors'
       get 'sort_items'
+      get 'remove_form_item'
+      get 'preview'
+      get 'move'
     end
   end  
 

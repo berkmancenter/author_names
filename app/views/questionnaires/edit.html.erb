@@ -33,24 +33,22 @@
 	
   <% if current_user.is_publisher? %>
 	<h4>Sort Order</h4>
-	<%= semantic_form_for :sort_items, :html => { :method => :get, :class => "form-horizontal" } do |f| %>
-	  <fieldset>
-	    <legend></legend>	
-		  <% @questionnaire.form_items.each do |item| %>    
-			<%= f.inputs do %>
-			  <div class="form-group"> 
-			    <label for="name" class="col-lg-2 control-label">Position: <%= f.input item.field_name, :as => :select, :collection => (1..@questionnaire.form_items.count).to_a, :label => false, :selected => FormItemsQuestionnaires.first(:conditions => {:form_item_id => item.id, :questionnaire_id => @questionnaire.id }).form_item_position.nil? ? '' : FormItemsQuestionnaires.first(:conditions => {:form_item_id => item.id, :questionnaire_id => @questionnaire.id }).form_item_position %></label>
-			    <div class="col-lg-10">
-		          <%= raw item.display_text %>
-			    </div>	
-			  </div>
-			  <hr />
-			<% end %>
-		  <% end %>	
-		<%= f.actions do %>
-		  <%= f.action :submit, :as => :button, :button_html => { :class => "btn btn-primary"} %>
-		<% end %>  
-	  </fieldset>
-	<% end %>  
+    <div class="table-responsive">
+      <table class="table table-striped table-hover ">
+  	  <tr>
+  	    <th>Name</th>
+  		<th>Description</th>
+  		<th>Actions</th>
+  	  </tr>
+  	  <% @questionnaire.form_items.each do |item| %> 
+  	  <tr>
+  	    <td><%= item.field_name %></td>
+  		<td><%= item.field_type %></td>
+  		<td><%= link_to "&#8593;".html_safe, move_questionnaires_path(:method => 'move_higher', :questionnaire_id => @questionnaire.id, :form_item_id => item.id)%>&nbsp;&nbsp;&nbsp;&nbsp;<%= link_to "&#8595;".html_safe, move_questionnaires_path(:method => 'move_lower', :questionnaire_id => @questionnaire.id, :form_item_id => item.id) %>&nbsp;&nbsp;&nbsp; | 
+  	    <%= link_to "Move to Top", move_questionnaires_path(:method => 'move_to_top', :questionnaire_id => @questionnaire.id, :form_item_id => item.id)%> | <%= link_to "Move to Bottom", move_questionnaires_path(:method => 'move_to_bottom', :questionnaire_id => @questionnaire.id, :form_item_id => item.id) %> | <%= link_to "Remove", move_questionnaires_path(:method => 'remove_from_list', :questionnaire_id => @questionnaire.id, :form_item_id => item.id) %></td>
+  	  </tr>
+  	  <% end %>
+      </table>
+    </div>
  <% end %>
 </div>

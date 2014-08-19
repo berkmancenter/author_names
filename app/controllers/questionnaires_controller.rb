@@ -79,8 +79,36 @@ class QuestionnairesController < ApplicationController
     params[:questionnaire][:form_item_ids] << FormItem.all(:conditions => {:required => true}).collect{|fi| fi.id.to_s}
     params[:questionnaire][:form_item_ids] = params[:questionnaire][:form_item_ids].flatten!.reject(&:empty?).collect{|fi| fi.to_i}
     
+    unless params[:questionnaire][:form_item_ids].nil?
+      all_items = FormItemsQuestionnaires.all(:conditions => {:questionnaire_id => @questionnaire.id})
+    end
+    
     respond_to do |format|
       if @questionnaire.update_attributes(params[:questionnaire])
+        unless params[:questionnaire][:form_item_ids].nil?
+          nil_items = FormItemsQuestionnaires.all(:conditions => {:questionnaire_id => @questionnaire.id, :position => nil})
+          i = 0
+          if all_items.last.nil? || all_items.last.position.nil?
+            pos = 1
+          else  
+            pos = all_items.last.position + 1
+          end  
+          while i < nil_items.length  do
+             nil_items[i].position = pos
+             nil_items[i].save
+             i +=1
+             pos +=1
+          end 
+          sorted = FormItemsQuestionnaires.all(:conditions => {:questionnaire_id => @questionnaire.id}).sort_by { |hsh| hsh[:position] }
+          j = 0
+          pj = 1
+          while j < sorted.length  do
+            sorted[j].update_attribute(:position, pj)
+            #sorted[j].save
+            j +=1
+            pj +=1
+          end  
+        end
         format.html { redirect_to edit_questionnaire_url(@questionnaire.id), notice: 'Questionnaire was successfully updated.' }
         format.json { head :no_content }
       else
@@ -157,11 +185,34 @@ class QuestionnairesController < ApplicationController
       item = FormItem.first(:conditions => {:field_name => field_name})
       form_item_q = FormItemsQuestionnaires.first(:conditions => {:form_item_id => item.id, :questionnaire_id => params[:id] })
 
-      FormItemsQuestionnaires.update_all(["form_item_position = ?", @sorted_hash[field_name].to_i], ["form_item_id = ? AND questionnaire_id = ?", item.id, params[:id].to_i])
+      FormItemsQuestionnaires.update_all(["position = ?", @sorted_hash[field_name].to_i], ["form_item_id = ? AND questionnaire_id = ?", item.id, params[:id].to_i])
 
       form_item_q.save
     end
     
     redirect_to edit_questionnaire_url(params[:id]), notice: 'Items sorted.'
+  end
+  
+  def remove_form_item
+    @questionnaire = Questionnaire.find(params[:questionnaire_id].to_i)
+    @item_to_remove = FormItem.find(params[:form_item_id])
+    @current_form_items = @questionnaire.form_items
+    @questionnaire.form_items = @current_form_items.delete_if {|item| item.id == @item_to_remove.id }
+    
+    redirect_to survey_url(@questionnaire), notice: 'Form item was removed.'
+  end
+  
+  def move
+    questionnaire = Questionnaire.find(params[:questionnaire_id].to_i)
+    form_items_form_item = FormItemsQuestionnaires.first(:conditions => {:questionnaire_id => questionnaire.id, :form_item_id => params[:form_item_id]})
+    p "form item form item"
+    p form_items_form_item
+    if ["move_higher", "move_lower", "move_to_top", "move_to_bottom", "remove_from_list"].include?(params[:method]) and !form_items_form_item.nil?
+      form_items_form_item.send(params[:method])
+      if params[:method] == "remove_from_list"
+        questionnaire.form_items = questionnaire.form_items.delete_if {|item| item.id == params[:form_item_id].to_i }
+      end  
+    end
+    redirect_to edit_questionnaire_url(questionnaire)
   end
 end
