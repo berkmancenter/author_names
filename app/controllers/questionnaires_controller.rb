@@ -63,6 +63,26 @@ class QuestionnairesController < ApplicationController
     
     respond_to do |format|
       if @questionnaire.save
+        unless params[:questionnaire][:form_item_ids].nil?
+          nil_items = FormItemsQuestionnaires.all(:conditions => {:questionnaire_id => @questionnaire.id, :position => nil})
+          i = 0 
+          pos =  1 
+          while i < nil_items.length  do
+             nil_items[i].position = pos
+             nil_items[i].save
+             i +=1
+             pos +=1
+          end 
+          sorted = FormItemsQuestionnaires.all(:conditions => {:questionnaire_id => @questionnaire.id}).sort_by { |hsh| hsh[:position] }
+          j = 0
+          pj = 1
+          while j < sorted.length  do
+            sorted[j].update_attribute(:position, pj)
+            #sorted[j].save
+            j +=1
+            pj +=1
+          end  
+        end
         format.html { redirect_to questionnaires_url, notice: 'Questionnaire was successfully created.' }
         format.json { render json: @questionnaire, status: :created, questionnaire: @questionnaire }
       else
