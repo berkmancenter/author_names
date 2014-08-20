@@ -193,26 +193,12 @@ class QuestionnairesController < ApplicationController
     redirect_to edit_questionnaire_url(params[:id]), notice: 'Items sorted.'
   end
   
-  def remove_form_item
-    @questionnaire = Questionnaire.find(params[:questionnaire_id].to_i)
-    @item_to_remove = FormItem.find(params[:form_item_id])
-    @current_form_items = @questionnaire.form_items
-    @questionnaire.form_items = @current_form_items.delete_if {|item| item.id == @item_to_remove.id }
-    
-    redirect_to survey_url(@questionnaire), notice: 'Form item was removed.'
-  end
-  
   def move
-    questionnaire = Questionnaire.find(params[:questionnaire_id].to_i)
-    form_items_form_item = FormItemsQuestionnaires.first(:conditions => {:questionnaire_id => questionnaire.id, :form_item_id => params[:form_item_id]})
-    p "form item form item"
-    p form_items_form_item
-    if ["move_higher", "move_lower", "move_to_top", "move_to_bottom", "remove_from_list"].include?(params[:method]) and !form_items_form_item.nil?
-      form_items_form_item.send(params[:method])
-      if params[:method] == "remove_from_list"
-        questionnaire.form_items = questionnaire.form_items.delete_if {|item| item.id == params[:form_item_id].to_i }
-      end  
+    @questionnaire = Questionnaire.find(params[:questionnaire_id].to_i)
+    form_items_form_item = FormItemsQuestionnaires.first(:conditions => {:questionnaire_id => @questionnaire.id, :form_item_id => params[:form_item_id]})
+    if ["move_higher", "move_lower", "move_to_top", "move_to_bottom"].include?(params[:method]) and !form_items_form_item.nil?
+      form_items_form_item.send(params[:method])  
     end
-    redirect_to edit_questionnaire_url(questionnaire)
+    redirect_to edit_questionnaire_url(@questionnaire)
   end
 end
