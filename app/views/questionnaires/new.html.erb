@@ -10,21 +10,32 @@
 </div>
 
 <div id="welcome-right">
-    <h4>Auto-Included Library Required Fields</h4>
-    <% unless @lib_req.nil? || @lib_req.empty? %>
-      <% @lib_req.each do |fi| %>
-        <%= fi.field_name %>
-      <% end %>	
-    <% else %>
-      None.
-    <% end %>	
-  
-    <h4>Auto-Included Publisher Required Fields</h4>
-    <% unless @pub_req.nil? || @pub_req.empty? %>
-      <% @pub_req.each do |fi| %>
-        <%= fi.field_name %>
-      <% end %>	
-    <% else %>
-      None.
-    <% end %>
+    <div class="col-lg-6">
+      <div class="row">
+        <div class="well">
+	      <h4>Auto-Included Library Required Fields</h4>
+	      <% unless @lib_req.nil? || @lib_req.empty? %>
+	        <% @lib_req.each do |fi| %>
+	          <%= fi.field_name %>
+	        <% end %>	
+	      <% else %>
+	        None.
+	      <% end %>	
+        </div>
+      </div>	
+    </div>
+    <div class="col-lg-6">
+      <div class="row">
+        <div class="well">
+	      <h4>Auto-Included Publisher Required Fields</h4>
+	      <% unless @pub_req.nil? || @pub_req.empty? %>
+	        <% @pub_req.each do |fi| %>
+	          <%= fi.field_name %>
+	        <% end %>	
+	      <% else %>
+	        None.
+	      <% end %>
+        </div>
+      </div>	
+    </div>
 </div>

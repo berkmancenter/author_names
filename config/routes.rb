@@ -1,7 +1,6 @@
 AuthorNames::Application.routes.draw do
   resources :publications
 
-
   resources :authors
 
   resources :responses do
@@ -37,6 +36,7 @@ AuthorNames::Application.routes.draw do
     collection do
       get 'batch_upload'
       post 'import'
+      get 'destroy_all_items'
     end
   end  
 
@@ -61,6 +61,8 @@ AuthorNames::Application.routes.draw do
       get 'author_home'
     end
   end
+  
+  resources :form_item_groups
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

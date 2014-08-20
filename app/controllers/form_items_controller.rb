@@ -15,6 +15,7 @@ class FormItemsController < ApplicationController
     else  
       @form_item = FormItem.new
     end  
+    @form_item_group = FormItemGroup.new
   end
   
   def edit
@@ -69,6 +70,15 @@ class FormItemsController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to form_items_url, notice: 'Form Item was successfully deleted.' }
+      format.json { head :no_content }
+    end
+  end 
+  
+  def destroy_all_items
+    FormItem.destroy_all
+
+    respond_to do |format|
+      format.html { redirect_to batch_upload_form_items_url, notice: 'All Form Items were successfully deleted.' }
       format.json { head :no_content }
     end
   end 
