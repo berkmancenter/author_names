@@ -20,13 +20,11 @@
 		       <table class="table table-striped table-hover ">
 		   	  <tr>
 		   	    <th>Name</th>
-		   		<th>Description</th>
 		   		<th>Actions</th>
 		   	  </tr>
 		   	  <% @questionnaire.form_items.each do |item| %> 
 		   	  <tr>
 		   	    <td><%= item.field_name %></td>
-		   		<td><%= item.field_type %></td>
 		   		<td><%= link_to "&#8593;".html_safe, move_questionnaires_path(:method => 'move_higher', :questionnaire_id => @questionnaire.id, :form_item_id => item.id)%>&nbsp;&nbsp;&nbsp;&nbsp;<%= link_to "&#8595;".html_safe, move_questionnaires_path(:method => 'move_lower', :questionnaire_id => @questionnaire.id, :form_item_id => item.id) %>&nbsp;&nbsp;&nbsp; | 
 		   	    <%= link_to "Move to Top", move_questionnaires_path(:method => 'move_to_top', :questionnaire_id => @questionnaire.id, :form_item_id => item.id)%> | <%= link_to "Move to Bottom", move_questionnaires_path(:method => 'move_to_bottom', :questionnaire_id => @questionnaire.id, :form_item_id => item.id) %></td>
 		   	  </tr>
