@@ -16,11 +16,17 @@ class FormItemsController < ApplicationController
       @form_item = FormItem.new
     end  
     @form_item_group = @form_item.build_form_item_group
+    if current_user.is_publisher?
+      @pub_groups = FormItemGroup.where(:publisher_id => current_user.publisher.id).pluck(:name).uniq
+    end  
   end
   
   def edit
     @form_item = FormItem.find(params[:id])
     @form_item_group = @form_item.build_form_item_group
+    if current_user.is_publisher?
+      @pub_groups = FormItemGroup.where(:publisher_id => current_user.publisher.id).pluck(:name).uniq
+    end 
     @questionnaire_ids = Array.new
     FormItemsQuestionnaires.all(:conditions => {:form_item_id => @form_item.id}).collect{|fiq| @questionnaire_ids << fiq.questionnaire_id}
     unless @questionnaire_ids.nil?
@@ -38,7 +44,7 @@ class FormItemsController < ApplicationController
       params[:form_item][:publisher] = Publisher.find(params[:form_item][:publisher])
     end  
     if params[:form_item][:form_item_group].nil? || params[:form_item][:form_item_group][:name].blank?
-      params[:form_item][:form_item_group] = FormItemGroup.new(:name => params[:new_group_name])
+      params[:form_item][:form_item_group] = FormItemGroup.new(:name => params[:new_group_name], :publisher => params[:form_item][:form_item_group][:publisher].blank? ? nil : Publisher.find(params[:form_item][:form_item_group][:publisher]))
     else
       params[:form_item][:form_item_group] = FormItemGroup.new(params[:form_item][:form_item_group])  
     end  
@@ -62,8 +68,9 @@ class FormItemsController < ApplicationController
       params[:form_item][:publisher] = Publisher.find(params[:form_item][:publisher])
     end 
     if params[:form_item][:form_item_group].nil? || params[:form_item][:form_item_group][:name].blank?
-      params[:form_item][:form_item_group] = FormItemGroup.new(:name => params[:new_group_name])
+      params[:form_item][:form_item_group] = FormItemGroup.new(:name => params[:new_group_name], :publisher => params[:form_item][:form_item_group][:publisher].blank? ? nil : Publisher.find(params[:form_item][:form_item_group][:publisher]))
     else
+      params[:form_item][:form_item_group][:publisher] = params[:form_item][:form_item_group][:publisher].blank? ? nil : Publisher.find(params[:form_item][:form_item_group][:publisher])
       params[:form_item][:form_item_group] = FormItemGroup.new(params[:form_item][:form_item_group])  
     end 
     respond_to do |format|

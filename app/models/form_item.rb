@@ -19,8 +19,8 @@ class FormItem < ActiveRecord::Base
     self.field_name
   end  
   
-  def self.all_groups
-    return FormItemGroup.pluck(:name).uniq!
+  def self.admin_groups
+    return FormItemGroup.where(:publisher_id => nil).pluck(:name).uniq
   end  
   
   def formtastic_field_map
