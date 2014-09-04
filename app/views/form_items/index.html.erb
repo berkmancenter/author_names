@@ -13,16 +13,22 @@
 		<th>Field Name</th>
 		<th>Display Text</th>
 		<th>Field Type</th>
+		<th>Group</th>
 		<th>Required?</th>
 		<th>Actions</th>
 	  </tr>
 	</thead> 
 	<tbody>
 	    <% @form_items.each do |form_item| %>
-	    	<tr>
+	    <tr>
 	  	  <td><%= form_item.field_name %></td>
 		  <td><%= truncate(form_item.display_text.html_safe) %></td>
 		  <td><%= form_item.field_type %></td>
+		  <% unless form_item.form_item_group.nil? %>
+		    <td><%= form_item.form_item_group.name %></td>
+		  <% else %>
+		    <td>None</td>
+		  <% end %>	
 		  <td><%= form_item.required %></td>
 		  <td>
 	      <% if current_user.try(:superadmin?) %>
@@ -54,6 +60,7 @@
 		<th>Field Name</th>
 		<th>Display Text</th>
 		<th>Field Type</th>
+		<th>Group</th>
 		<th>Required?</th>
 		<th>Actions</th>
 	  </tr>
@@ -64,6 +71,11 @@
 	  	  <td><%= form_item.field_name %></td>
 		  <td><%= truncate(form_item.display_text.html_safe) %></td>
 		  <td><%= form_item.field_type %></td>
+		  <% unless form_item.form_item_group.nil? %>
+		    <td><%= form_item.form_item_group.name %></td>
+		  <% else %>
+		    <td>None</td>	
+		  <% end %>
 		  <td><%= form_item.required %></td>
 		  <td>
 			  <%= link_to('View Field', view_field_form_item_path(form_item), :class => "action-edit") %>

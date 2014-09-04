@@ -32,6 +32,17 @@
 		      <%= f.input :required, :hint => "If required, this field will automatically appear on all questionnaires.", :label => " " %>
 		    </div>	
 		  </div>
+		  <%= f.semantic_fields_for @form_item_group, :html => { :class => "form-horizontal"} do |group| %>
+  		    <div class="form-group"> 
+  		      <label for="name" class="col-lg-2 control-label">Group Name</label>
+  		      <div class="col-lg-10">
+				<%= group.input :name, :as => :select, :collection => current_user.is_publisher? ? @pub_groups : FormItem.admin_groups, :prompt => "Choose Existing...", :label => false, :input_html => { :class => "form-control"} %> <br />
+				or create a new one:<br /><br />
+  		        <%= text_field_tag :new_group_name, nil, :class => "form-control" %>
+				<%= group.input :publisher, :as => :hidden, :input_html => { :value => current_user.is_publisher? ? current_user.publisher.id : nil} %>
+  		      </div>	
+  		    </div>
+		  <% end %>
 		  <% if current_user.is_pub_admin? %>
 		    <div class="form-group"> 
 		      <label for="name" class="col-lg-2 control-label">Publisher</label>

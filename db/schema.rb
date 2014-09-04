@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20140731170115) do
+ActiveRecord::Schema.define(:version => 20140820155522) do
 
   create_table "authors", :force => true do |t|
     t.string   "phone",                       :null => false
@@ -43,15 +43,23 @@ ActiveRecord::Schema.define(:version => 20140731170115) do
     t.datetime "updated_at",                      :null => false
   end
 
-  create_table "form_items", :force => true do |t|
-    t.string   "field_name",                       :null => false
-    t.text     "display_text"
-    t.string   "field_type",                       :null => false
-    t.string   "field_options"
-    t.boolean  "required",      :default => false
+  create_table "form_item_groups", :force => true do |t|
+    t.string   "name"
     t.integer  "publisher_id"
-    t.datetime "created_at",                       :null => false
-    t.datetime "updated_at",                       :null => false
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  create_table "form_items", :force => true do |t|
+    t.string   "field_name",                            :null => false
+    t.text     "display_text"
+    t.string   "field_type",                            :null => false
+    t.string   "field_options"
+    t.boolean  "required",           :default => false
+    t.integer  "publisher_id"
+    t.integer  "form_item_group_id"
+    t.datetime "created_at",                            :null => false
+    t.datetime "updated_at",                            :null => false
   end
 
   add_index "form_items", ["display_text"], :name => "index_form_items_on_display_text"
