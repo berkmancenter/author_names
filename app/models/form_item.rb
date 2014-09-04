@@ -1,8 +1,11 @@
 class FormItem < ActiveRecord::Base
-  attr_accessible :field_name, :display_text, :field_type, :field_options, :required, :publisher
+  attr_accessible :field_name, :display_text, :field_type, :field_options, :required, :publisher, :form_item_group
   
   has_and_belongs_to_many :questionnaires
   belongs_to :publisher
+  belongs_to :form_item_group
+  
+  accepts_nested_attributes_for :form_item_group
   
   validates_presence_of :field_name, :field_type
   validates_uniqueness_of :field_name
@@ -14,6 +17,10 @@ class FormItem < ActiveRecord::Base
   
   def to_s
     self.field_name
+  end  
+  
+  def self.all_groups
+    return FormItemGroup.pluck(:name).uniq!
   end  
   
   def formtastic_field_map
@@ -37,8 +44,6 @@ class FormItem < ActiveRecord::Base
   end 
   
   def author_profile_map(author)
-    p "author"
-    p author
     a = Author.find(author)
     if self.field_name == "creator_given_name"
       return a.first_name

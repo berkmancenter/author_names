@@ -15,11 +15,12 @@ class FormItemsController < ApplicationController
     else  
       @form_item = FormItem.new
     end  
-    @form_item_group = FormItemGroup.new
+    @form_item_group = @form_item.build_form_item_group
   end
   
   def edit
     @form_item = FormItem.find(params[:id])
+    @form_item_group = @form_item.build_form_item_group
     @questionnaire_ids = Array.new
     FormItemsQuestionnaires.all(:conditions => {:form_item_id => @form_item.id}).collect{|fiq| @questionnaire_ids << fiq.questionnaire_id}
     unless @questionnaire_ids.nil?
@@ -36,12 +37,19 @@ class FormItemsController < ApplicationController
     unless params[:form_item][:publisher].nil?
       params[:form_item][:publisher] = Publisher.find(params[:form_item][:publisher])
     end  
+    if params[:form_item][:form_item_group].nil? || params[:form_item][:form_item_group][:name].blank?
+      params[:form_item][:form_item_group] = FormItemGroup.new(:name => params[:new_group_name])
+    else
+      params[:form_item][:form_item_group] = FormItemGroup.new(params[:form_item][:form_item_group])  
+    end  
     @form_item = FormItem.new(params[:form_item])
     respond_to do |format|
       if @form_item.save
+        params[:form_item][:form_item_group].save
         format.html { redirect_to form_items_url, notice: 'FormItem was successfully created.' }
         format.json { render json: @form_item, status: :created, form_item: @form_item }
       else
+        @form_item_group = @form_item.build_form_item_group
         format.html { render action: "new" }
         format.json { render json: @form_item.errors, status: :unprocessable_entity }
       end
@@ -53,8 +61,14 @@ class FormItemsController < ApplicationController
     unless params[:form_item][:publisher].nil?
       params[:form_item][:publisher] = Publisher.find(params[:form_item][:publisher])
     end 
+    if params[:form_item][:form_item_group].nil? || params[:form_item][:form_item_group][:name].blank?
+      params[:form_item][:form_item_group] = FormItemGroup.new(:name => params[:new_group_name])
+    else
+      params[:form_item][:form_item_group] = FormItemGroup.new(params[:form_item][:form_item_group])  
+    end 
     respond_to do |format|
       if @form_item.update_attributes(params[:form_item])
+        params[:form_item][:form_item_group].save
         format.html { redirect_to form_items_url, notice: 'FormItem was successfully updated.' }
         format.json { head :no_content }
       else
