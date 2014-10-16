@@ -1,12 +1,12 @@
 class Publisher < ActiveRecord::Base
   attr_accessible :name, :contact_name, :phone, :email, :address_1, :address_2, :city, :state, :postal_code, :country, :website, :description, :logo, :remove_logo
   
-  has_many :users
+  has_many :users, :dependent => :destroy
   has_many :questionnaires, :dependent => :destroy
   has_many :authors, :dependent => :destroy
   has_many :form_items, :dependent => :destroy
-  has_many :publications
-  has_many :form_item_groups
+  has_many :publications, :dependent => :destroy
+  has_many :form_item_groups, :dependent => :destroy
   
   validates_presence_of :name, :contact_name, :phone, :email, :address_1, :city, :state, :postal_code, :country
   

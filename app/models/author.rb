@@ -3,7 +3,7 @@ class Author < ActiveRecord::Base
   
   belongs_to :publisher
   belongs_to :user
-  has_many :publications
+  has_many :publications, :dependent => :destroy
   
   validates_presence_of :publisher_id
   
