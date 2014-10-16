@@ -7,7 +7,7 @@ class Questionnaire < ActiveRecord::Base
   belongs_to :publisher
   has_many :responses
   has_one :publication
-  has_many :form_item_groups
+  has_and_belongs_to_many :form_item_groups
   
   validates_presence_of :name, :publisher
   

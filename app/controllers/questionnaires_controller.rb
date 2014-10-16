@@ -79,7 +79,6 @@ class QuestionnairesController < ApplicationController
     @group_items = Array.new
     params[:questionnaire][:form_item_group_ids].reject(&:empty?).each do |gid|
       @group_items << FormItemGroup.find(gid.to_i).form_items
-      params[:questionnaire][:form_item_group_ids] 
     end  
     
     params[:questionnaire][:form_item_ids] << FormItem.all(:conditions => {:required => true}).collect{|fi| fi.id.to_s}

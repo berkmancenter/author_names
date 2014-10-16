@@ -3,6 +3,6 @@ class FormItemGroup < ActiveRecord::Base
   
   has_many :form_items#, :order => "form_items_questionnaires.position"
   belongs_to :publisher
-  belongs_to :questionnaire
+  has_and_belongs_to_many :questionnaires
   
 end
