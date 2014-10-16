@@ -117,7 +117,7 @@ class ResponsesController < ApplicationController
     @questionnaire = Questionnaire.find(params[:questionnaire].to_i)
     @user = User.find(params[:user].to_i)
     @publication = Publication.find(params[:publication].to_i)
-    if current_user.is_publisher? || current_user.is_librarian?
+    if current_user.is_publisher? || current_user.is_librarian? || current_user.superadmin
       @responses = Response.all(:conditions => {:questionnaire_id => @questionnaire.id, :user_id => @user.id, :publication_id => @publication.id}) 
     end 
   end
