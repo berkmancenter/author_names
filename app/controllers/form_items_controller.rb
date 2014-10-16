@@ -6,6 +6,7 @@ class FormItemsController < ApplicationController
     @form_items = FormItem.find(:all, :conditions => {:publisher_id => nil})
     if current_user.is_publisher?
       @your_form_items = FormItem.find(:all, :conditions => {:publisher_id => current_user.publisher.id})
+      @your_groups = FormItemGroup.where(:publisher_id => current_user.publisher.id)
     end  
   end
   
@@ -46,17 +47,13 @@ class FormItemsController < ApplicationController
       params[:form_item][:publisher] = Publisher.find(params[:form_item][:publisher])
     end 
     if params[:form_item][:form_item_group].nil? || params[:form_item][:form_item_group][:name].blank?
-      p "text field"
       if params[:new_group_name] == ""
-        p "text field empty"
         params[:form_item] = params[:form_item].reject!{|key, value| key == "form_item_group" }  
       else  
-        p "text field not empty"
         existing_group = FormItemGroup.find_by_name(params[:new_group_name])
         params[:form_item][:form_item_group] = existing_group.nil? ? FormItemGroup.create(:name => params[:new_group_name], :publisher => params[:form_item][:form_item_group][:publisher].blank? ? nil : Publisher.find(params[:form_item][:form_item_group][:publisher])) : existing_group
       end  
     else
-      p "drop down"
       params[:form_item][:form_item_group][:publisher] = params[:form_item][:form_item_group][:publisher].blank? ? nil : Publisher.find(params[:form_item][:form_item_group][:publisher])
       params[:form_item][:form_item_group] = FormItemGroup.find_by_name(params[:form_item][:form_item_group][:name])  
     end 
@@ -83,20 +80,16 @@ class FormItemsController < ApplicationController
       params[:form_item][:publisher] = Publisher.find(params[:form_item][:publisher])
     end 
     if params[:form_item][:form_item_group].nil? || params[:form_item][:form_item_group][:name].blank?
-      p "text field"
       if params[:new_group_name] == ""
-        p "text field empty"
         if params[:form_item][:form_item_group][:name] == ""
           @form_item.form_item_group = nil
         end
         params[:form_item] = params[:form_item].reject!{|key, value| key == "form_item_group" }  
       else  
-        p "text field not empty"
         existing_group = FormItemGroup.find_by_name(params[:new_group_name])
         params[:form_item][:form_item_group] = existing_group.nil? ? FormItemGroup.create(:name => params[:new_group_name], :publisher => params[:form_item][:form_item_group][:publisher].blank? ? nil : Publisher.find(params[:form_item][:form_item_group][:publisher])) : existing_group
       end  
     else
-      p "drop down"
       params[:form_item][:form_item_group][:publisher] = params[:form_item][:form_item_group][:publisher].blank? ? nil : Publisher.find(params[:form_item][:form_item_group][:publisher])
       params[:form_item][:form_item_group] = FormItemGroup.find_by_name(params[:form_item][:form_item_group][:name])  
     end 
