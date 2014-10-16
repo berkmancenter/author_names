@@ -46,8 +46,9 @@ ActiveRecord::Schema.define(:version => 20140820155522) do
   create_table "form_item_groups", :force => true do |t|
     t.string   "name"
     t.integer  "publisher_id"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.integer  "questionnaire_id"
+    t.datetime "created_at",       :null => false
+    t.datetime "updated_at",       :null => false
   end
 
   create_table "form_items", :force => true do |t|
