@@ -1,12 +1,13 @@
 class Questionnaire < ActiveRecord::Base
   include ActionDispatch::Routing::UrlFor
   include Rails.application.routes.url_helpers
-  attr_accessible :name, :description, :version, :publisher, :form_item_ids
+  attr_accessible :name, :description, :version, :publisher, :form_item_ids, :form_item_group_ids
   
   has_and_belongs_to_many :form_items, :order => "form_items_questionnaires.position"
   belongs_to :publisher
   has_many :responses
   has_one :publication
+  has_many :form_item_groups
   
   validates_presence_of :name, :publisher
   

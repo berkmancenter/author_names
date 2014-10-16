@@ -17,7 +17,7 @@ class FormItemsController < ApplicationController
     end  
     @form_item_group = @form_item.build_form_item_group
     if current_user.is_publisher?
-      @pub_groups = FormItemGroup.where(:publisher_id => current_user.publisher.id).pluck(:name).uniq
+      @pub_groups = FormItem.pub_groups(current_user.publisher.id)
     end  
   end
   
@@ -34,24 +34,39 @@ class FormItemsController < ApplicationController
       @q_links = ""
       @questionnaires.each do |q|
         @q_links = @q_links + "<a href='#{ROOT_URL}#{questionnaire_path(q)}'>#{q.name}</a><br />"
+      end 
+      unless @q_links.blank? 
+        flash[:notice] = "<p>Note these questionnaires are using this form item: <br />#{@q_links}</p>".html_safe
       end  
-      flash[:notice] = "<p>Note these questionnaires are using this form item: <br />#{@q_links}</p>".html_safe
     end
   end
   
   def create
     unless params[:form_item][:publisher].nil?
       params[:form_item][:publisher] = Publisher.find(params[:form_item][:publisher])
-    end  
+    end 
     if params[:form_item][:form_item_group].nil? || params[:form_item][:form_item_group][:name].blank?
-      params[:form_item][:form_item_group] = FormItemGroup.new(:name => params[:new_group_name], :publisher => params[:form_item][:form_item_group][:publisher].blank? ? nil : Publisher.find(params[:form_item][:form_item_group][:publisher]))
+      p "text field"
+      if params[:new_group_name] == ""
+        p "text field empty"
+        params[:form_item] = params[:form_item].reject!{|key, value| key == "form_item_group" }  
+      else  
+        p "text field not empty"
+        existing_group = FormItemGroup.find_by_name(params[:new_group_name])
+        params[:form_item][:form_item_group] = existing_group.nil? ? FormItemGroup.create(:name => params[:new_group_name], :publisher => params[:form_item][:form_item_group][:publisher].blank? ? nil : Publisher.find(params[:form_item][:form_item_group][:publisher])) : existing_group
+      end  
     else
-      params[:form_item][:form_item_group] = FormItemGroup.new(params[:form_item][:form_item_group])  
-    end  
+      p "drop down"
+      params[:form_item][:form_item_group][:publisher] = params[:form_item][:form_item_group][:publisher].blank? ? nil : Publisher.find(params[:form_item][:form_item_group][:publisher])
+      params[:form_item][:form_item_group] = FormItemGroup.find_by_name(params[:form_item][:form_item_group][:name])  
+    end 
+    
     @form_item = FormItem.new(params[:form_item])
     respond_to do |format|
       if @form_item.save
-        params[:form_item][:form_item_group].save
+        unless params[:form_item][:form_item_group].nil?
+          params[:form_item][:form_item_group].save
+        end  
         format.html { redirect_to form_items_url, notice: 'FormItem was successfully created.' }
         format.json { render json: @form_item, status: :created, form_item: @form_item }
       else
@@ -68,14 +83,25 @@ class FormItemsController < ApplicationController
       params[:form_item][:publisher] = Publisher.find(params[:form_item][:publisher])
     end 
     if params[:form_item][:form_item_group].nil? || params[:form_item][:form_item_group][:name].blank?
-      params[:form_item][:form_item_group] = FormItemGroup.new(:name => params[:new_group_name], :publisher => params[:form_item][:form_item_group][:publisher].blank? ? nil : Publisher.find(params[:form_item][:form_item_group][:publisher]))
+      p "text field"
+      if params[:new_group_name] == ""
+        p "text field empty"
+        if params[:form_item][:form_item_group][:name] == ""
+          @form_item.form_item_group = nil
+        end
+        params[:form_item] = params[:form_item].reject!{|key, value| key == "form_item_group" }  
+      else  
+        p "text field not empty"
+        existing_group = FormItemGroup.find_by_name(params[:new_group_name])
+        params[:form_item][:form_item_group] = existing_group.nil? ? FormItemGroup.create(:name => params[:new_group_name], :publisher => params[:form_item][:form_item_group][:publisher].blank? ? nil : Publisher.find(params[:form_item][:form_item_group][:publisher])) : existing_group
+      end  
     else
+      p "drop down"
       params[:form_item][:form_item_group][:publisher] = params[:form_item][:form_item_group][:publisher].blank? ? nil : Publisher.find(params[:form_item][:form_item_group][:publisher])
-      params[:form_item][:form_item_group] = FormItemGroup.new(params[:form_item][:form_item_group])  
+      params[:form_item][:form_item_group] = FormItemGroup.find_by_name(params[:form_item][:form_item_group][:name])  
     end 
     respond_to do |format|
       if @form_item.update_attributes(params[:form_item])
-        params[:form_item][:form_item_group].save
         format.html { redirect_to form_items_url, notice: 'FormItem was successfully updated.' }
         format.json { head :no_content }
       else

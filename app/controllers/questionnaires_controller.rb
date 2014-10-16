@@ -38,8 +38,16 @@ class QuestionnairesController < ApplicationController
   def new
     @questionnaire = Questionnaire.new
     
-    @lib_opt = FormItem.all(:conditions => {:publisher_id => nil, :required => false})
-    @pub_opt = FormItem.all(:conditions => {:publisher_id => current_user.publisher.id, :required => false})
+    if current_user.is_publisher?
+      @pub_groups = FormItemGroup.where(:publisher_id => current_user.publisher.id).pluck(:name).uniq
+    else
+      @admin_groups = FormItem.admin_groups
+    end
+    
+    @lib_opt = FormItem.all(:conditions => {:publisher_id => nil, :required => false, :form_item_group_id => nil})
+    @lib_opt_groups = FormItemGroup.where(:publisher_id => nil)
+    @pub_opt = FormItem.all(:conditions => {:publisher_id => current_user.publisher.id, :required => false, :form_item_group_id => nil})
+    @pub_opt_groups = FormItemGroup.where(:publisher_id => current_user.publisher.id)
     @lib_req = FormItem.all(:conditions => {:publisher_id => nil, :required => true})
     @pub_req = FormItem.all(:conditions => {:publisher_id => current_user.publisher.id, :required => true})
   end
@@ -47,6 +55,16 @@ class QuestionnairesController < ApplicationController
   def edit
     @questionnaire = Questionnaire.find(params[:id])
     
+    if current_user.is_publisher?
+      @pub_groups = FormItemGroup.where(:publisher_id => current_user.publisher.id).pluck(:name).uniq
+    else
+      @admin_groups = FormItem.admin_groups
+    end
+    
+    @lib_opt = FormItem.all(:conditions => {:publisher_id => nil, :required => false, :form_item_group_id => nil})
+    @lib_opt_groups = FormItemGroup.where(:publisher_id => nil)
+    @pub_opt = FormItem.all(:conditions => {:publisher_id => current_user.publisher.id, :required => false, :form_item_group_id => nil})
+    @pub_opt_groups = FormItemGroup.where(:publisher_id => current_user.publisher.id)
     @lib_req = FormItem.all(:conditions => {:publisher_id => nil, :required => true})
     @pub_req = FormItem.all(:conditions => {:publisher_id => current_user.publisher.id, :required => true})
     
@@ -58,7 +76,16 @@ class QuestionnairesController < ApplicationController
   def create
     params[:questionnaire][:publisher] = Publisher.find_by_name(params[:questionnaire][:publisher])
     
+    @group_items = Array.new
+    params[:questionnaire][:form_item_group_ids].reject(&:empty?).each do |gid|
+      @group_items << FormItemGroup.find(gid.to_i).form_items
+      params[:questionnaire][:form_item_group_ids] 
+    end  
+    
     params[:questionnaire][:form_item_ids] << FormItem.all(:conditions => {:required => true}).collect{|fi| fi.id.to_s}
+    unless @group_items.flatten!.nil?
+      params[:questionnaire][:form_item_ids] << @group_items.collect{|fi| fi.id.to_s}
+    end 
     params[:questionnaire][:form_item_ids] = params[:questionnaire][:form_item_ids].flatten!.reject(&:empty?).collect{|fi| fi.to_i}
     
     @questionnaire = Questionnaire.new(params[:questionnaire])
@@ -98,7 +125,15 @@ class QuestionnairesController < ApplicationController
     params[:questionnaire][:publisher] = Publisher.find_by_name(params[:questionnaire][:publisher])
     @questionnaire = Questionnaire.find(params[:id])
     
+    @group_items = Array.new
+    params[:questionnaire][:form_item_group_ids].reject(&:empty?).each do |gid|
+      @group_items << FormItemGroup.find(gid.to_i).form_items
+    end  
+    
     params[:questionnaire][:form_item_ids] << FormItem.all(:conditions => {:required => true}).collect{|fi| fi.id.to_s}
+    unless @group_items.flatten!.nil?
+      params[:questionnaire][:form_item_ids] << @group_items.collect{|fi| fi.id.to_s}
+    end  
     params[:questionnaire][:form_item_ids] = params[:questionnaire][:form_item_ids].flatten!.reject(&:empty?).collect{|fi| fi.to_i}
     
     unless params[:questionnaire][:form_item_ids].nil?
