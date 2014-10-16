@@ -1,7 +1,7 @@
 class Library < ActiveRecord::Base
   attr_accessible :name, :contact_name, :phone, :email, :address_1, :address_2, :city, :state, :postal_code, :country, :website, :description
   
-  has_many :users
+  has_many :users, :dependent => :destroy
   
   validates_presence_of :name, :contact_name, :phone, :email, :address_1, :city, :state, :postal_code, :country
   
