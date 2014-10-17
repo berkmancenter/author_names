@@ -15,10 +15,6 @@ class UsersController < ApplicationController
   end
   
   def create
-    # admin = params[:user][:admin]
-    # staff = params[:user][:staff]
-    # superadmin = params[:user][:superadmin]
-    # params[:user] = params[:user].delete_if{|key, value| key == "admin" || key == "staff" || key == "superadmin" }
     @user = User.new(params[:user])
     @user.password = User.random_password
     params[:user_type] == "Author" ? @user.author = true : @user.author = false

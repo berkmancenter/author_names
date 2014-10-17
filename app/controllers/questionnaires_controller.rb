@@ -13,24 +13,52 @@ class QuestionnairesController < ApplicationController
   
   def show
     @questionnaire = Questionnaire.find(params[:id])
+    p "publication"
+    p params[:publication]
     unless params[:author_user_id].nil?
       @user = User.find(params[:author_user_id])
-    else
-      unless current_user.try(:superadmin?) || current_user.is_publisher? || current_user.is_librarian?
-        @user = current_user  
-      end  
-    end  
-    unless @user.nil?
-      profile = Author.first(:conditions => {:email => @user.email, :publisher_id => @questionnaire.publisher.id})
-      unless profile.nil?
-        profile.user_id = @user.id
-        profile.save
-        @user.publisher_id = @questionnaire.publisher.id
-        @user.save
-        @publication = Publication.create(:user_id => @user.id, :author_id => profile.id, :publisher_id => @questionnaire.publisher.id, :questionnaire_id => @questionnaire.id)
-      else
-        @publication = Publication.create(:user_id => @user.id, :publisher_id => @questionnaire.publisher.id, :questionnaire_id => @questionnaire.id)
+      unless @user.nil?
+        if params[:publication].nil?
+          profile = Author.first(:conditions => {:email => @user.email, :publisher_id => @questionnaire.publisher.id})
+          unless profile.nil?
+            profile.user_id = @user.id
+            profile.save
+            @user.publisher_id = @questionnaire.publisher.id
+            @user.save
+            @publication = Publication.create(:user_id => @user.id, :author_id => profile.id, :publisher_id => @questionnaire.publisher.id, :questionnaire_id => @questionnaire.id)
+            redirect_to(edit_author_path(profile, :questionnaire => @questionnaire, :publication => @publication)) and return 
+          else
+            @publication = Publication.create(:user_id => @user.id, :publisher_id => @questionnaire.publisher.id, :questionnaire_id => @questionnaire.id)
+            redirect_to(new_author_path(:questionnaire => @questionnaire, :publication => @publication)) and return 
+          end
+        else
+          @publication = Publication.find(params[:publication])
+        end     
       end 
+    else
+      if current_user.try(:superadmin?) || current_user.is_publisher? || current_user.is_librarian?
+        @user = current_user  
+      else
+        @user = current_user
+        unless @user.nil?
+          if params[:publication].nil?
+            profile = Author.first(:conditions => {:email => @user.email, :publisher_id => @questionnaire.publisher.id})
+            unless profile.nil?
+              profile.user_id = @user.id
+              profile.save
+              @user.publisher_id = @questionnaire.publisher.id
+              @user.save
+              @publication = Publication.create(:user_id => @user.id, :author_id => profile.id, :publisher_id => @questionnaire.publisher.id, :questionnaire_id => @questionnaire.id)
+              redirect_to(edit_author_path(profile, :questionnaire => @questionnaire, :publication => @publication)) and return 
+            else
+              @publication = Publication.create(:user_id => @user.id, :publisher_id => @questionnaire.publisher.id, :questionnaire_id => @questionnaire.id)
+              redirect_to(new_author_path(:questionnaire => @questionnaire, :publication => @publication)) and return 
+            end
+          else
+            @publication = Publication.find(params[:publication])
+          end     
+        end   
+      end  
     end 
     
   end

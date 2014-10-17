@@ -29,7 +29,7 @@ class AuthorsController < ApplicationController
     respond_to do |format|
       if @author.save
         if current_user.is_author?
-          format.html { redirect_to root_url, notice: 'Author was successfully created.' }
+          format.html { redirect_to root_url, notice: 'Contact info was successfully recorded.' }
           format.json { render json: @author, status: :created, author: @author }
         else  
           format.html { redirect_to authors_url, notice: 'Author was successfully created.' }
@@ -44,13 +44,13 @@ class AuthorsController < ApplicationController
   
   def update
     @author = Author.find(params[:id])
-
+    
     respond_to do |format|
       if @author.update_attributes(params[:author])
         if current_user.try(:superadmin?) || current_user.try(:admin?)
           format.html { redirect_to authors_url, notice: 'Author was successfully updated.' }
-        else   
-          format.html { redirect_to root_url, notice: 'Thank you. Your profile was successfully updated.' }
+        else 
+          format.html { redirect_to questionnaire_url(params[:questionnaire], :publication => params[:publication]), notice: 'Thank you. Your profile was successfully updated.' }
         end  
         format.json { head :no_content }  
       else

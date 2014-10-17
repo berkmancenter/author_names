@@ -6,19 +6,19 @@
 		  <div class="form-group"> 
 		    <label for="name" class="col-lg-2 control-label">First Name</label>
 		    <div class="col-lg-10">
-		      <%= f.input :first_name, :label => false, :input_html => { :size => 30, :class => "form-control" } %>
+		      <%= f.input :first_name, :label => false, :input_html => { :value => current_user.first_name, :size => 30, :class => "form-control" } %>
 		    </div>	
 		  </div>
 		  <div class="form-group"> 
 		    <label for="name" class="col-lg-2 control-label">Last Name</label>
 		    <div class="col-lg-10">
-		      <%= f.input :last_name, :label => false, :input_html => { :size => 30, :class => "form-control" } %>
+		      <%= f.input :last_name, :label => false, :input_html => { :value => current_user.last_name, :size => 30, :class => "form-control" } %>
 		    </div>	
 		  </div>
 		  <div class="form-group"> 
 		    <label for="name" class="col-lg-2 control-label">Email</label>
 		    <div class="col-lg-10">
-		      <%= f.input :email, :label => false, :input_html => { :size => 30, :class => "form-control" } %>
+		      <%= f.input :email, :label => false, :input_html => { :value => current_user.email, :size => 30, :class => "form-control" } %>
 		    </div>	
 		  </div>
 		  <div class="form-group"> 
@@ -83,7 +83,12 @@
 		  <% else %>	
 			<%= f.input :user_id, :as => :hidden, :value => current_user.id %>
 	  	  <% end %>
-		  
+		  <% unless params[:questionnaire].nil? %>
+		    <%= hidden_field_tag :questionnaire, params[:questionnaire] %>
+		  <% end %>	
+		  <% unless params[:publication].nil? %>
+		    <%= hidden_field_tag :publication, params[:publication] %>
+		  <% end %>
 		<% end %>
 		<%= f.actions do %>
 		  <%= f.action :submit, :as => :button, :button_html => { :class => "btn btn-primary"} %>
