@@ -60,7 +60,7 @@ ActiveRecord::Schema.define(:version => 20141016190100) do
     t.string   "field_name",                            :null => false
     t.text     "display_text"
     t.string   "field_type",                            :null => false
-    t.string   "field_options"
+    t.text     "field_options"
     t.boolean  "required",           :default => false
     t.integer  "publisher_id"
     t.integer  "form_item_group_id"
