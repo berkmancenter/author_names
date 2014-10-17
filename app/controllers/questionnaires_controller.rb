@@ -13,8 +13,6 @@ class QuestionnairesController < ApplicationController
   
   def show
     @questionnaire = Questionnaire.find(params[:id])
-    p "publication"
-    p params[:publication]
     unless params[:author_user_id].nil?
       @user = User.find(params[:author_user_id])
       unless @user.nil?
