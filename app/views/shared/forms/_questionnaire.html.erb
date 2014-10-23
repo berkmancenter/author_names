@@ -35,10 +35,19 @@
 	        </div>	
 	      </div> 
 	  	  <% end %>
+		  
 		  <div class="form-group"> 
 		    <label for="name" class="col-lg-2 control-label">Optional Global Form Items</label>
 		    <div class="col-lg-10">
-		      <%= f.input :form_items, :as => :check_boxes, :label => false, :collection => @lib_opt %>
+			  <div class="col-lg-5">
+				Groups:<br />  
+				<%= f.input :form_item_groups, :as => :check_boxes, :label => false, :collection => @lib_opt_groups %>
+			    	
+		      </div>
+			  <div class="col-lg-5">	
+				Individual:<br />  
+		        <%= f.input :form_items, :as => :check_boxes, :label => false, :collection => @lib_opt %>
+			  </div>
 		    </div>	
 		  </div>
 		  <div class="form-group"> 
