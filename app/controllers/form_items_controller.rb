@@ -24,6 +24,7 @@ class FormItemsController < ApplicationController
   
   def edit
     @form_item = FormItem.find(params[:id])
+    @group_name = @form_item.form_item_group.nil? ? nil : @form_item.form_item_group.name
     @form_item_group = @form_item.build_form_item_group
     if current_user.is_publisher?
       @pub_groups = FormItemGroup.where(:publisher_id => current_user.publisher.id).pluck(:name).uniq
