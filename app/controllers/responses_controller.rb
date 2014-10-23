@@ -93,8 +93,8 @@ class ResponsesController < ApplicationController
     @response = Response.find(params[:id])
 
     respond_to do |format|
-      if @response.update_attributes(params[:questionnaire])
-        format.html { redirect_to questionnaires_url, notice: 'Response was successfully updated.' }
+      if @response.update_attributes(params[:response])
+        format.html { redirect_to responses_url, notice: 'Response was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
