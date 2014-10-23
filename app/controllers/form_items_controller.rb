@@ -7,6 +7,8 @@ class FormItemsController < ApplicationController
     if current_user.is_publisher?
       @your_form_items = FormItem.find(:all, :conditions => {:publisher_id => current_user.publisher.id})
       @your_groups = FormItemGroup.where(:publisher_id => current_user.publisher.id)
+    elsif current_user.superadmin
+      @your_groups = FormItemGroup.where(:publisher_id => nil)
     end  
   end
   
