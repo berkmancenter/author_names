@@ -115,7 +115,7 @@
 	    <tr>
 	  	  <td><%= group.name %></td>
 		  <td>
-		  <% if current_user.is_pub_admin? %>	  
+		  <% if current_user.is_pub_admin? || current_user.superadmin %>	  
 	        <% 
 		      @questionnaire_ids = Array.new
 	          group.questionnaires.collect{|q| @questionnaire_ids << q.id}
