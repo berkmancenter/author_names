@@ -44,7 +44,7 @@ class AuthorsController < ApplicationController
           if params[:questionnaire].nil?
             format.html { redirect_to authors_url, notice: 'Author was successfully created.' }
           else
-            format.html { redirect_to questionnaire_url(params[:questionnaire], :publication => params[:publication]), notice: 'Profile was successfully created.' }  
+            format.html { redirect_to questionnaire_url(params[:questionnaire], :publication => params[:publication], :author_user_id => @author.user.id), notice: 'Profile was successfully created.' }  
           end
           format.json { render json: @author, status: :created, author: @author }
         end
@@ -64,7 +64,7 @@ class AuthorsController < ApplicationController
           if params[:questionnaire].nil?
             format.html { redirect_to authors_url, notice: 'Author was successfully updated.' }
           else
-            format.html { redirect_to questionnaire_url(params[:questionnaire], :publication => params[:publication]), notice: 'Profile was successfully updated.' }  
+            format.html { redirect_to questionnaire_url(params[:questionnaire], :publication => params[:publication], :author_user_id => @author.user.id), notice: 'Profile was successfully updated.' }  
           end
         else 
           if params[:questionnaire].nil?
