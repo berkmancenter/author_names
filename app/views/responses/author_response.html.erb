@@ -1,16 +1,16 @@
 <div class="col-lg-12">
   <h1><%= @user.full_name %>'s Responses</h1>
   <br />
-	  <% @responses.each do |response| %>
-	    <strong><%= raw response.form_item.display_text %></strong> 
+	<% @responses.each do |response| %>
+	  <strong><%= raw response.form_item.display_text %></strong> 
   
-	    <%= response.response_text %> 
+	  <%= response.response_text %> 
 
-	    <% if current_user.is_pub_admin? %>
-	  	<%= link_to('Edit', edit_response_path(response), :class => "action-edit") %>
-	    <% end %>
-	    <br /><br />
+	  <% if current_user.is_pub_admin? %>
+	    <%= link_to('Edit', edit_response_path(response), :class => "action-edit") %>
 	  <% end %>
+	  <br /><br />
+	<% end %>
 </div>
 
 

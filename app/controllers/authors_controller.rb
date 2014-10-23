@@ -13,7 +13,12 @@ class AuthorsController < ApplicationController
     if current_user.is_librarian?
        redirect_to('/') and return
     end
-    @author = Author.new
+    unless params[:user_id].nil?
+      user = User.find(params[:user_id])
+      @author = Author.new(:email => user.email, :first_name => user.first_name, :last_name => user.last_name)
+    else  
+      @author = Author.new
+    end  
   end
   
   def edit
@@ -36,7 +41,11 @@ class AuthorsController < ApplicationController
           end  
           format.json { render json: @author, status: :created, author: @author }
         else  
-          format.html { redirect_to authors_url, notice: 'Author was successfully created.' }
+          if params[:questionnaire].nil?
+            format.html { redirect_to authors_url, notice: 'Author was successfully created.' }
+          else
+            format.html { redirect_to questionnaire_url(params[:questionnaire], :publication => params[:publication]), notice: 'Profile was successfully created.' }  
+          end
           format.json { render json: @author, status: :created, author: @author }
         end
       else
@@ -52,7 +61,11 @@ class AuthorsController < ApplicationController
     respond_to do |format|
       if @author.update_attributes(params[:author])
         if current_user.try(:superadmin?) || current_user.try(:admin?)
-          format.html { redirect_to authors_url, notice: 'Author was successfully updated.' }
+          if params[:questionnaire].nil?
+            format.html { redirect_to authors_url, notice: 'Author was successfully updated.' }
+          else
+            format.html { redirect_to questionnaire_url(params[:questionnaire], :publication => params[:publication]), notice: 'Profile was successfully updated.' }  
+          end
         else 
           if params[:questionnaire].nil?
             format.html { redirect_to root_url, notice: 'Contact info was successfully updated.' }
