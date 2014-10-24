@@ -15,7 +15,7 @@ class AuthorsController < ApplicationController
     end
     unless params[:user_id].nil?
       user = User.find(params[:user_id])
-      @author = Author.new(:email => user.email, :first_name => user.first_name, :last_name => user.last_name)
+      @author = Author.new(:email => user.email, :first_name => user.first_name, :last_name => user.last_name, :user_id => user.id)
     else  
       @author = Author.new
     end  
@@ -49,6 +49,7 @@ class AuthorsController < ApplicationController
           format.json { render json: @author, status: :created, author: @author }
         end
       else
+        flash[:error] = "Please fill out all required fields."
         format.html { render action: "new" }
         format.json { render json: @author.errors, status: :unprocessable_entity }
       end
