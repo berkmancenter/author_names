@@ -5,7 +5,7 @@ class Author < ActiveRecord::Base
   belongs_to :user
   has_many :publications, :dependent => :destroy
   
-  validates_presence_of :publisher_id
+  validates_presence_of :publisher_id, :user_id
   
   def to_s
     self.full_name
