@@ -26,12 +26,14 @@
 		      <%= f.input :field_options, :label => false, :input_html => { :class => "form-control"} %>
 		    </div>	
 		  </div>
-		  <div class="form-group"> 
-		    <label for="name" class="col-lg-2 control-label">Required Field?</label>
-		    <div class="col-lg-10">
-		      <%= f.input :required, :hint => "If required, this field will automatically appear on all questionnaires.", :label => " " %>
-		    </div>	
-		  </div>
+		  <% if current_user.superadmin %>
+		    <div class="form-group"> 
+		      <label for="name" class="col-lg-2 control-label">Auto-Include?</label>
+		      <div class="col-lg-10">
+		        <%= f.input :required, :hint => "If checked, this field will automatically appear on all questionnaires.", :label => " " %>
+		      </div>	
+		    </div>
+		  <% end %>
 		  <%= f.semantic_fields_for @form_item_group, :html => { :class => "form-horizontal"} do |group| %>
   		    <div class="form-group"> 
   		      <label for="name" class="col-lg-2 control-label">Group Name</label>
