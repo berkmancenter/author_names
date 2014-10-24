@@ -8,11 +8,11 @@ class FormItemGroupsController < ApplicationController
       fi.save
     end  
     
-    
-    @form_item_group.questionnaires.each do |q|
-      q.form_items = q.form_items - @form_item_group.form_items
-      q.save
-    end  
+    #remove form_items from deleted group from associated questionnaires
+    # @form_item_group.questionnaires.each do |q|
+    #   q.form_items = q.form_items - @form_item_group.form_items
+    #   q.save
+    # end
     @form_item_group.destroy
 
     respond_to do |format|
