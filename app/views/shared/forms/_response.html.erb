@@ -20,12 +20,21 @@
 		      <%= f.input :form_item_id, :label => false, :input_html => { :class => "form-control"} %>
 		    </div>	
 		  </div>
-		  <div class="form-group"> 
-		    <label for="name" class="col-lg-2 control-label">Response Text</label>
-		    <div class="col-lg-10">
-		      <%= f.input :response_text, :label => false, :input_html => { :class => "form-control"} %>
-		    </div>	
-		  </div>
+		  <% if @response.form_item.formtastic_field_map == "file" %>
+		    <div class="form-group"> 
+		      <label for="name" class="col-lg-2 control-label">Upload File</label>
+		      <div class="col-lg-10">
+		        <%= f.input :author_upload, :as => :file, :label => false, :input_html => { :class => "form-control"} %>
+		      </div>	
+		    </div>
+		  <% else %>
+		    <div class="form-group"> 
+		      <label for="name" class="col-lg-2 control-label">Response Text</label>
+		      <div class="col-lg-10">
+		        <%= f.input :response_text, :label => false, :input_html => { :class => "form-control"} %>
+		      </div>	
+		    </div>
+		  <% end %>
 		  <% if current_user.is_pub_admin? %>
   		    <div class="form-group"> 
   		      <label for="name" class="col-lg-2 control-label">Exported?</label>
