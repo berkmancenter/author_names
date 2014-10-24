@@ -3,11 +3,13 @@
   <br />
 	<% @responses.each do |response| %>
 	  <strong><%= raw response.form_item.display_text %></strong> 
-  
-	  <%= response.response_text %> 
-
+	  <% if response.form_item.formtastic_field_map == "file" %>
+  	    <%= link_to "View Upload", response.author_upload_url unless response.author_upload.blank? %>
+	  <% else %>	
+	    <%= response.response_text %> 
+	  <% end %>
 	  <% if current_user.is_pub_admin? %>
-	    <%= link_to('Edit', edit_response_path(response), :class => "action-edit") %>
+	     - <%= link_to('Edit', edit_response_path(response)) %>
 	  <% end %>
 	  <br /><br />
 	<% end %>
