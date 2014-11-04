@@ -148,8 +148,8 @@ class User < ActiveRecord::Base
   def send_new_publisher_user_email(email, path)
     # send to selected users
     Email.create(
-      :from => self.publisher.email,
-      :reply_to => self.publisher.email,
+      :from => self.publisher.nil? ? self.email : self.publisher.email,
+      :reply_to => self.publisher.nil? ? self.email : self.publisher.email,
       :to => email,
       :subject => "[Author Names] Please Sign Up",
       :body => "<p>Please <a href='#{ROOT_URL}#{path}'>create</a> an account.</p>"
@@ -159,8 +159,8 @@ class User < ActiveRecord::Base
   def send_new_library_user_email(email, path)
     # send to selected users
     Email.create(
-      :from => self.library.email,
-      :reply_to => self.library.email,
+      :from => self.library.nil? ? self.email : self.library.email,
+      :reply_to => self.library.nil? ? self.email : self.library.email,
       :to => email,
       :subject => "[Author Names] Please Sign Up",
       :body => "<p>Please <a href='#{ROOT_URL}#{path}'>create</a> an account.</p>"
