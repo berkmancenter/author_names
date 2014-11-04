@@ -36,7 +36,10 @@ th {
     font-weight: bold;
 }
 
-
+.ll_logo {
+  padding-top: 30px;
+  padding-bottom: 34px;	
+}
 
 
 /*! jQuery UI - v1.11.0 - 2014-08-06
