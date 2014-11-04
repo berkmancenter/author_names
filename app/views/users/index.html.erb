@@ -312,7 +312,7 @@
 	  <div class="form-group"> 
 	    <label for="name" class="col-lg-2 control-label">Assign Library: </label>
 	    <div class="col-lg-10">
-	      <%= select_tag :library_id, options_from_collection_for_select(Library.all, "id", "name"), :class => "form-control" %>
+	      <%= select_tag :library_id, options_from_collection_for_select(Library.all, "id", "name"), :include_blank => true, :class => "form-control" %>
 	    </div>	
 	  </div>
       </span>
@@ -320,7 +320,7 @@
 	  <div class="form-group"> 
 	    <label for="name" class="col-lg-2 control-label">Assign Publisher: </label>
 	    <div class="col-lg-10">
-	      <%= select_tag :publisher_id, options_from_collection_for_select(Publisher.all, "id", "name"), :class => "form-control" %>
+	      <%= select_tag :publisher_id, options_from_collection_for_select(Publisher.all, "id", "name"), :include_blank => true, :class => "form-control" %>
 	    </div>	
 	  </div>
       </span>
