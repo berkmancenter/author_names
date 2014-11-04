@@ -251,10 +251,14 @@
     <%= form_tag bulk_users_users_path, :method => :get do %>
     <p>
       <%= hidden_field_tag :publisher_id, current_user.publisher.id %>
-      Email Addresses (comma separated):<br />
-      <%= text_area_tag 'new_emails', nil, :size => "50x10" %>
+	  <div class="form-group"> 
+	    <label for="name" class="col-lg-2 control-label">Email Addresses (comma separated): </label>
+	    <div class="col-lg-10">
+		  <%= text_area_tag 'new_emails', nil, :size => "50x10" %>
+	    </div>	
+	  </div>
       <br />
-      <%= submit_tag "Create" %>
+      <%= submit_tag "Create", :class => "btn btn-primary" %>
     </p>
     <% end %>
   <% end %>
@@ -270,13 +274,60 @@
     <%= form_tag bulk_users_users_path, :method => :get do %>
     <p>
       <%= hidden_field_tag :library_id, current_user.library.id %>
-      Email Addresses (comma separated):<br />
-      <%= text_area_tag 'new_emails', nil, :size => "50x10" %>
+	  <div class="form-group"> 
+	    <label for="name" class="col-lg-2 control-label">Email Addresses (comma separated): </label>
+	    <div class="col-lg-10">
+		  <%= text_area_tag 'new_emails', nil, :size => "50x10" %>
+	    </div>	
+	  </div>
       <br />
-      <%= submit_tag "Create" %>
+      <%= submit_tag "Create", :class => "btn btn-primary" %>
     </p>
     <% end %>
   <% end %>
+  </div>
+</div>
+<% end %>
+
+<% if current_user.superadmin %>
+<div class="col-lg-12">
+  <div class="table-responsive">
+    <h3>Bulk Create New Users</h3>
+    <%= form_tag bulk_users_users_path, :method => :get do %>
+    <p>
+	  <div class="form-group"> 
+	    <label for="name" class="col-lg-2 control-label">Email Addresses (comma separated): </label>
+	    <div class="col-lg-10">
+		  <%= text_area_tag 'new_emails', nil, :size => "50x10" %>
+	    </div>	
+	  </div>
+	  <div class="form-group"> 
+	    <label for="name" class="col-lg-2 control-label">Affiliation: </label>
+	    <div class="col-lg-10">
+		  <%= radio_button_tag("affiliation", "Publisher", checked = false) %> Publisher <br />	
+		  <%= radio_button_tag("affiliation", "Library", checked = false) %> Library <br /><br />
+	    </div>	
+	  </div>
+	  <span id="lib_affiliation_dropdown">
+	  <div class="form-group"> 
+	    <label for="name" class="col-lg-2 control-label">Assign Library: </label>
+	    <div class="col-lg-10">
+	      <%= select_tag :library_id, options_from_collection_for_select(Library.all, "id", "name"), :class => "form-control" %>
+	    </div>	
+	  </div>
+      </span>
+	  <span id="pub_affiliation_dropdown">
+	  <div class="form-group"> 
+	    <label for="name" class="col-lg-2 control-label">Assign Publisher: </label>
+	    <div class="col-lg-10">
+	      <%= select_tag :publisher_id, options_from_collection_for_select(Publisher.all, "id", "name"), :class => "form-control" %>
+	    </div>	
+	  </div>
+      </span>
+      <br /><br />
+      <%= submit_tag "Create", :class => "btn btn-primary" %>
+    </p>
+    <% end %>
   </div>
 </div>
 <% end %>
