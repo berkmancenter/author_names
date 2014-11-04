@@ -29,59 +29,63 @@ $(document).ready(function(){
 	
   $("#users-table")
   	.tablesorter({sortList: [[0,0]]})
-    .tablesorterPager({container: $("#pager-users-table")})
+    .tablesorterPager({container: $("#pager-users-table"), size: 50})
   ;
   $("#users-admin-table")
   	.tablesorter({sortList: [[0,0]]})
-    .tablesorterPager({container: $("#pager-users-admin-table")})
+    .tablesorterPager({container: $("#pager-users-admin-table"), size: 50})
   ;
   $("#users-staff-table")
   	.tablesorter({sortList: [[0,0]]})
-    .tablesorterPager({container: $("#pager-users-staff-table")})
+    .tablesorterPager({container: $("#pager-users-staff-table"), size: 50})
   ;
   $("#users-authors-table")
   	.tablesorter({sortList: [[0,0]]})
-    .tablesorterPager({container: $("#pager-users-authors-table")})
+    .tablesorterPager({container: $("#pager-users-authors-table"), size: 50})
   ;
   $("#users-unassociated-table")
   	.tablesorter({sortList: [[0,0]]})
-    .tablesorterPager({container: $("#pager-users-unassociated-table")})
+    .tablesorterPager({container: $("#pager-users-unassociated-table"), size: 50})
   ;
   $("#unaffiliated-users-table")
   	.tablesorter({sortList: [[0,0]]})
-    .tablesorterPager({container: $("#pager-unaffiliated-users-table")})
+    .tablesorterPager({container: $("#pager-unaffiliated-users-table"), size: 50})
   ;
   $("#superadmin-users-table")
   	.tablesorter({sortList: [[0,0]]})
-    .tablesorterPager({container: $("#pager-superadmin-users-table")})
+    .tablesorterPager({container: $("#pager-superadmin-users-table"), size: 50})
   ;
   $("#publishers-table")
   	.tablesorter({sortList: [[0,0]]})
-    .tablesorterPager({container: $("#pager-publishers-table")})
+    .tablesorterPager({container: $("#pager-publishers-table"), size: 50})
   ;
   $("#libraries-table")
   	.tablesorter({sortList: [[0,0]]})
-    .tablesorterPager({container: $("#pager-libraries-table")})
+    .tablesorterPager({container: $("#pager-libraries-table"), size: 50})
   ;
   $("#authors-table")
   	.tablesorter({sortList: [[0,0]]})
-    .tablesorterPager({container: $("#pager-authors-table")})
+    .tablesorterPager({container: $("#pager-authors-table"), size: 50})
   ;
   $("#form_items-table")
   	.tablesorter({sortList: [[0,0]]})
-    .tablesorterPager({container: $("#pager-form_items-table")})
+    .tablesorterPager({container: $("#pager-form_items-table"), size: 50})
   ;
   $("#form_items_ours-table")
   	.tablesorter({sortList: [[0,0]]})
-    .tablesorterPager({container: $("#pager-form_items_ours-table")})
+    .tablesorterPager({container: $("#pager-form_items_ours-table"), size: 50})
+  ;
+  $("#groups_ours-table")
+  	.tablesorter({sortList: [[0,0]]})
+    .tablesorterPager({container: $("#pager-groups_ours-table"), size: 50})
   ;
   $("#questionnaires-table")
   	.tablesorter({sortList: [[0,0]]})
-    .tablesorterPager({container: $("#pager-questionnaires-table")})
+    .tablesorterPager({container: $("#pager-questionnaires-table"), size: 50})
   ;
   $("#responses-table")
   	.tablesorter({sortList: [[0,0]]})
-    .tablesorterPager({container: $("#pager-responses-table")})
+    .tablesorterPager({container: $("#pager-responses-table"), size: 50})
   ;
   
   $('#pub_affiliation_dropdown').hide();

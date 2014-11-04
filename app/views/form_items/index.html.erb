@@ -103,7 +103,7 @@
 <% unless @your_groups.nil? %>
 <div class="table-responsive">
 	<h3>Our Groups</h3>
-	<table id="form_items_ours-table" class="table table-striped table-hover tablesorter">	
+	<table id="groups_ours-table" class="table table-striped table-hover tablesorter">	
 	<thead>
 	  <tr>
 		<th>Group Name</th>
@@ -131,7 +131,7 @@
 	</tbody>	
 	</table>
 	
-	<%= render :partial => '/shared/tablesorter_pager', :locals => {:pager_id => "form_items_ours-table" } %>
+	<%= render :partial => '/shared/tablesorter_pager', :locals => {:pager_id => "groups_ours-table" } %>
 </div>	
 <% end %>
 </div>
