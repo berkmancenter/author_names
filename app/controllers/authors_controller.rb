@@ -33,6 +33,12 @@ class AuthorsController < ApplicationController
     @author = Author.new(params[:author])
     respond_to do |format|
       if @author.save
+        unless @author.user.nil?
+          @author.user.email = @author.email
+          @author.user.first_name = @author.first_name
+          @author.user.last_name = @author.last_name
+          @author.user.save
+        end  
         if current_user.is_author?
           if params[:questionnaire].nil?
             format.html { redirect_to root_url, notice: 'Contact info was successfully recorded.' }
@@ -61,6 +67,12 @@ class AuthorsController < ApplicationController
     
     respond_to do |format|
       if @author.update_attributes(params[:author])
+        unless @author.user.nil?
+          @author.user.email = @author.email
+          @author.user.first_name = @author.first_name
+          @author.user.last_name = @author.last_name
+          @author.user.save
+        end
         if current_user.try(:superadmin?) || current_user.try(:admin?)
           if params[:questionnaire].nil?
             format.html { redirect_to authors_url, notice: 'Author was successfully updated.' }
