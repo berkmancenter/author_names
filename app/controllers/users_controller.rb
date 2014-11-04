@@ -137,12 +137,12 @@ class UsersController < ApplicationController
     end
     respond_to do |format|
       unless params[:new_emails].blank?
-        unless params[:publisher_id].nil?
+        unless params[:publisher_id].nil? || params[:publisher_id].blank?
           emails.collect{|e| e.strip}.each do |email|
             current_user.send_new_publisher_user_email(email, "#{new_user_registration_path(:publisher_id => params[:publisher_id], :email => email)}") 
           end  
         end
-        unless params[:library_id].nil?
+        unless params[:library_id].nil? || params[:library_id].blank?
           emails.collect{|e| e.strip}.each do |email|
             current_user.send_new_library_user_email(email, "#{new_user_registration_path(:library_id => params[:library_id], :email => email)}") 
           end  
