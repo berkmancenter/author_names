@@ -106,6 +106,14 @@ class UsersController < ApplicationController
     
     respond_to do|format|
       if @user.save
+        unless @user.authors.nil?
+          @user.authors.each do |a|
+            a.email = @user.email
+            a.first_name = @user.first_name
+            a.last_name = @user.last_name
+            a.save
+          end  
+        end
         flash[:notice] = %Q|#{@user} updated|
         format.html {redirect_to :action => :index}
       else
