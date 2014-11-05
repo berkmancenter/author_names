@@ -21,8 +21,10 @@
   		  <td>
 			<%= link_to('View', author_path(author)) %> |   
   	   		<%= link_to('Edit', edit_author_path(author), :class => "action-edit") %> 
-  			<% if (current_user.try(:admin?) || current_user.try(:superadmin?)) && author.user != current_user %>
+  			<% if (current_user.try(:admin?) || current_user.try(:superadmin?)) && author.user != current_user && author.can_delete? %>
   			  | <%= link_to('Delete', author_path(author), :confirm => "Are you sure?", :method => :delete) %>
+ 			<% else %>
+			  | <%= link_to 'Delete', "", :confirm => "Cannot be deleted since there are responses that have not been exported yet." %>  
   	  	    <% end %>
   		  </td>
   	    </tr>

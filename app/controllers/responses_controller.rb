@@ -250,7 +250,9 @@ class ResponsesController < ApplicationController
     @responses.each do |response|
       response.send("#{type}=", true)
       response.save  
-    end  
+    end 
+    @publication.send("#{type}=", true)
+    @publication.save 
     
     flash[:notice] = 'Response has been marked as exported!'
     redirect_to responses_path(:questionnaire => @questionnaire.id, :user => @user)

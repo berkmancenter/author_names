@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
   belongs_to :publisher
   belongs_to :library
   has_many :authors, dependent: :destroy
-  has_many :responses
+  has_many :responses, :dependent => :destroy
   has_many :publications, :dependent => :destroy
   
   SUPER_USER_TYPES = ["", "Superadmin", "Admin", "Staff", "Author"]
@@ -20,6 +20,17 @@ class User < ActiveRecord::Base
   
   def to_s
     self.full_name
+  end
+  
+  def can_delete?
+    a = true
+    self.responses.each do |resp|
+      if !resp.lib_exported_flag || !resp.pub_exported_flag
+        a = false
+        break
+      end    
+    end
+    return a
   end
   
   def full_name

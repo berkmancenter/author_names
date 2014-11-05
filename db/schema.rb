@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20141016190100) do
+ActiveRecord::Schema.define(:version => 20141105194226) do
 
   create_table "authors", :force => true do |t|
     t.string   "phone",                       :null => false
@@ -60,7 +60,7 @@ ActiveRecord::Schema.define(:version => 20141016190100) do
     t.string   "field_name",                            :null => false
     t.text     "display_text"
     t.string   "field_type",                            :null => false
-    t.text     "field_options"
+    t.string   "field_options"
     t.boolean  "required",           :default => false
     t.integer  "publisher_id"
     t.integer  "form_item_group_id"
@@ -101,8 +101,10 @@ ActiveRecord::Schema.define(:version => 20141016190100) do
     t.integer  "author_id"
     t.integer  "publisher_id"
     t.integer  "questionnaire_id"
-    t.datetime "created_at",       :null => false
-    t.datetime "updated_at",       :null => false
+    t.datetime "created_at",                           :null => false
+    t.datetime "updated_at",                           :null => false
+    t.boolean  "lib_exported_flag", :default => false
+    t.boolean  "pub_exported_flag", :default => false
   end
 
   create_table "publishers", :force => true do |t|

@@ -4,6 +4,7 @@ class FormItem < ActiveRecord::Base
   has_and_belongs_to_many :questionnaires
   belongs_to :publisher
   belongs_to :form_item_group
+  has_many :responses
   
   accepts_nested_attributes_for :form_item_group
   
@@ -17,7 +18,18 @@ class FormItem < ActiveRecord::Base
   
   def to_s
     self.field_name
-  end  
+  end 
+  
+  def can_delete?
+    a = true
+    self.responses.each do |resp|
+      if !resp.lib_exported_flag || !resp.pub_exported_flag
+        a = false
+        break
+      end    
+    end
+    return a
+  end 
   
   def self.admin_groups
     return FormItemGroup.where(:publisher_id => nil).pluck(:name).uniq

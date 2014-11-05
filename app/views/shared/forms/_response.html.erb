@@ -35,21 +35,6 @@
 		      </div>	
 		    </div>
 		  <% end %>
-		  <% if current_user.is_pub_admin? %>
-  		    <div class="form-group"> 
-  		      <label for="name" class="col-lg-2 control-label">Exported?</label>
-  		      <div class="col-lg-10">
-  		        <%= f.input :pub_exported_flag, :label => " " %>
-  		      </div>	
-  		    </div>
-		  <% elsif current_user.is_lib_admin? %>
-		    <div class="form-group"> 
-		      <label for="name" class="col-lg-2 control-label">Exported?</label>
-		      <div class="col-lg-10">
-		        <%= f.input :lib_exported_flag, :label => " " %>
-		      </div>	
-		    </div>
-		  <% end %>	
 		<% end %>
 		<%= f.actions do %>
 		  <%= f.action :submit, :as => :button, :button_html => { :class => "btn btn-primary"} %>
