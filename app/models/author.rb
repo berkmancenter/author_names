@@ -19,4 +19,15 @@ class Author < ActiveRecord::Base
     return "#{self.last_name}, #{self.first_name} (#{self.email})"
   end
   
+  def can_delete?
+    a = true
+    self.publications.each do |pub|
+      if !pub.lib_exported_flag || !pub.pub_exported_flag
+        a = false
+        break
+      end    
+    end
+    return a
+  end  
+  
 end

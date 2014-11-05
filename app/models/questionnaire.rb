@@ -5,7 +5,7 @@ class Questionnaire < ActiveRecord::Base
   
   has_and_belongs_to_many :form_items, :order => "form_items_questionnaires.position"
   belongs_to :publisher
-  has_many :responses
+  has_many :responses, :dependent => :destroy
   has_one :publication
   has_and_belongs_to_many :form_item_groups
   
@@ -46,4 +46,15 @@ class Questionnaire < ActiveRecord::Base
                    #{self.publisher.name} staff</p>"
     )   
   end  
+  
+  def can_delete?
+    a = true
+    self.responses.each do |resp|
+      if !resp.lib_exported_flag || !resp.pub_exported_flag
+        a = false
+        break
+      end    
+    end
+    return a
+  end
 end

@@ -77,7 +77,7 @@
 			<% end %>
 			<% if !@user.nil? && !@viewing %>
 			  <%= f.actions do %>
-			    <%= f.action :submit, :as => :button, :button_html => { :class => "btn btn-primary"} %>
+			    <%= f.action :submit, :as => :button, :label => "Submit Responses", :button_html => { :class => "btn btn-primary"} %>
 			  <% end %>
 			<% end %>
 	  </fieldset>
