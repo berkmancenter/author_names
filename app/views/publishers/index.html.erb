@@ -18,7 +18,12 @@
 		  <td>
 			<%= link_to('View', publisher_path(publisher)) %>  
 	      <% if current_user.try(:superadmin?) %>
-	   		 | <%= link_to('Edit', edit_publisher_path(publisher), :class => "action-edit") %> | <%= link_to('Delete', publisher_path(publisher), :confirm => "Are you sure?", :method => :delete) %>
+	   		 | <%= link_to('Edit', edit_publisher_path(publisher), :class => "action-edit") %> | 
+  			<% if publisher.can_delete? %>
+  			  <%= link_to('Delete', publisher_path(publisher), :confirm => "Are you sure?", :method => :delete) %>
+  			<% else %>
+ 			  <%= link_to 'Delete', "", :confirm => "This entity cannot be deleted until all associated responses have been exported by both the publisher and a library." %>
+ 			<% end %>
 	  	  <% end %>
 		  </td>
 	    </tr>
