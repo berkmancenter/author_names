@@ -24,7 +24,7 @@
   			<% if (current_user.try(:admin?) || current_user.try(:superadmin?)) && author.user != current_user && author.can_delete? %>
   			  | <%= link_to('Delete', author_path(author), :confirm => "Are you sure?", :method => :delete) %>
  			<% else %>
-			  | <%= link_to 'Delete', "", :confirm => "Cannot be deleted since there are responses that have not been exported yet." %>  
+			  | <%= link_to 'Delete', "", :confirm => "This entity cannot be deleted until all associated responses have been exported by both the publisher and a library." %>  
   	  	    <% end %>
   		  </td>
   	    </tr>

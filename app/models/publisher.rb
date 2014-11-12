@@ -23,4 +23,15 @@ class Publisher < ActiveRecord::Base
   def all_admin
     User.find(:all, :conditions => {:admin => true, :publisher_id => self.id})
   end  
+  
+  def can_delete?
+    a = true
+    self.publications.each do |pub|
+      if !pub.lib_exported_flag || !pub.pub_exported_flag
+        a = false
+        break
+      end    
+    end
+    return a
+  end
 end

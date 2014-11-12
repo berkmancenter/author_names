@@ -24,7 +24,7 @@
 			<% if questionnaire.can_delete? %>
 			  <%= link_to('Delete', questionnaire_path(questionnaire), :confirm => "Are you sure you want to delete this questionnaire? This action cannot be undone.", :method => :delete) %> | 
  			<% else %>
-			  <%= link_to 'Delete', "", :confirm => "Cannot be deleted since there are responses that have not been exported yet." %> |   
+			  <%= link_to 'Delete', "", :confirm => "This entity cannot be deleted until all associated responses have been exported by both the publisher and a library." %> |   
 			<% end %> 
 	  	  <% end %>
 		    <%= link_to('View', questionnaire_path(questionnaire), :class => "action-edit") %>

@@ -36,7 +36,7 @@
 			<% if form_item.can_delete? %>
 			  <%= link_to('Delete', form_item_path(form_item), :confirm => "Are you sure?", :method => :delete) %>
  			<% else %>
-			  <%= link_to 'Delete', "", :confirm => "Cannot be deleted since there are responses that have not been exported yet." %>  
+			  <%= link_to 'Delete', "", :confirm => "This entity cannot be deleted until all associated responses have been exported by both the publisher and a library." %>  
 			<% end %>  
 		  <% elsif current_user.is_pub_admin? %>
 			<%= link_to('View Field', view_field_form_item_path(form_item), :class => "action-edit") %> | <%= link_to('Clone', new_form_item_path(:clone => form_item.id), :class => "action-edit") %>
@@ -96,7 +96,7 @@
  			<% if form_item.can_delete? %>
  			  <%= link_to('Delete', form_item_path(form_item), :confirm => "Note that #{@questionnaires.length} questionnaires are using this form item. Are you sure you want to delete it everywhere?", :method => :delete) %>
  			<% else %>
-			  <%= link_to 'Delete', "", :confirm => "Cannot be deleted since there are responses that have not been exported yet." %>
+			  <%= link_to 'Delete', "", :confirm => "This entity cannot be deleted until all associated responses have been exported by both the publisher and a library." %>
 			<% end %>
 		  <% end %>
 		  </td>
