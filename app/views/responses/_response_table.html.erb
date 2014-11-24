@@ -2,7 +2,7 @@
   <div class="table-responsive">
     <% if current_user.is_publisher? || current_user.is_librarian? || current_user.try(:superadmin?) %>
       Download all responses as <%= link_to("CSV", export_responses_path ) %> or <%= link_to "ISNI XML", isni_responses_path(:format => 'xml') %> <br />
-	  Download all file attachements as <%= link_to("ZIP", "#" ) %><br /><br />
+	  Download all file attachments as <%= link_to("ZIP", "#" ) %><br /><br />
     <% end %>  
 	<table id="responses-table" class="table table-striped table-hover tablesorter">
   	<thead>
