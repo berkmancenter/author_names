@@ -75,9 +75,9 @@ class AuthorsController < ApplicationController
         end
         if current_user.try(:superadmin?) || current_user.try(:admin?)
           if params[:questionnaire].nil?
-            format.html { redirect_to authors_url, notice: 'Author was successfully updated.' }
+            format.html { redirect_to authors_url, notice: 'Contact Info was successfully updated.' }
           else
-            format.html { redirect_to questionnaire_url(params[:questionnaire], :publication => params[:publication], :author_user_id => @author.user.id), notice: 'Contact info was successfully updated.' }  
+            format.html { redirect_to questionnaire_url(params[:questionnaire], :publication => params[:publication], :author_user_id => @author.user.id), notice: 'Thank you. OAQ has updated the author’s contact information that you just supplied. Fill out the questionnaire below on behalf of the author.' }  
           end
         else 
           if params[:questionnaire].nil?
