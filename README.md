@@ -98,4 +98,4 @@ GPLv2 - See the LICENSE file for more information.
 Copyright
 ---------
 
-Copyright &copy; {{Year}} President and Fellows of Harvard College
+Copyright &copy; 2014 President and Fellows of Harvard College
