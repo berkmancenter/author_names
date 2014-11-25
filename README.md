@@ -56,7 +56,7 @@ Setup
 * Run bootstrap rake tasks for test data: 
   * rake authornames:bootstrap:run_all
 * Create cron jobs to automatically run rake tasks for sending out notifications: 
-  * rake inscriptio:cron_task:send_queued_emails
+  * rake authornames:cron_task:send_queued_emails
 
 Issue Tracker
 -------------
