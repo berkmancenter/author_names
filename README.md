@@ -4,8 +4,6 @@ Author Names (OAQ - Online Author Questionnaire)
 Description
 -----------
 
-What is OAQ?
-
 OAQ is a web-based application that enables libraries to share author data
 collected by cooperating publishers. The application enables a publisher's
 staff to send email queries to authors to gather information such as:
